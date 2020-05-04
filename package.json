@@ -1,0 +1,46 @@
+{
+	"name": "kodi2webos",
+	"version": "1.0.0",
+	"description": "A general template for an Enact Moonstone application.",
+	"author": "",
+	"main": "src/index.js",
+	"scripts": {
+		"serve": "enact serve",
+		"pack": "enact pack",
+		"pack-p": "enact pack -p",
+		"watch": "enact pack --watch",
+		"clean": "enact clean",
+		"lint": "enact lint .",
+		"license": "enact license",
+		"test": "enact test",
+		"test-watch": "enact test --watch",
+		"ares-p": "ares-package ./dist -o ipk" 
+	},
+	"license": "UNLICENSED",
+	"private": true,
+	"repository": "",
+	"enact": {
+		"theme": "moonstone"
+	},
+	"eslintConfig": {
+		"extends": "enact"
+	},
+	"eslintIgnore": [
+		"node_modules/*",
+		"build/*",
+		"dist/*"
+	],
+	"dependencies": {
+		"@enact/core": "^3.0.0",
+		"@enact/i18n": "^3.0.0",
+		"@enact/moonstone": "^3.0.0",
+		"@enact/spotlight": "^3.0.0",
+		"@enact/ui": "^3.0.0",
+		"ilib": "^14.2.0",
+		"prop-types": "^15.6.2",
+		"react": "^16.7.0",
+		"react-dom": "^16.7.0",
+		"react-redux": "^5.0.3",
+		"redux": "^3.6.0"
+	}
+}

@@ -1,0 +1,12 @@
+{
+  "id": "kodi2webos.tv.app",
+  "title": "kodi2webos",
+  "vendor": "Kodi2WebOS using Enact Moonstone",
+  "version": "0.0.1",
+  "type": "web",
+  "main": "index.html",
+  "icon": "icon.png",
+  "miniicon": "icon-mini.png",
+  "largeIcon": "icon-large.png",
+  "uiRevision": 2
+}
