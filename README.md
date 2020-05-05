@@ -1,3 +1,62 @@
+# kodi2webos ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MX8LMBWFQY734&item_name=Donations+to+fund+application+development.&currency_code=USD&source=url)
+A Kodi client for LG Smart TVs with webOS - using EnactJS, Moonstone
+
+## Donations to continue...
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MX8LMBWFQY734&item_name=Donations+to+fund+application+development.&currency_code=USD&source=url)
+
+## inspirations, tools, and more...
+Kodi2Webos-reactTV (previous project using ReactTV) https://github.com/valverde-marcelo/kodi2webos-reactTV
+EnactJS https://enactjs.com/
+EnactJS Samples https://github.com/enactjs/samples
+LG webOSTV Developer http://webostv.developer.lge.com/sdk/tools/using-webos-tv-cli/
+LG webOSTV Enyo/Enact Guides http://webostv.developer.lge.com/develop/enyo-enact-developer-guide/
+
+## Install and run...
+
+$ git clone
+
+$ cd kodi2webos
+
+$ yarn install
+
+$ enact serve (browser)
+
+To run on an emulator or smart tv, see: http://webostv.developer.lge.com/sdk/installation/#
+Follow the steps in the article: https://medium.com/@raphamorim/developing-for-tvs-with-react-tv-b5b5204964ef
+
+$ enact pack (to build project on /dist directory)
+
+$ ares-package ./dist -o ./ipk (to create ipk file on ./ipk directory)
+$ ares-install --device <DEVICE_NAME> ./kodi2webos.tv.app_<version> (to deploy on DEVICE)
+$ ares-install --device <DEVICE_NAME>  --remove kodi2webos.tv.app (to remove)
+$ ares-launch --device <DEVICE_NAME> kodi2webos.tv.app (to launch)
+$ ares-inspect --device <DEVICE_NAME> --app kodi2webos.tv.app (to debug on DEVICE)
+
+## Goal!
+
+develop something that looks like this:
+
+![alt text](https://img.ibxk.com.br/2019/03/22/netflix-22141026148281.jpg)
+
+## WIP
+- [x] basic navigation
+- [ ] websocket/API-REST send/request communication
+  - [ ] list movies/tvshows
+  - [ ] works in browser
+  - [ ] works in webos
+- [ ] Design interface
+  - [ ] Sections: Movies | TV Shows | Settings
+  - [ ] Horizontal List - Categories (Recently added, in progress, genres...)
+  - [ ] Vertical List
+  - [ ] Movies | TV Shows details
+  - [ ] Background image
+  - [ ] Create a Video Player
+- [ ] Test key navigation
+- [ ] Publish to LG Store 
+- [ ] Documentation
+
+
+---------------------------------------------------------------------------------------------------------------------------------
 This project was bootstrapped with [@enact/cli](https://github.com/enactjs/cli).
 
 Below you will find some information on how to perform common tasks.
