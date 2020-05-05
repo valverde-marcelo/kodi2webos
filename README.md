@@ -5,10 +5,15 @@ A Kodi client for LG Smart TVs with webOS - using EnactJS, Moonstone
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MX8LMBWFQY734&item_name=Donations+to+fund+application+development.&currency_code=USD&source=url)
 
 ## inspirations, tools, and more...
+
 Kodi2Webos-reactTV (previous project using ReactTV) https://github.com/valverde-marcelo/kodi2webos-reactTV
+
 EnactJS https://enactjs.com/
+
 EnactJS Samples https://github.com/enactjs/samples
+
 LG webOSTV Developer http://webostv.developer.lge.com/sdk/tools/using-webos-tv-cli/
+
 LG webOSTV Enyo/Enact Guides http://webostv.developer.lge.com/develop/enyo-enact-developer-guide/
 
 ## Install and run...
@@ -22,14 +27,19 @@ $ yarn install
 $ enact serve (browser)
 
 To run on an emulator or smart tv, see: http://webostv.developer.lge.com/sdk/installation/#
+
 Follow the steps in the article: https://medium.com/@raphamorim/developing-for-tvs-with-react-tv-b5b5204964ef
 
 $ enact pack (to build project on /dist directory)
 
 $ ares-package ./dist -o ./ipk (to create ipk file on ./ipk directory)
+
 $ ares-install --device <DEVICE_NAME> ./kodi2webos.tv.app_<version> (to deploy on DEVICE)
+
 $ ares-install --device <DEVICE_NAME>  --remove kodi2webos.tv.app (to remove)
+
 $ ares-launch --device <DEVICE_NAME> kodi2webos.tv.app (to launch)
+
 $ ares-inspect --device <DEVICE_NAME> --app kodi2webos.tv.app (to debug on DEVICE)
 
 ## Goal!
