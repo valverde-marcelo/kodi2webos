@@ -12,6 +12,7 @@ const DetailsPanel = kind({
 	propTypes: {
 		next: PropTypes.string,
 		onClick: PropTypes.func,
+		indice:PropTypes.number
 		//title: PropTypes.string
 	},
 
@@ -19,7 +20,9 @@ const DetailsPanel = kind({
 		//text: ({next}) => `To ${next} Panel`
 	},
 
-	render: ({onClick, ...rest}) => {
+	render: ({onClick, indice, ...rest}) => {
+		console.log(indice);
+		
 		delete rest.next;
 		return (
 			<Panel {...rest}>
