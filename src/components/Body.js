@@ -40,22 +40,24 @@ class Body extends React.Component {
 
 	render () {
 		const selectedSection = this.state.selectedSection;
-		let items, onClickRoute;
+		let items, itemsExtra, onClickRoute;
 
 		if(selectedSection == "Movies") {
 			onClickRoute = this.handleOnClickRouteA;
 			items = createImageItens('movies', 5);
+			itemsExtra = createImageItens('movies', 20);
+
 		} else if(selectedSection == "TV Shows"){
 			onClickRoute = this.handleOnClickRouteB;
-			items = createImageItens('tvshows', 5);
+			items = createImageItens('tvshows', 20);
 		}
 
 		return (
 			<Row className={css.body}>
 				<Cell size="100%">
 				<Scroller className={css.scroller}>
-						<div className={css.sidebar}/>
 						<ImageList items={items} onClick={onClickRoute} className={css.list}/>
+						<ImageList items={itemsExtra} onClick={onClickRoute} className={css.list}/>
 					</Scroller>
 				</Cell>
 			</Row>

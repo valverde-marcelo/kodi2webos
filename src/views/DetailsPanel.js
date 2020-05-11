@@ -7,7 +7,7 @@ import React from 'react';
 import Scroller from '@enact/ui/Scroller/Scroller';
 
 const DetailsPanel = kind({
-	name: 'DetaisPanel',
+	name: 'DetailsPanel',
 
 	propTypes: {
 		next: PropTypes.string,
@@ -21,7 +21,7 @@ const DetailsPanel = kind({
 	},
 
 	render: ({onClick, indice, ...rest}) => {
-		console.log(indice);
+		console.log(rest);
 		
 		delete rest.next;
 		return (
