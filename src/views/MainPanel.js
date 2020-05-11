@@ -1,4 +1,4 @@
-import {Header, Panel} from '@enact/moonstone/Panels';
+import { Header, Panel } from '@enact/moonstone/Panels';
 //import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -14,31 +14,35 @@ class MainPanel extends React.Component {
 	static propTypes = {
 		next: PropTypes.string,
 	}
-	
+
 	constructor(props) {
 		super(props);
-		this.state = {section: sections[0]};
+		this.state = { section: sections[0] };
+		console.log("construtor MainPanel");
 	}
 
-	handleSectionChange = ({data: section}) => {
-		this.setState({section});
+	handleSectionChange = ({ data: section }) => {
+		console.log("chamou o handleSectionChange:" + section);
+		this.setState({ section });
 	}
 
-	render(){
+	render() {
 		//clona o objeto
 		const rest = Object.assign({}, this.props);
 
 		const selectedSection = this.state.section;
-		const onChange = this.handleSectionChange;	
+		const onChange = this.handleSectionChange;
+
+		console.log("render MainPanel: " + selectedSection);
 
 		return (
 			<div className={css.mainView}>
-			<Panel>
-				<Header type="compact" title="Kodi2WebOS">
-					<Nav sections={sections} onSectionChange={onChange}	defaultSelected={0}/>
-				</Header>
-				<Body {...rest} selectedSection={selectedSection}/>
-			</Panel>
+				<Panel>
+					<Header type="compact" title="Kodi2WebOS">
+						<Nav sections={sections} onSectionChange={onChange} defaultSelected={0} />
+					</Header>
+					<Body {...rest} selectedSection={selectedSection} />
+				</Panel>
 			</div>
 		);
 	}

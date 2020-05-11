@@ -43,7 +43,7 @@ const App = kind({
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={onNavigate} path={path} noCloseButton>
 				<Route path="first" component={MainPanel} onClickRouteA={onSecondPanel} onClickRouteB={onFourthPanel}>
-					<Route path="second" component={DetailsPanel} next="third" onClick={onThirdPanel}>
+					<Route path="second" component={DetailsPanel} next="third" onClick={onThirdPanel} idItem={0}>
 						<Route path="third" component={PlayerPanel} next="first" onClick={onFirstPanel} />
 					</Route>
 					<Route path="fourth" component={SeasonsPanel} next="fifth" onClick={onFifthPanel}>
