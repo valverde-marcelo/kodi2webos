@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ri from '@enact/ui/resolution';
 import { VirtualGridList } from '@enact/moonstone/VirtualList';
-import GridListImageItem from '@enact/moonstone/GridListImageItem';
 
-//import ImageItem from './ImageItem';
+
+import Item from './Item';
 
 class ImageList extends React.Component {
 	static propTypes = {
@@ -42,16 +42,7 @@ class ImageList extends React.Component {
 		//const onClickItem = this.handleOnClickItem(index);
 		const { caption, selected, selectionOverlayShowing, source, subCaption } = this.props.items[index];
 		//TODO: selectImageItem não está definido, deve ser uma função
-		return (
-			<GridListImageItem
-				{...props}
-				caption={caption}
-				selected={selected}
-				selectionOverlayShowing={selectionOverlayShowing}
-				source={source}
-				subCaption={subCaption}
-				onClick={this.sayHello(index)}
-			/>);
+		return (<Item {...props} key={index} index={index}/>);
 	};
 
 	render = () => {

@@ -12,8 +12,8 @@ const Nav = kind({
 		onSectionChange: PropTypes.func.isRequired
 	},
 
-	render: ({sections, onSectionChange, ...rest}) => {
-
+	render: ({ sections, onSectionChange, ...rest }) => {
+		console.log('Nav - entrou no render');
 		return (
 			<Group
 				childComponent={Button}
