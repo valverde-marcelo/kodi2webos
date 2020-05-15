@@ -16,8 +16,7 @@ const sections = ['Movies', 'TV Shows'];
 class MainPanel extends React.Component {
 	static propTypes = {
 		//next: PropTypes.string, NÃO RECEBE O NEXT. PODE VARIAR CONFORME A ROTA
-		onClickRouteA: PropTypes.func,
-		onClickRouteB: PropTypes.func,
+		onSelectItem: PropTypes.func,
 	}
 
 	constructor(props) {
@@ -39,25 +38,15 @@ class MainPanel extends React.Component {
 		this.setState({ section: section });
 	}
 
-	handleOnSelectItem = (index, type) => {
-		console.log("MainPanel - chamou o handleOnSelectItem: " + index + " " + type);
-		if (type === 'movies') {
-			this.props.onClickRouteA(`Index: ${index} - type: ${type}`);
-		} else if (type === 'tv-shows') {
-			this.props.onClickRouteB(`Index: ${index} - type: ${type}`);
-		}
-	}
-
 	render() {
 		//clona o objeto
 		const rest = Object.assign({}, this.props);
+		const onSelectItem = rest.onSelectItem;
 
 		const selectedSection = this.state.section;
-		const onChange = this.handleSectionChange;
-		const onSelectItem = this.handleOnSelectItem;
+		const onChange = this.handleSectionChange;	
 
 		console.log("MainPanel - entrou no render: " + selectedSection);
-		//console.log(rest);
 
 		return (
 			<div className={css.mainView}>

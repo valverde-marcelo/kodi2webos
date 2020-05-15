@@ -1,11 +1,15 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
-function path (state = '/first', action) {
-	//console.log('executou reducer');
-	//console.log(action);
+function path(state = {path:'/first'}, action) {
+	console.log('executou reducer');
+	console.log(state);
+	console.log(action);
 	switch (action.type) {
 		case 'NAVIGATE':
-			return action.path;
+			return {
+				index: action.index,
+				path: action.path
+			};
 		default:
 			return state;
 	}

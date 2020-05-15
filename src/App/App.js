@@ -27,20 +27,46 @@ const App = kind({
 	propTypes: {
 		onNavigate: PropTypes.func,
 		path: PropTypes.string,
+		index: PropTypes.string,
+		type: PropTypes.string
 	},
 
 	handlers: {
+
+		_onSelectItem: ({ index, type }, { onNavigate }) => {
+			//TODO: remover - Index deve ser string
+			index = '#' + index;
+
+			console.log("App - chamou o _onSelectItem: " + index + " " + type);
+			if (type === 'movies') {
+				return onNavigate({ path: '/first/second', index, type })
+			} else if (type === 'tv-shows') {
+				return onNavigate({ path: '/first/fourth', index, type })
+			}
+		},
+
+		/**
+		 * sintaxe original:
+		 * _onSixthPanel: (ev, { onNavigate }) => {
+		 *	return onNavigate({ path: '/first/fourth/fifth/sixth' })
+		 *	},
+		 */
+
+		// Método onNavigate recebe um objeto como parâmetro, contendo atributo 'path'
+
 		_onFirstPanel: (ev, args) => {
 			console.log(args);
 			const { onNavigate } = args;
-			return onNavigate({ path: '/first'})
+			return onNavigate({ path: '/first' })
 		},
 
-		_onSecondPanel: (ev, args) => {
-			console.log(ev);
+		/*
+		_onSecondPanel: (index, args) => {
+			console.log(index);
 			const { onNavigate } = args;
-			return onNavigate({ path: '/first/second'})
+			return onNavigate({ path: '/first/second', index })
 		},
+		*/
 
 		_onThirdPanel: (ev, args) => {
 			console.log(args);
@@ -48,11 +74,13 @@ const App = kind({
 			return onNavigate({ path: '/first/second/third' })
 		},
 
+		/*
 		_onFourthPanel: (ev, args) => {
 			console.log(ev);
 			const { onNavigate } = args;
 			return onNavigate({ path: '/first/fourth' })
 		},
+		*/
 
 		_onFifthPanel: (ev, { onNavigate }) => {
 			return onNavigate({ path: '/first/fourth/fifth' })
@@ -67,12 +95,12 @@ const App = kind({
 		},
 	},
 
-	render: ({ _onFirstPanel, _onSecondPanel, _onThirdPanel, _onFourthPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, onNavigate, path, ...rest }) => {
-
+	render: ({ _onSelectItem, _onFirstPanel, _onSecondPanel, _onThirdPanel, _onFourthPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, onNavigate, path, index, ...rest }) => {
+		console.log(rest);
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={onNavigate} path={path} noCloseButton>
-				<Route path="first" component={MainPanel} onClickRouteA={_onSecondPanel} onClickRouteB={_onFourthPanel}>
-					<Route path="second" component={DetailsPanel} next="third" onClick={_onThirdPanel}>
+				<Route path="first" component={MainPanel} onSelectItem={_onSelectItem} >
+					<Route path="second" index={index} component={DetailsPanel} next="third" onClick={_onThirdPanel}>
 						<Route path="third" component={PlayerPanel} next="first" onClick={_onFirstPanel} />
 					</Route>
 					<Route path="fourth" component={SeasonsPanel} next="fifth" onClick={_onFifthPanel}>

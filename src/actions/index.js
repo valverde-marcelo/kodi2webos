@@ -1,9 +1,13 @@
-export const navigate = (path) => {
-	//console.log("executou actions navigate");
-	//console.log(path);
+export const navigate = (path, index, typeMedia) => {
+	console.log("executou actions navigate");
+	// console.log(path);
+	// console.log(index);
+	// console.log(typeMedia);
 
 	return {
 		type: 'NAVIGATE',
-		path
+		path,
+		index,
+		typeMedia
 	};
 };

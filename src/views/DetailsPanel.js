@@ -12,7 +12,8 @@ const DetailsPanel = kind({
 	propTypes: {
 		next: PropTypes.string,
 		onClick: PropTypes.func,
-		//title: PropTypes.string
+		path: PropTypes.string,
+		index: PropTypes.string
 	},
 
 	computed: {
@@ -20,6 +21,8 @@ const DetailsPanel = kind({
 	},
 
 	render: ({onClick, ...rest}) => {
+		console.log("Details - entrou no render");
+		console.log(rest);
 		delete rest.next;
 		return (
 			<Panel {...rest}>

@@ -40,7 +40,7 @@ const Item = kind({
 
     render: ({ index, type, url, onSelect }) => {
 
-        console.log(`Item ${index}- entrou no render`);
+        console.log(`Item ${index}, type: ${type} - entrou no render`);
         //console.log(rest);
 
         return (
@@ -49,7 +49,7 @@ const Item = kind({
                 source={url}
                 subCaption={"subcaptio: " + index}
 
-                onClick={() => (onSelect(index, type))}
+                onClick={() => (onSelect({index:index, type:type}))}
             />
         );
     }
