@@ -10,20 +10,26 @@ const PlayerPanel = kind({
 	name: 'PlayerPanel',
 
 	propTypes: {
-		next: PropTypes.string,
-		onClick: PropTypes.func,
-		//title: PropTypes.string
+		sectionID: PropTypes.number,
+		itemID: PropTypes.string,
+		onClick: PropTypes.func,	
 	},
 
 	computed: {
-		//text: ({next}) => `To ${next} Panel`
+		text: ({sectionID}) => {
+			if (sectionID === 0) {
+				return "Movie";
+			} else if (sectionID === 1) {
+				return "TV Show";
+			}
+		}
 	},
 
-	render: ({onClick, ...rest}) => {
-		delete rest.next;
+	render: ({sectionID, itemID, onClick, text, ...rest}) => {
+		console.log(`PlayerPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
 		return (
 			<Panel {...rest}>
-				<Header type="compact" title="Player"/>
+				<Header type="compact" title={`Player of ${text}: ${itemID}`}/>
 				<div>
 					<Scroller>
 						<Button onClick={onClick}>Go to Home</Button>

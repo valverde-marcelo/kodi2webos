@@ -9,16 +9,16 @@ const Nav = kind({
 
 	propTypes: {
 		sections: PropTypes.array.isRequired,
-		onSectionChange: PropTypes.func.isRequired
+		onChangeSection: PropTypes.func.isRequired
 	},
 
-	render: ({ sections, onSectionChange, ...rest }) => {
+	render: ({ sections, onChangeSection, ...rest }) => {
 		console.log('Nav - entrou no render');
 		return (
 			<Group
 				childComponent={Button}
 				selectedProp="selected"
-				onSelect={onSectionChange}
+				onSelect={onChangeSection}
 				select="radio"
 				{...rest}
 			>

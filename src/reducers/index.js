@@ -1,15 +1,29 @@
 import { combineReducers } from 'redux';
 
-function path(state = {path:'/first'}, action) {
+const init = {
+	path: '/first',
+	sectionID: 0,
+	itemID: '#000000'
+};
+
+function path(state = init, action) {
 	console.log('executou reducer');
-	console.log(state);
-	console.log(action);
+	//console.log(state);
+	//console.log(action);
 	switch (action.type) {
 		case 'NAVIGATE':
 			return {
-				index: action.index,
-				path: action.path
+				path: action.path,
+				sectionID: action.sectionID,
+				itemID: action.itemID	
 			};
+
+		case 'CHANGE_SECTION':
+			return {
+				path: action.path,
+				sectionID: action.sectionID
+			};
+
 		default:
 			return state;
 	}

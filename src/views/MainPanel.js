@@ -12,7 +12,48 @@ const sections = ['Movies', 'TV Shows'];
 
 //TODO: ao voltar, restabelecer a mesma seção. Está sempre voltando para Movies.
 
+const MainPanel = kind({
 
+	name: 'MainPanel',
+
+	propTypes: {
+		sectionID: PropTypes.number,
+		itemId: PropTypes.string,
+		onSelectItem: PropTypes.func,
+		onChangeSection: PropTypes.func
+	},
+
+	defaultProps: {
+
+	},
+
+	handlers: {
+
+	},
+
+	computed: {
+
+	},
+
+	render: ({ sectionID, itemID, onChangeSection, onSelectItem, ...rest }) => {
+		console.log(`MainPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
+		//delete rest.section;
+		return (
+			<div className={css.mainView}>
+				<Panel {...rest}>
+					<Header type="compact" title="Kodi2WebOS">
+						<Nav sections={sections} onChangeSection={onChangeSection} defaultSelected={sectionID} />
+					</Header>
+					<Body sectionID={sectionID} onSelect={onSelectItem} />
+				</Panel>
+			</div>
+		)
+	}
+});
+
+export default MainPanel;
+
+/**
 class MainPanel extends React.Component {
 	static propTypes = {
 		//next: PropTypes.string, NÃO RECEBE O NEXT. PODE VARIAR CONFORME A ROTA
@@ -44,7 +85,7 @@ class MainPanel extends React.Component {
 		const onSelectItem = rest.onSelectItem;
 
 		const selectedSection = this.state.section;
-		const onChange = this.handleSectionChange;	
+		const onChange = this.handleSectionChange;
 
 		console.log("MainPanel - entrou no render: " + selectedSection);
 
@@ -61,9 +102,6 @@ class MainPanel extends React.Component {
 	}
 }
 
-export default MainPanel;
-
-/**
 <Scroller className={css.scroller}>
 <Button onClick={onClickRouteA}>Movie 01 - onClick</Button>
 <Button onClick={onClickRouteB}>TV Show 01 - onClick2</Button>

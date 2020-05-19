@@ -9,9 +9,9 @@ const Item = kind({
     name: 'Item',
 
     propTypes: {
-        index: PropTypes.number, //utilizada como índice
+        itemID: PropTypes.number, //utilizada como índice
         theme: PropTypes.string,
-        type: PropTypes.string,
+        sectionID: PropTypes.number,
         onSelect: PropTypes.func,
     },
 
@@ -33,23 +33,25 @@ const Item = kind({
         // url: ({ index, size }) => {
         // url: (props) => { const index = props.index, size = props.size;
 
-        url: ({ index, size, theme }) => {
-            return `//loremflickr.com/${size}/${size}/${theme}?random=${index}`;
+        url: ({ itemID, size, theme }) => {
+            return `//loremflickr.com/${size}/${size}/${theme}?random=${itemID}`;
         }
     },
 
-    render: ({ index, type, url, onSelect }) => {
+    render: ({ itemID, sectionID, url, onSelect }) => {
 
-        console.log(`Item ${index}, type: ${type} - entrou no render`);
+        console.log(`Item ${itemID}, sectionID: ${sectionID} - entrou no render`);
         //console.log(rest);
+
+        let sItemID= "#" + itemID;
 
         return (
             <GridListImageItem
-                caption={"caption: " + index}
+                caption={"caption: " + sItemID}
                 source={url}
-                subCaption={"subcaptio: " + index}
+                subCaption={"subcaptio: " + sItemID}
 
-                onClick={() => (onSelect({index:index, type:type}))}
+                onClick={() => (onSelect({sectionID:sectionID, itemID:sItemID}))}
             />
         );
     }

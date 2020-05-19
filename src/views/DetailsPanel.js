@@ -1,5 +1,5 @@
 import Button from '@enact/moonstone/Button';
-import {Header, Panel} from '@enact/moonstone/Panels';
+import { Header, Panel } from '@enact/moonstone/Panels';
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,23 +10,27 @@ const DetailsPanel = kind({
 	name: 'DetailsPanel',
 
 	propTypes: {
-		next: PropTypes.string,
+		sectionID: PropTypes.number,
+		itemID: PropTypes.string,
 		onClick: PropTypes.func,
-		path: PropTypes.string,
-		index: PropTypes.string
 	},
 
 	computed: {
-		//text: ({next}) => `To ${next} Panel`
+		text: ({sectionID}) => {
+			if (sectionID === 0) {
+				return "Movie";
+			} else if (sectionID === 1) {
+				return "TV Show";
+			}
+		}
 	},
 
-	render: ({onClick, ...rest}) => {
-		console.log("Details - entrou no render");
+	render: ({ sectionID, itemID, onClick, text, ...rest }) => {
+		console.log(`DetailsPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
 		console.log(rest);
-		delete rest.next;
 		return (
 			<Panel {...rest}>
-				<Header type="compact" title="Details"/>
+				<Header type="compact" title={`Details of ${text}: ${itemID}`} />
 				<div>
 					<Scroller>
 						<Button onClick={onClick}>Go to Player</Button>

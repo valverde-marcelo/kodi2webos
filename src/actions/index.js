@@ -1,13 +1,19 @@
-export const navigate = (path, index, typeMedia) => {
-	console.log("executou actions navigate");
-	// console.log(path);
-	// console.log(index);
-	// console.log(typeMedia);
-
+export const navigate = (path, sectionID, itemID) => {
+	console.log(`executou actions NAVIGATE: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 	return {
 		type: 'NAVIGATE',
 		path,
-		index,
-		typeMedia
+		sectionID,
+		itemID,
+	};
+};
+
+export const changeSection = (path, sectionID, itemID) => {
+	console.log(`executou actions CHANGE_SECTION: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
+	return {
+		type: 'CHANGE_SECTION',
+		path,
+		sectionID,
+		itemID,
 	};
 };

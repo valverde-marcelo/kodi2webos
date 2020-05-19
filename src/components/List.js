@@ -13,13 +13,13 @@ const List = kind({
     propTypes: {
         //TODO: incluir titulo e descrição da lista, horizontal ou vertical
         items: PropTypes.array,
-        type: PropTypes.string,
+        sectionID: PropTypes.number,
         theme: PropTypes.string,
         onSelect: PropTypes.func,
     },
 
 
-    render: ({ items, theme, type, onSelect}) => {
+    render: ({ items, theme, sectionID, onSelect}) => {
 
         console.log("List - entrou no render");
         //console.log(rest);
@@ -33,8 +33,8 @@ const List = kind({
         return (
                 <Repeater
                     childComponent={Item}
-                    indexProp="index"
-                    itemProps={{ theme, type, onSelect }}
+                    indexProp="itemID"
+                    itemProps={{ theme, sectionID, onSelect }}
                 >
                     {items}
                 </Repeater>
