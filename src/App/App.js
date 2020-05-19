@@ -13,6 +13,10 @@ import PlayerPanel from '../views/PlayerPanel';
 import SeasonsPanel from '../views/SeasonsPanel';
 import EpisodesPanel from '../views/EpisodesPanel';
 
+import { GetMovies } from '../api/actions.js';
+
+GetMovies();
+
 //Routable Decorator
 const RoutablePanels = Routable({ navigate: 'onBack' }, Panels);
 
@@ -26,21 +30,20 @@ const App = kind({
 	name: 'App',
 
 	propTypes: {
-		onNavigate: PropTypes.func,
-		onChangeSection: PropTypes.func,
 		path: PropTypes.string,
 		itemID: PropTypes.string,
 		sectionID: PropTypes.number,
 	},
 
 	handlers: {
-		
+
 		// Método onNavigate recebe um objeto como parâmetro, contendo atributos: 'path', 'sectionID', 'itemID'
 
 		_onChangeSection: ({ data: section, selected: sectionID }, { onChangeSection }) => {
 			console.log("App - chamou o _onChangeSection: " + section + " - " + sectionID);
 			return onChangeSection({ path: '/first', sectionID });
 		},
+
 
 		_onSelectItem: ({ sectionID, itemID }, { onNavigate }) => {
 			console.log("App - chamou o _onSelectItem: " + itemID + " " + sectionID);
@@ -51,6 +54,16 @@ const App = kind({
 			}
 		},
 
+
+		//TODO: fix JSX props should not use arrow functions react/jsx-no-bind
+		/*
+		_onSelectItem: (ev, args) => {
+			console.log("App - chamou o _onSelectItem:");
+			console.log(ev);
+			console.log(args);
+		},
+		*/
+
 		/**
 		 * sintaxe original:
 		 * _onSixthPanel: (ev, { onNavigate }) => {
@@ -58,8 +71,8 @@ const App = kind({
 		 *	},
 		 */
 
-		_onBack: ({path}, { onNavigate, itemID, sectionID }) => {
-			console.log(`App - chamou o _obBack: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
+		_onBack: ({ path }, { onNavigate, itemID, sectionID }) => {
+			console.log(`App - chamou o _onBack: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 			return onNavigate({ path, sectionID, itemID })
 		},
 
@@ -103,8 +116,11 @@ const App = kind({
 		},
 	},
 
-	render: ({ _onChangeSection, _onSelectItem, _onFirstPanel, _onSecondPanel, _onThirdPanel, _onFourthPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onBack, path, itemID, sectionID, ...rest }) => {
+	render: ({ _onChangeSection, _onSelectItem, _onFirstPanel, _onThirdPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onBack, path, itemID, sectionID, ...rest }) => {
 		console.log(`App - entrou no render: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
+		delete rest.onNavigate;
+		delete rest.onChangeSection;
+
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
 				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} >

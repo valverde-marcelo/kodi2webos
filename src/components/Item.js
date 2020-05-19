@@ -5,11 +5,15 @@ import React from 'react';
 
 import css from './Item.module.less';
 
+const SelectionOverlay = kind({
+    render: () => <div>Item selected</div>
+});
+
 const Item = kind({
     name: 'Item',
 
     propTypes: {
-        itemID: PropTypes.number, //utilizada como índice
+        selectedItemID: PropTypes.string, //utilizada como índice
         theme: PropTypes.string,
         sectionID: PropTypes.number,
         onSelect: PropTypes.func,
@@ -35,26 +39,50 @@ const Item = kind({
 
         url: ({ itemID, size, theme }) => {
             return `//loremflickr.com/${size}/${size}/${theme}?random=${itemID}`;
+        },
+
+        selected: ({ selectedItemID, itemID }) => {
+            let tempID = "#" + itemID;
+            if (selectedItemID === tempID) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        sItemID: ({ itemID }) => {
+            return "#" + itemID;
+        },
+
+        text: ({ sectionID }) => {
+            if (sectionID === 0) {
+                return "Movie";
+            } else if (sectionID === 1) {
+                return "TV Show";
+            }
         }
     },
 
-    render: ({ itemID, sectionID, url, onSelect }) => {
+    render: ({ selectedItemID, sItemID, sectionID, url, text, onSelect, selected }) => {
 
-        console.log(`Item ${itemID}, sectionID: ${sectionID} - entrou no render`);
+        console.log(`Item ${sItemID}, sectionID: ${sectionID}, selectedItemID=${selectedItemID}, selected=${selected} - entrou no render`);
         //console.log(rest);
-
-        let sItemID= "#" + itemID;
 
         return (
             <GridListImageItem
-                caption={"caption: " + sItemID}
+                caption={`${text} caption: ${sItemID}`}
                 source={url}
-                subCaption={"subcaptio: " + sItemID}
-
-                onClick={() => (onSelect({sectionID:sectionID, itemID:sItemID}))}
+                subCaption={`${text} caption: ${sItemID}`}
+                selectionOverlayShowing={selected}
+                selectionOverlay={SelectionOverlay}
+                
+                onClick={() => (onSelect({ sectionID: sectionID, itemID: sItemID }))}
+                //onClick={onSelect}
             />
         );
     }
 });
 
 export default Item;
+//TODO: fix JSX props should not use arrow functions react/jsx-no-bind
+//onClick={() => (onSelect({ sectionID: sectionID, itemID: sItemID }))}

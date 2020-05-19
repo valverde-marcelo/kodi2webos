@@ -15,7 +15,7 @@ function path(state = init, action) {
 			return {
 				path: action.path,
 				sectionID: action.sectionID,
-				itemID: action.itemID	
+				itemID: action.itemID
 			};
 
 		case 'CHANGE_SECTION':

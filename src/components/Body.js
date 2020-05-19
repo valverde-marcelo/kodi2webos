@@ -24,6 +24,7 @@ const Body = kind({
 
 	propTypes: {
 		sectionID: PropTypes.number,
+		selectedItemID: PropTypes.string,
 		onSelect: PropTypes.func,
 	},
 
@@ -39,17 +40,6 @@ const Body = kind({
 		// Destructuring:
 		// url: (props) => { const index = props.index, size = props.size;
 
-		/*
-		section: ({ section }) => {
-			//console.log('Body - entrou no computed: type');
-			if (section === 'Movies') {
-				return 'movies';
-			} else {
-				return 'tv-shows';
-			}
-		},
-		*/
-
 		//TODO: remover atributo theme
 		theme: ({ sectionID}) => {
 			//console.log('Body - entrou no computed: theme');
@@ -61,11 +51,11 @@ const Body = kind({
 		}
 	},
 
-	render: ({ theme, sectionID, onSelect}) => {
+	render: ({ theme, sectionID, selectedItemID, onSelect}) => {
 		console.log("Body - entrou no render");
 		//delete rest.section;
 		return (
-				<List sectionID={sectionID} theme={theme} items={kittens} onSelect={onSelect}/>
+				<List sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect}/>
 		)
 	}
 });

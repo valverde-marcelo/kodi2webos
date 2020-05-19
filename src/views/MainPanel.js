@@ -44,7 +44,7 @@ const MainPanel = kind({
 					<Header type="compact" title="Kodi2WebOS">
 						<Nav sections={sections} onChangeSection={onChangeSection} defaultSelected={sectionID} />
 					</Header>
-					<Body sectionID={sectionID} onSelect={onSelectItem} />
+					<Body sectionID={sectionID} selectedItemID={itemID} onSelect={onSelectItem} />
 				</Panel>
 			</div>
 		)
