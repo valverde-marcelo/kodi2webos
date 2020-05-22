@@ -40,7 +40,7 @@ const MainPanel = kind({
 		//delete rest.section;
 		return (
 			<div className={css.mainView}>
-				<Panel {...rest}>
+				<Panel {...rest} className="debug layout">
 					<Header type="compact" title="Kodi2WebOS">
 						<Nav sections={sections} onChangeSection={onChangeSection} defaultSelected={sectionID} />
 					</Header>

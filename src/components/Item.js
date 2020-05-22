@@ -6,7 +6,7 @@ import React from 'react';
 import css from './Item.module.less';
 
 const SelectionOverlay = kind({
-    render: () => <div>Item selected</div>
+    render: () => <div className={css.selected}>Item selected</div>
 });
 
 const Item = kind({
@@ -22,14 +22,6 @@ const Item = kind({
     defaultProps: {
         size: 300,
         theme: 'music'
-    },
-
-    styles: {
-        css,
-        className: 'item'
-    },
-
-    handlers: {
     },
 
     computed: {
@@ -69,7 +61,7 @@ const Item = kind({
         //console.log(rest);
 
         return (
-            <GridListImageItem
+            <GridListImageItem className={css.item}
                 caption={`${text} caption: ${sItemID}`}
                 source={url}
                 subCaption={`${text} caption: ${sItemID}`}

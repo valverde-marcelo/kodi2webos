@@ -1,7 +1,9 @@
 import kind from '@enact/core/kind';
-import Repeater from '@enact/ui/Repeater';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Repeater from '@enact/ui/Repeater';
+import { Column, Row, Cell } from '@enact/ui/Layout';
+import Scroller from '@enact/moonstone/Scroller';
 
 import Item from './Item';
 //import css from './Item.module.less';
@@ -12,6 +14,8 @@ const List = kind({
 
     propTypes: {
         //TODO: incluir titulo e descrição da lista, horizontal ou vertical
+        id: PropTypes.string,
+        title: PropTypes.string,
         items: PropTypes.array,
         sectionID: PropTypes.number,
         selectedItemID: PropTypes.string,
@@ -20,7 +24,7 @@ const List = kind({
     },
 
 
-    render: ({ items, theme, sectionID, selectedItemID, onSelect}) => {
+    render: ({ id, items, theme, sectionID, title, selectedItemID, onSelect }) => {
 
         console.log("List - entrou no render");
         //console.log(rest);
@@ -32,13 +36,22 @@ const List = kind({
         // itemProps={{ onSelect: onSelectItem, theme: "sun" }
 
         return (
-                <Repeater
-                    childComponent={Item}
-                    indexProp="itemID"
-                    itemProps={{ theme, sectionID, selectedItemID, onSelect }}
-                >
-                    {items}
-                </Repeater>
+            <Column>
+                <Cell shrink>{title}</Cell>
+                <Scroller id={id} direction="horizontal" horizontalScrollbar="hidden">
+                    <Cell size="40%">
+                        <Repeater
+                            childComponent={Item}
+                            indexProp="itemID"
+                            itemProps={{ theme, sectionID, selectedItemID, onSelect }}
+                            component={Row}
+                        >
+                            {items}
+                        </Repeater>
+                    </Cell>
+                </Scroller>
+            </Column>
+
         );
     }
 });

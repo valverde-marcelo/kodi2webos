@@ -2,6 +2,9 @@ import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+// Usar Scroller moonstone para ter acesso à key navigation
+import Scroller from '@enact/moonstone/Scroller';
+
 import List from './List';
 
 
@@ -14,7 +17,12 @@ const kittens = [
 	'Simba',
 	'Nala',
 	'Tiger',
-	'Kitty'
+	'Kitty',
+	'aNermal',
+	'aSimba',
+	'aNala',
+	'aTiger',
+	'aKitty'
 ];
 
 
@@ -41,7 +49,7 @@ const Body = kind({
 		// url: (props) => { const index = props.index, size = props.size;
 
 		//TODO: remover atributo theme
-		theme: ({ sectionID}) => {
+		theme: ({ sectionID }) => {
 			//console.log('Body - entrou no computed: theme');
 			if (sectionID === 0) {
 				return 'Sun';
@@ -51,11 +59,14 @@ const Body = kind({
 		}
 	},
 
-	render: ({ theme, sectionID, selectedItemID, onSelect}) => {
+	render: ({ theme, sectionID, selectedItemID, onSelect, ...rest }) => {
 		console.log("Body - entrou no render");
 		//delete rest.section;
 		return (
-				<List sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect}/>
+			<Scroller direction="vertical" verticalScrollbar="hidden">
+				<List id={'1'} title="Continuar assitindo como <<USUÁRIO>>" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+				<List id={'2'} title="Recém adicionados" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+			</Scroller>
 		)
 	}
 });
