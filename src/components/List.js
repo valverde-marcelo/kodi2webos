@@ -6,7 +6,7 @@ import { Column, Row, Cell } from '@enact/ui/Layout';
 import Scroller from '@enact/moonstone/Scroller';
 
 import Item from './Item';
-//import css from './Item.module.less';
+import css from './List.module.less';
 
 
 const List = kind({
@@ -36,7 +36,7 @@ const List = kind({
         // itemProps={{ onSelect: onSelectItem, theme: "sun" }
 
         return (
-            <Column>
+            <Column className={css.list}>
                 <Cell shrink>{title}</Cell>
                 <Scroller id={id} direction="horizontal" horizontalScrollbar="hidden">
                     <Cell size="40%">

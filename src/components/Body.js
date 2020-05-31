@@ -6,9 +6,7 @@ import React from 'react';
 import Scroller from '@enact/moonstone/Scroller';
 
 import List from './List';
-
-
-//import css from './Body.module.less';
+import css from './Body.module.less';
 
 
 const kittens = [
@@ -63,10 +61,21 @@ const Body = kind({
 		console.log("Body - entrou no render");
 		//delete rest.section;
 		return (
-			<Scroller direction="vertical" verticalScrollbar="hidden">
-				<List id={'1'} title="Continuar assitindo como <<USUÁRIO>>" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
-				<List id={'2'} title="Recém adicionados" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
-			</Scroller>
+			<div className={css.body} style={{}}>
+				<div className={css.containerDetails}>
+					Detais
+				</div>
+				<div className={css.scrooller}>
+					<Scroller direction="vertical" verticalScrollbar="none">
+						<div className={css.containerList}>
+							<List id={'1'} title="Continuar assitindo como <<USUÁRIO>>" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+							<List id={'2'} title="Recém adicionados" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+							<List id={'3'} title="Continuar assitindo como <<USUÁRIO>>" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+							<List id={'4'} title="Recém adicionados" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+						</div>
+					</Scroller>
+				</div>
+			</div>
 		)
 	}
 });

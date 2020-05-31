@@ -1,16 +1,13 @@
-import { Header, Panel } from '@enact/moonstone/Panels';
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Header, Panel } from '@enact/moonstone/Panels';
+import { Column, Row, Cell } from '@enact/ui/Layout';
 
 import Nav from '../components/Nav';
 import Body from '../components/Body';
 
 import css from './MainPanel.module.less';
-
-const sections = ['Movies', 'TV Shows'];
-
-//TODO: ao voltar, restabelecer a mesma seção. Está sempre voltando para Movies.
 
 const MainPanel = kind({
 
@@ -39,19 +36,33 @@ const MainPanel = kind({
 		console.log(`MainPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
 		//delete rest.section;
 		return (
-			<div className={css.mainView}>
-				<Panel {...rest} className="debug layout">
-					<Header type="compact" title="Kodi2WebOS">
-						<Nav sections={sections} onChangeSection={onChangeSection} defaultSelected={sectionID} />
-					</Header>
-					<Body sectionID={sectionID} selectedItemID={itemID} onSelect={onSelectItem} />
-				</Panel>
-			</div>
+			<Panel {...rest} className="debug layout" style={{}}>
+				<div className={css.main}>
+				<Row style={{height: '100%'}}>
+					<Cell size="20%">
+						<div>K</div>
+						<Nav onChangeSection={onChangeSection} defaultSelected={sectionID} /></Cell>
+					<Cell>
+						<Column>
+							<Body sectionID={sectionID} selectedItemID={itemID} onSelect={onSelectItem} />
+						</Column>
+					</Cell>
+				</Row>
+				</div>
+			</Panel>
 		)
 	}
 });
 
 export default MainPanel;
+
+/**
+ *
+ *
+ *
+ *
+ */
+
 
 /**
 class MainPanel extends React.Component {
@@ -101,11 +112,4 @@ class MainPanel extends React.Component {
 		);
 	}
 }
-
-<Scroller className={css.scroller}>
-<Button onClick={onClickRouteA}>Movie 01 - onClick</Button>
-<Button onClick={onClickRouteB}>TV Show 01 - onClick2</Button>
-<ImageList imageitems={items} className={css.list}/>
-<ImageList imageitems={tvshows} className={css.list}/>
-</Scroller>
  */
