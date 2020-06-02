@@ -6,7 +6,9 @@ import React from 'react';
 import Scroller from '@enact/moonstone/Scroller';
 
 import List from './List';
+import Details from './Details';
 import css from './Body.module.less';
+import { Column, Row, Cell } from '@enact/ui/Layout';
 
 
 const kittens = [
@@ -61,21 +63,21 @@ const Body = kind({
 		console.log("Body - entrou no render");
 		//delete rest.section;
 		return (
-			<div className={css.body} style={{}}>
-				<div className={css.containerDetails}>
-					Detais
-				</div>
-				<div className={css.scrooller}>
-					<Scroller direction="vertical" verticalScrollbar="none">
-						<div className={css.containerList}>
-							<List id={'1'} title="Continuar assitindo como <<USUÁRIO>>" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
-							<List id={'2'} title="Recém adicionados" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+			<Column className={css.body} style={{}}>
+				<Cell className={css.containerDetails}>
+					<Details />
+				</Cell>
+				<Cell className={css.containerVerticalScrooller}>
+					<Scroller direction="vertical" verticalScrollbar="hidden">
+						<Cell className={css.containerList}>
+							<List id={'1'} title="Popular on Kodi2WebOS" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
+							<List id={'2'} title="Trending Now" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
 							<List id={'3'} title="Continuar assitindo como <<USUÁRIO>>" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
 							<List id={'4'} title="Recém adicionados" sectionID={sectionID} selectedItemID={selectedItemID} theme={theme} items={kittens} onSelect={onSelect} />
-						</div>
+						</Cell>
 					</Scroller>
-				</div>
-			</div>
+				</Cell>
+			</Column>
 		)
 	}
 });

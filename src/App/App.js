@@ -14,6 +14,7 @@ import SeasonsPanel from '../views/SeasonsPanel';
 import EpisodesPanel from '../views/EpisodesPanel';
 
 import { GetMovies } from '../api/actions.js';
+import css from './App.module.less';
 
 GetMovies();
 

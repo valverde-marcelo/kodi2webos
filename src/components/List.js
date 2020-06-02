@@ -4,8 +4,7 @@ import React from 'react';
 import Repeater from '@enact/ui/Repeater';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import Scroller from '@enact/moonstone/Scroller';
-
-import Item from './Item';
+import ImageItem from './ImageItem';
 import css from './List.module.less';
 
 
@@ -39,19 +38,16 @@ const List = kind({
             <Column className={css.list}>
                 <Cell shrink>{title}</Cell>
                 <Scroller id={id} direction="horizontal" horizontalScrollbar="hidden">
-                    <Cell size="40%">
-                        <Repeater
-                            childComponent={Item}
-                            indexProp="itemID"
-                            itemProps={{ theme, sectionID, selectedItemID, onSelect }}
-                            component={Row}
-                        >
-                            {items}
-                        </Repeater>
-                    </Cell>
+                    <Repeater
+                        childComponent={ImageItem}
+                        indexProp="itemID"
+                        itemProps={{ theme, sectionID, selectedItemID, onSelect }}
+                        component={Row} //enfilera os Itens em linha
+                    >
+                        {items}
+                    </Repeater>
                 </Scroller>
             </Column>
-
         );
     }
 });

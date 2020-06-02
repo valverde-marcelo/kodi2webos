@@ -37,18 +37,15 @@ const MainPanel = kind({
 		//delete rest.section;
 		return (
 			<Panel {...rest} className="debug layout" style={{}}>
-				<div className={css.main}>
-				<Row style={{height: '100%'}}>
-					<Cell size="20%">
-						<div>K</div>
-						<Nav onChangeSection={onChangeSection} defaultSelected={sectionID} /></Cell>
-					<Cell>
-						<Column>
-							<Body sectionID={sectionID} selectedItemID={itemID} onSelect={onSelectItem} />
+					<Row className={css.main}>
+						<Column className={css.sideBar}>
+							<Cell>K</Cell>
+							<Nav onChangeSection={onChangeSection} defaultSelected={sectionID} />
 						</Column>
-					</Cell>
-				</Row>
-				</div>
+						<Cell className={css.content}>
+							<Body sectionID={sectionID} selectedItemID={itemID} onSelect={onSelectItem} />
+						</Cell>
+					</Row>
 			</Panel>
 		)
 	}
