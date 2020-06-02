@@ -48,6 +48,10 @@ develop something that looks like this:
 
 ![alt text](https://img.ibxk.com.br/2019/03/22/netflix-22141026148281.jpg)
 
+## Snapshots!
+
+![alt text](./assets/images/example01.png?raw=true "Title")
+
 ## WIP
 - [x] basic navigation
 - [ ] websocket/API-REST send/request communication
@@ -56,12 +60,12 @@ develop something that looks like this:
   - [ ] works in webos
 - [ ] Design interface
   - [ ] Sections: Movies | TV Shows | Settings
-  - [ ] Horizontal List - Categories (Recently added, in progress, genres...)
-  - [ ] Vertical List
+  - [X] Horizontal List - Categories (Recently added, in progress, genres...)
+  - [X] Vertical List
   - [ ] Movies | TV Shows details
-  - [ ] Background image
+  - [X] Background image
   - [ ] Create a Video Player
-- [ ] Test key navigation
+- [X] Test key navigation 
 - [ ] Publish to LG Store 
 - [ ] Documentation
 
