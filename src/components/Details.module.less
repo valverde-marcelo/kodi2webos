@@ -19,25 +19,25 @@
 
     &__shadow {
       left: 0;
-      background: #221F1F;
-      width: 30%;
+      background: black;
+      width: 40%;
       z-index: 2;
 
       &:before {
         content: '';
         position: absolute;
         z-index: 10;
-        background-image: linear-gradient(to right,#221F1F,transparent); // gradiente da esquerda para direita
+        background-image: linear-gradient(to right,black,transparent); // gradiente da esquerda para direita
         top: 0;
         bottom: 0;
         left: 100%;
-        width: 275px;
+        width: 40%;
       }
     }
 
     &__image {
       right: 0;
-      width: 70%;
+      width: 60%;
       height: 100%;
       background-position: center 10%;
       background-size: cover;
@@ -50,7 +50,7 @@
     right: 0;
     height: 100%;
     z-index: 3;
-    background-image: linear-gradient(to top,#221F1F,transparent); //gradiente de baixo para cima
+    background-image: linear-gradient(to top, black,transparent); //gradiente de baixo para cima
 
     &__container {
       padding: 30px 70px;
@@ -60,7 +60,7 @@
 
   &__title {
     font-size: 45px;
-    color: #F5F5F1;
+    color: #999;
     font-weight: 700;
   }
 

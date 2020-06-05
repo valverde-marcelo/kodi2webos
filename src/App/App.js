@@ -55,6 +55,7 @@ const App = kind({
 			}
 		},
 
+		
 
 		//TODO: fix JSX props should not use arrow functions react/jsx-no-bind
 		/*
@@ -124,7 +125,7 @@ const App = kind({
 
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
-				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} >
+				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem}>
 					<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} next="third" onClick={_onThirdPanel}>
 						<Route path="third" component={PlayerPanel} sectionID={sectionID} itemID={itemID} next="first" onClick={_onFirstPanel} />
 					</Route>

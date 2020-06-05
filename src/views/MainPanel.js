@@ -17,7 +17,7 @@ const MainPanel = kind({
 		sectionID: PropTypes.number,
 		itemId: PropTypes.string,
 		onSelectItem: PropTypes.func,
-		onChangeSection: PropTypes.func
+		onChangeSection: PropTypes.func,
 	},
 
 	defaultProps: {
@@ -43,7 +43,7 @@ const MainPanel = kind({
 							<Nav onChangeSection={onChangeSection} defaultSelected={sectionID} />
 						</Column>
 						<Cell className={css.content}>
-							<Body sectionID={sectionID} selectedItemID={itemID} onSelect={onSelectItem} />
+							<Body sectionID={sectionID} selectedItemID={itemID} onSelectItem={onSelectItem}/>
 						</Cell>
 					</Row>
 			</Panel>

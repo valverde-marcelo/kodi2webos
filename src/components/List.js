@@ -13,17 +13,18 @@ const List = kind({
 
     propTypes: {
         //TODO: incluir titulo e descrição da lista, horizontal ou vertical
-        id: PropTypes.string,
+        listID: PropTypes.string,
         title: PropTypes.string,
         items: PropTypes.array,
         sectionID: PropTypes.number,
         selectedItemID: PropTypes.string,
         theme: PropTypes.string,
-        onSelect: PropTypes.func,
+        onSelectItem: PropTypes.func,
+        onFocusItem: PropTypes.func,
     },
 
 
-    render: ({ id, items, theme, sectionID, title, selectedItemID, onSelect }) => {
+    render: ({ listID, items, theme, sectionID, title, selectedItemID, onSelectItem, onFocusItem }) => {
 
         console.log("List - entrou no render");
         //console.log(rest);
@@ -37,11 +38,11 @@ const List = kind({
         return (
             <Column className={css.list}>
                 <Cell shrink>{title}</Cell>
-                <Scroller id={id} direction="horizontal" horizontalScrollbar="hidden">
+                <Scroller id={listID} direction="horizontal" horizontalScrollbar="hidden">
                     <Repeater
                         childComponent={ImageItem}
                         indexProp="itemID"
-                        itemProps={{ theme, sectionID, selectedItemID, onSelect }}
+                        itemProps={{ listID, theme, sectionID, selectedItemID, onSelectItem, onFocusItem }}
                         component={Row} //enfilera os Itens em linha
                     >
                         {items}

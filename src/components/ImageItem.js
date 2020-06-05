@@ -11,9 +11,11 @@ const ImageItem = kind({
 
     propTypes: {
         selectedItemID: PropTypes.string, //utilizada como índice
+        listID: PropTypes.string,
         theme: PropTypes.string,
         sectionID: PropTypes.number,
-        onSelect: PropTypes.func,
+        onSelectItem: PropTypes.func,
+        onFocusItem: PropTypes.func,
     },
 
     defaultProps: {
@@ -52,13 +54,15 @@ const ImageItem = kind({
         }
     },
 
-    render: ({ selectedItemID, sItemID, sectionID, url, text, onSelect, selected }) => {
+    render: ({ listID, selectedItemID, sItemID, sectionID, url, text, onSelectItem, selected, onFocusItem }) => {
 
         console.log(`Item ${sItemID}, sectionID: ${sectionID}, selectedItemID=${selectedItemID}, selected=${selected} - entrou no render`);
         //console.log(rest);
 
         return (
-            <Item className={css.item} onClick={() => (onSelect({ sectionID: sectionID, itemID: sItemID }))}>
+            <Item className={css.item} 
+                onFocus={()=>(onFocusItem({ itemID: sItemID }))} 
+                onClick={() => (onSelectItem({ sectionID: sectionID, itemID: sItemID }))}>
                 <Image className={css.image} src={url} sizing="fill"/>
             </Item>
         );
