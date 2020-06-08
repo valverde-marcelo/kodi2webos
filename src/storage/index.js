@@ -1,7 +1,9 @@
+/* global localStorage */
+
 import localforage from 'localforage';
 
 const asyncStorage = localforage.createInstance({
-  name: 'Kodi2WebOS'
+  name: 'kodi2webosAssync'
 });
 
 function set(key, value) {

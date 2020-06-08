@@ -1,3 +1,5 @@
+/* global localStorage */
+
 import Button from '@enact/moonstone/Button';
 import { Header, Panel } from '@enact/moonstone/Panels';
 import kind from '@enact/core/kind';
@@ -5,11 +7,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import storage from '../storage';
-import debug from '../utis/debug';
+import debug from '../utils/debug';
+const logger = debug('components:settings');
 
 import Scroller from '@enact/ui/Scroller/Scroller';
 
-const logger = debug('components:settings');
 
 const SettingsPanel = kind({
     name: 'SettingsPanel',
@@ -32,7 +34,8 @@ const SettingsPanel = kind({
                     });
                     */
 
-                   logger('Local storage has been cleared', err);
+                   logger('Local storage has been cleared');
+                   console.log('clear storage');
                 })
                 .catch(err => {
                     /*
@@ -48,9 +51,9 @@ const SettingsPanel = kind({
         },
     },
 
-    render: ({ sectionID, itemID, onClick, text, ...rest }) => {
-        //console.log(`SettingsPanel - entrou no render`);
-        logger("SettingsPanel - entrou no render")
+    render: ({ sectionID, itemID, onClick, text, _clearStorage, ...rest }) => {
+        console.log(`SettingsPanel - entrou no render`);
+        //logger("SettingsPanel - entrou no render")
         return (
             <Panel {...rest}>
                 <Header type="compact" title={`Settings Panel`} />
