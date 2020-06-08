@@ -12,11 +12,12 @@ import DetailsPanel from '../views/DetailsPanel';
 import PlayerPanel from '../views/PlayerPanel';
 import SeasonsPanel from '../views/SeasonsPanel';
 import EpisodesPanel from '../views/EpisodesPanel';
+import SettingsPanel from '../views/SettingsPanel';
 
 import { GetMovies } from '../api/actions.js';
 import css from './App.module.less';
 
-GetMovies();
+//GetMovies();
 
 //Routable Decorator
 const RoutablePanels = Routable({ navigate: 'onBack' }, Panels);
@@ -116,16 +117,20 @@ const App = kind({
 		_onSeventhPanel: (ev, { onNavigate, itemID, sectionID }) => {
 			return onNavigate({ path: '/first/fourth/fifth/sixth/seventh', sectionID, itemID })
 		},
+
+		_onSettingsPanel: (ev, { onNavigate, itemID, sectionID }) => {
+			return onNavigate({ path: '/settings', sectionID, itemID })
+		},
 	},
 
-	render: ({ _onChangeSection, _onSelectItem, _onFirstPanel, _onThirdPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onBack, path, itemID, sectionID, ...rest }) => {
+	render: ({ _onChangeSection, _onSelectItem, _onFirstPanel, _onThirdPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onSettingsPanel, _onBack, path, itemID, sectionID, ...rest }) => {
 		console.log(`App - entrou no render: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 		delete rest.onNavigate;
 		delete rest.onChangeSection;
 
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
-				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem}>
+				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
 					<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} next="third" onClick={_onThirdPanel}>
 						<Route path="third" component={PlayerPanel} sectionID={sectionID} itemID={itemID} next="first" onClick={_onFirstPanel} />
 					</Route>
@@ -135,9 +140,9 @@ const App = kind({
 								<Route path="seventh" component={PlayerPanel} sectionID={sectionID} itemID={itemID} next="first" onClick={_onFirstPanel} />
 							</Route>
 						</Route>
-					</Route>
+					</Route>	
 				</Route>
-				<Route path="admin" component={"a"} />
+				<Route path="settings" component={SettingsPanel} sectionID={sectionID} itemID={itemID} next="first" onClick={_onFirstPanel} />
 				<Route path="help" component={"b"} />
 			</RoutablePanels>
 		);

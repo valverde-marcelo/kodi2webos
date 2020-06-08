@@ -61,7 +61,7 @@ const ImageItem = kind({
 
         return (
             <Item className={css.item} 
-                onFocus={()=>(onFocusItem({ itemID: sItemID }))} 
+                onFocus={()=>(onFocusItem({ sectionID: sectionID, listID: listID, itemID: sItemID }))} 
                 onClick={() => (onSelectItem({ sectionID: sectionID, itemID: sItemID }))}>
                 <Image className={css.image} src={url} sizing="fill"/>
             </Item>

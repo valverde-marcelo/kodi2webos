@@ -42,7 +42,12 @@ class Body extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { item: item };
+		this.state = {
+			itemImageBG: item.imageBg,
+			itemTitle: item.title,
+			itemDescription: item.description
+		};
+
 		console.log("Body - entrou construtor");
 		//console.log(this.props);
 		//console.log(this.state.item.description);
@@ -61,27 +66,26 @@ class Body extends React.Component {
 		}
 	}
 
-	handleOnFocusItem = (ev, args) => {
+	handleOnFocusItem = ({ sectionID, listID, itemID }) => {
 		console.log("Body - chamou o handleOnFocusItem: ");
-		console.log(ev);
-		console.log(args);
-
-		//this.setState({ section: section });
+		this.setState({ itemTitle: `${sectionID}, ${listID}, ${itemID}` });
 	}
 
 	render() {
 		console.log("Body - entrou render()");
 		//clona o objeto
-		const {sectionID, selectedItemID, onSelectItem, ...rest} = Object.assign({}, this.props);
+		const { sectionID, selectedItemID, onSelectItem, ...rest } = Object.assign({}, this.props);
 		console.log(this.props);
-		console.log(rest);
+		console.log(this.state);
 
 		const theme = this._theme();
+
+		const itemDetails = { imageBg: this.state.itemImageBG, title: this.state.itemTitle, description: this.state.itemDescription };
 
 		return (
 			<Column className={css.body} style={{}}>
 				<Cell className={css.containerDetails}>
-					<Details item={this.state.item} />
+					<Details item={itemDetails} />
 				</Cell>
 				<Cell className={css.containerVerticalScrooller}>
 					<Scroller direction="vertical" verticalScrollbar="hidden">
