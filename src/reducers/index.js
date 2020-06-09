@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux';
+import debug from '../utils/debug';
+
+const logger = debug('reducers:index');
 
 const init = {
-	path: '/first',
+	path: '/loading',
 	sectionID: 0,
 	itemID: '#000000'
 };
 
 function path(state = init, action) {
-	console.log('executou reducer');
+	logger('executou reducer');
 	//console.log(state);
 	//console.log(action);
 	switch (action.type) {

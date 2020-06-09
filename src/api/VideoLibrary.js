@@ -43,4 +43,6 @@ const getMovies = (start, end) => {
     return message;
 };
 
-export { getMovies };
+export default { 
+    getMovies 
+};

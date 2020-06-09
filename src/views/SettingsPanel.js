@@ -1,17 +1,25 @@
-/* global localStorage */
 
-import Button from '@enact/moonstone/Button';
-import { Header, Panel } from '@enact/moonstone/Panels';
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import storage from '../storage';
-import debug from '../utils/debug';
-const logger = debug('components:settings');
-
+import Button from '@enact/moonstone/Button';
+import { Header, Panel } from '@enact/moonstone/Panels';
 import Scroller from '@enact/ui/Scroller/Scroller';
 
+import VideoPlayer, { MediaControls } from '@enact/moonstone/VideoPlayer';
+import IconButton from '@enact/moonstone/IconButton';
+
+import { generate as uuid } from 'shortid'
+
+import storage from '../utils/storage';
+import mock from '../utils/mock';
+import debug from '../utils/debug';
+import utils from '../utils/utils';
+
+
+const logger = debug('views:settings');
+
+const id = uuid();
 
 const SettingsPanel = kind({
     name: 'SettingsPanel',
@@ -26,43 +34,70 @@ const SettingsPanel = kind({
         _clearStorage: () => {
             storage.clear()
                 .then(() => {
-                    /**
-                    addNotification({
-                        title: 'Local Storage',
-                        message: 'Local storage has been cleared.',
-                        level: 'info'
-                    });
-                    */
-
-                   logger('Local storage has been cleared');
-                   console.log('clear storage');
+                    logger('Local storage has been cleared');
                 })
                 .catch(err => {
-                    /*
-                    addNotification({
-                        title: 'Local Storage',
-                        message: 'Failed to clear local storage.',
-                        level: 'error'
-                    });
-                    */
-
                     logger('Failed to clear storage', err);
                 });
+
+            //storage.clearSync();
         },
+
+        _refreshData: () => {
+            logger('executou _refreshData');
+
+            storage.setSync("movies", mock.getMovies(id));
+
+            let movies = JSON.parse(storage.getSync("movies"));
+            logger(movies);
+
+
+            if (utils.isObject(movies)) {
+                logger("é um objeto");
+                if (movies.result && movies.result.movies && Array.isArray(movies.result.movies)) {
+                    logger("movies existe e é um array");
+                    movies.result.movies.forEach(utils.imageFixURL);
+                    logger(movies.result.movies);
+                }
+            }
+            //storage.setSync("tv-shows", mock.getTVshows(id));
+            //logger(storage.getSync("tv-shows"));
+            //console.log(JSON.parse(storage.getSync("tv-shows")));
+
+            return "";
+        }
     },
 
-    render: ({ sectionID, itemID, onClick, text, _clearStorage, ...rest }) => {
-        console.log(`SettingsPanel - entrou no render`);
-        //logger("SettingsPanel - entrou no render")
+    defaultProps: {
+        src: "http://192.168.0.4:8080/vfs/smb%3a%2f%2fLACIE-CLOUDBOX%2fFamily%2fVideos%2fS%c3%a9ries%2fMr.%20Robot%2fMr.%20Robot%201%c2%aa%20Temporada%202015%2fS01E02%20-%20uns%20e%20zer0s.mpeg.mkv",
+
+        bg: "http://192.168.0.4:8080/image/image%3A%2F%2Fhttp%253a%252f%252fimage.tmdb.org%252ft%252fp%252foriginal%252fmvUvfgoN5U9U3riyqRXHiswtDGo.jpg%2F",
+    },
+
+
+    render: ({ src, bg, sectionID, itemID, onClick, text, _clearStorage, _refreshData, ...rest }) => {
+        logger("entrou no render");
         return (
             <Panel {...rest}>
                 <Header type="compact" title={`Settings Panel`} />
                 <div>
                     <Scroller>
                         <Button onClick={onClick}>Go to Home</Button>
+                        <Button onClick={_refreshData}>Refresh data</Button>
                         <Button onClick={_clearStorage}>Clear local storage</Button>
                     </Scroller>
 
+                    <VideoPlayer title="Hilarious Cat Video" poster={bg}>
+                        <source src={src} type="video/mp4" />
+                        <infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
+                        <MediaControls>
+                            <leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
+                            <rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
+
+                            <Button backgroundOpacity="translucent">Add To Favorites</Button>
+                            <IconButton backgroundOpacity="translucent">search</IconButton>
+                        </MediaControls>
+                    </VideoPlayer>
                 </div>
             </Panel>
         );

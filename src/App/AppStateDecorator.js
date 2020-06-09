@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-
 import { navigate, changeSection } from '../actions';
+import debug from '../utils/debug';
+
+const logger = debug('App:AppStateDecorator');
 
 /*
 * sintaxe original:
@@ -10,14 +12,13 @@ const mapStateToProps = ({path}) => ({
 */
 
 const mapStateToProps = (state) => {
-	console.log("executou o mapStateToProps");
-	//console.log(state);
+	logger("executou mapStateToProps");
 	const { path, sectionID, itemID } = state.path;
 	return { path, sectionID, itemID };
 };
 
 const mapDispatchToProps = (dispatch) => {
-	console.log("executou o mapDispatchToProps");
+	logger("executou o mapDispatchToProps");
 	return {
 		onNavigate: (object) => {
 			//console.log(object);
