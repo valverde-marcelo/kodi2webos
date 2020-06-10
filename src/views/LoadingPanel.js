@@ -1,3 +1,15 @@
+/*
+ * File: LoadingPanel.js
+ * Project: kodi2webos
+ * File Created: Tuesday, 9th June 2020 5:46:57 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:23:29 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import Button from '@enact/moonstone/Button';
 import { Header, Panel } from '@enact/moonstone/Panels';
 import kind from '@enact/core/kind';
@@ -6,7 +18,7 @@ import React from 'react';
 import Scroller from '@enact/ui/Scroller/Scroller';
 
 //import api from '../api/';
-import api from '../utils/mock';
+import api from '../api/mock';
 import debug from '../utils/debug';
 
 const logger = debug('views:loading');

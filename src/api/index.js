@@ -1,3 +1,15 @@
+/*
+ * File: index.js
+ * Project: kodi2webos
+ * File Created: Tuesday, 19th May 2020 6:19:54 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:29:44 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import axios from "axios";
 import { endpoint } from "./config";
 import videoLibrary from "./VideoLibrary";

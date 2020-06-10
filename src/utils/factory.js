@@ -1,3 +1,15 @@
+/*
+ * File: factory.js
+ * Project: kodi2webos
+ * File Created: Sunday, 3rd May 2020 1:40:01 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:25:06 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 export const createImageItens = (label,size) => {
 	let itens = [];
 	let caption, subCaption, color;

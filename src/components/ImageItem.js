@@ -1,3 +1,15 @@
+/*
+ * File: ImageItem.js
+ * Project: kodi2webos
+ * File Created: Tuesday, 2nd June 2020 4:53:38 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:27:04 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import kind from '@enact/core/kind';
 import Image from '@enact/moonstone/Image';
 import Item from '@enact/moonstone/Item';

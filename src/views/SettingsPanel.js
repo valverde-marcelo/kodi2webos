@@ -1,3 +1,14 @@
+/*
+ * File: SettingsPanel.js
+ * Project: kodi2webos
+ * File Created: Sunday, 7th June 2020 9:32:04 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:24:28 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
 
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';

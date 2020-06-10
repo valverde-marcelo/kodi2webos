@@ -10,7 +10,6 @@
  * Copyright 2020 VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-
 import { generate as uuid } from "shortid";
 
 

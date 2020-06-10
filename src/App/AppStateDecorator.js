@@ -1,3 +1,15 @@
+/*
+ * File: AppStateDecorator.js
+ * Project: App
+ * File Created: Saturday, 2nd May 2020 10:08:34 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:28:49 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import { connect } from 'react-redux';
 import { navigate, changeSection } from '../actions';
 import debug from '../utils/debug';

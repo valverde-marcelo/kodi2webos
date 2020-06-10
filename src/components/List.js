@@ -1,3 +1,15 @@
+/*
+ * File: List.js
+ * Project: kodi2webos
+ * File Created: Monday, 11th May 2020 3:54:34 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:27:34 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';

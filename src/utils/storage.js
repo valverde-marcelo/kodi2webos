@@ -1,5 +1,17 @@
 /* global localStorage */
 
+/*
+ * File: storage.js
+ * Project: kodi2webos
+ * File Created: Sunday, 7th June 2020 9:20:52 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:25:19 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import localforage from 'localforage';
 
 const asyncStorage = localforage.createInstance({

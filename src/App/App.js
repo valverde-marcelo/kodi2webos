@@ -1,3 +1,15 @@
+/*
+ * File: App.js
+ * Project: App
+ * File Created: Saturday, 2nd May 2020 10:08:34 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:28:31 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import kind from '@enact/core/kind';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import { Panels, Routable, Route } from '@enact/moonstone/Panels';

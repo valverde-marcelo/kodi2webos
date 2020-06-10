@@ -1,3 +1,15 @@
+/*
+ * File: Item.js
+ * Project: kodi2webos
+ * File Created: Monday, 11th May 2020 2:28:25 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:27:19 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
 import kind from '@enact/core/kind';
 import GridListImageItem from '@enact/moonstone/GridListImageItem';
 import PropTypes from 'prop-types';

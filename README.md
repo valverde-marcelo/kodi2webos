@@ -1,3 +1,5 @@
+Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
+
 # kodi2webos ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MX8LMBWFQY734&item_name=Donations+to+fund+application+development.&currency_code=USD&source=url)
 A Kodi client for LG Smart TVs with webOS - using EnactJS, Moonstone
 
