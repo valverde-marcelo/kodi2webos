@@ -1,3 +1,16 @@
+/*
+ * File: mock.js
+ * Project: kodi2webos
+ * File Created: Monday, 8th June 2020 7:13:58 pm
+ * Author: valverde82 (valverde.marcelo@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 10th June 2020 3:17:16 pm
+ * Modified By: valverde82 (valverde.marcelo@gmail.com>)
+ * -----
+ * Copyright 2020 VALVERDE, Marcelo Richard. All Rigths Reserved.
+ */
+
+
 import { generate as uuid } from "shortid";
 
 

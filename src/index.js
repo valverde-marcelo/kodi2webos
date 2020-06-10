@@ -1,3 +1,7 @@
+/**
+ * Copyright 2020 © Marcelo Richard Valverde. All Rigths Reserved.
+ */
+
 import React from 'react';
 import {render} from 'react-dom';
 

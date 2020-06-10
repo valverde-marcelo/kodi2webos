@@ -1,0 +1,1 @@
+Copyright 2020 VALVERDE, Marcelo Richard. All Rigths Reserved.
