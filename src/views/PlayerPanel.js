@@ -10,46 +10,76 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
+//TODO: ver exemplo do pattern-video-player (painel sobreposto, opções, altera layout conforme posição do video...)
+
 import Button from '@enact/moonstone/Button';
 import { Header, Panel } from '@enact/moonstone/Panels';
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { Column, Row, Cell } from '@enact/ui/Layout';
+import React, { useState, useEffect } from 'react';;
+import VideoPlayer, { MediaControls } from '@enact/moonstone/VideoPlayer';
+import IconButton from '@enact/moonstone/IconButton';
 
-import Scroller from '@enact/ui/Scroller/Scroller';
+import api from '../api/';
 
-const PlayerPanel = kind({
-	name: 'PlayerPanel',
+import debug from '../utils/debug';
 
-	propTypes: {
-		sectionID: PropTypes.number,
-		itemID: PropTypes.string,
-		onClick: PropTypes.func,
-	},
+const logger = debug('views:plauerpanel');
 
-	computed: {
-		text: ({ sectionID }) => {
-			if (sectionID === 0) {
-				return "Movie";
-			} else if (sectionID === 1) {
-				return "TV Show";
-			}
+
+//TODO: ao sair do video (onBack) deve parar a reprodução, caso constrario fica consumindo espaço em memoria (download em segundo plano)
+
+function PlayerPanel({ itemID, item, onClick, ...rest }) {
+
+	const [source, setSource] = useState("");
+
+	useEffect(() => {
+		
+		const fetchData = async () => {
+			setSource("");
+			const path = await api.prepareDownload(item.file);
+			setSource(path);
 		}
-	},
 
-	render: ({ sectionID, itemID, onClick, text, ...rest }) => {
-		console.log(`PlayerPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
-		return (
-			<Panel {...rest}>
-				<Header type="compact" title={`Player of ${text}: ${itemID}`} />
-				<div>
-					<Scroller>
-						<Button onClick={onClick}>Go to Home</Button>
-					</Scroller>
-				</div>
-			</Panel>
-		);
-	}
-});
+		fetchData();
+
+	}, []);
+
+
+	return (
+		<Panel {...rest}>
+				<VideoPlayer title={item.title} poster={item.art.fanart}>
+					<source src={source} type="video/mp4" />
+					<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
+					<MediaControls>
+						<leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
+						<rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
+
+						<Button backgroundOpacity="translucent">Add To Favorites</Button>
+						<IconButton backgroundOpacity="translucent">search</IconButton>
+					</MediaControls>
+				</VideoPlayer>
+		</Panel>
+	);
+
+}
+/*
+<Panel {...rest}>
+			<Header type="compact" title={`Player of: ${itemID}`} />
+			<Column>
+				<VideoPlayer title={item.title} poster={item.art.fanart}>
+					<source src={source} type="video/mp4" />
+					<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
+					<MediaControls>
+						<leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
+						<rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
+
+						<Button backgroundOpacity="translucent">Add To Favorites</Button>
+						<IconButton backgroundOpacity="translucent">search</IconButton>
+					</MediaControls>
+				</VideoPlayer>
+				<Button onClick={onClick}>Go to Home</Button>
+			</Column>
+		</Panel>
+*/
 
 export default PlayerPanel;

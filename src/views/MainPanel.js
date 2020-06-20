@@ -16,6 +16,7 @@ import React from 'react';
 import { Header, Panel } from '@enact/moonstone/Panels';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import { IconButtonDecorator } from '@enact/moonstone/IconButton';
+import IconButton from '@enact/moonstone/IconButton';
 import SettingsIconBase from '@material-ui/icons/Settings';
 
 import Nav from '../components/Nav';
@@ -31,39 +32,28 @@ const MainPanel = kind({
 
 	propTypes: {
 		sectionID: PropTypes.number,
-		itemId: PropTypes.string,
+		itemID: PropTypes.string,
+		item: PropTypes.object,
 		onSelectItem: PropTypes.func,
 		onChangeSection: PropTypes.func,
 		onSettingsPanel: PropTypes.func,
 	},
 
-	defaultProps: {
-
-	},
-
-	handlers: {
-
-	},
-
-	computed: {
-
-	},
-
-	render: ({ sectionID, itemID, onChangeSection, onSelectItem, onSettingsPanel, ...rest }) => {
+	render: ({ sectionID, itemID, item, onChangeSection, onSelectItem, onSettingsPanel, ...rest }) => {
 		console.log(`MainPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
 		//delete rest.section;
+		//<Panel {...rest} className="debug layout" style={{}}>
 		return (
-			<Panel {...rest} className="debug layout" style={{}}>
+			<Panel {...rest}>
 				<Row className={css.main}>
 					<Column className={css.sideBar}>
-						<Cell>K</Cell>
 						<Nav onChangeSection={onChangeSection} defaultSelected={sectionID} />
 						<Cell>
-							<SettingsIcon pressed="false" fontSize="default" onClick={onSettingsPanel} />
+							<IconButton backgroundOpacity="translucent" size="small" onClick={onSettingsPanel}>list</IconButton>
 						</Cell>
 					</Column>
 					<Cell className={css.content}>
-						<Body sectionID={sectionID} selectedItemID={itemID} onSelectItem={onSelectItem} />
+						<Body sectionID={sectionID}  onSelectItem={onSelectItem} />
 					</Cell>
 				</Row>
 			</Panel>
@@ -74,8 +64,9 @@ const MainPanel = kind({
 export default MainPanel;
 
 /**
- *
- *
+ * TODO: resolver implementacao do selectedItemID
+ * 
+ *<Body sectionID={sectionID} selectedItemID={itemID} onSelectItem={onSelectItem} />
  *
  *
  */

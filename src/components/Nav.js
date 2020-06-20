@@ -10,53 +10,30 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
 import React from 'react';
 import Group from '@enact/ui/Group';
+import { Column, Cell } from '@enact/ui/Layout';
+import Icons from './Icons';
+import { SECTIONS } from '../utils/global';
+import debug from '../utils/debug';
 
-import Icon from './Icon';
+const logger = debug('components:nav');
 
+function Nav({ onChangeSection, defaultSelected }) {
 
-const sections = ['Movies', 'TV Shows'];
+	logger('entrou no render');
 
+	return (
+			<Group
+				childComponent={Icons}
+				selectedProp="selected"
+				onSelect={onChangeSection}
+				select="radio"
+				itemProps={{ defaultSelected }}
+			>
+				{SECTIONS}
+			</Group>
+	);
 
-const Nav = kind({
-	name: 'Nav',
-
-	propTypes: {
-		onChangeSection: PropTypes.func.isRequired,
-		defaultSelected: PropTypes.number,
-	},
-
-	render: ({ onChangeSection, defaultSelected }) => {
-		console.log('Nav - entrou no render');
-		console.log(defaultSelected);
-
-		return (
-				<Group
-					childComponent={Icon}
-					selectedProp="selected"
-					onSelect={onChangeSection}
-					select="radio"
-					itemProps={{ defaultSelected }}
-				>
-					{sections}
-				</Group>
-		);
-	}
-});
-
+}
 export default Nav;
-
-/**
- * <Group
-childComponent={IconButton}
-selectedProp="selected"
-onSelect={onChangeSection}
-select="radio"
-{...rest}
->
-{sections}
-</Group>
- */

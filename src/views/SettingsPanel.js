@@ -10,109 +10,160 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
+
 import React from 'react';
-import Button from '@enact/moonstone/Button';
-import { Header, Panel } from '@enact/moonstone/Panels';
-import Scroller from '@enact/ui/Scroller/Scroller';
-
-import VideoPlayer, { MediaControls } from '@enact/moonstone/VideoPlayer';
-import IconButton from '@enact/moonstone/IconButton';
-
-import { generate as uuid } from 'shortid'
+import LabeledIconButton from '@enact/moonstone/LabeledIconButton';
+import { Panel } from '@enact/moonstone/Panels';
+import Group from '@enact/ui/Group';
+import RadioItem from '@enact/moonstone/RadioItem';
+import Input from '@enact/moonstone/Input';
+import { Layout, Cell } from '@enact/ui/Layout';
+import CheckboxItem from '@enact/moonstone/CheckboxItem';
 
 import storage from '../utils/storage';
-import mock from '../utils/mock';
 import debug from '../utils/debug';
-import utils from '../utils/utils';
-
+import css from './SettingsPanel.module.less';
+import {
+    LOCAL_STORAGE_PREFIX, LOCAL_STORAGE_PREFIX_SERVER, PROTOCOLS,
+    INPUT_PLACEHOLDER_IP, INPUT_PLACEHOLDER_PORT, DEMO_MODE
+} from '../utils/global';
 
 const logger = debug('views:settings');
 
-const id = uuid();
+function server_protocol () {
+    return PROTOCOLS.indexOf(storage.getSync("protocol", LOCAL_STORAGE_PREFIX_SERVER));
+}
 
-const SettingsPanel = kind({
-    name: 'SettingsPanel',
+const server_ip = storage.getSync("ip", LOCAL_STORAGE_PREFIX_SERVER);
 
-    propTypes: {
-        sectionID: PropTypes.number,
-        itemID: PropTypes.string,
-        onClick: PropTypes.func,
-    },
+const server_port = storage.getSync("port", LOCAL_STORAGE_PREFIX_SERVER);
 
-    handlers: {
-        _clearStorage: () => {
-            storage.clear()
-                .then(() => {
-                    logger('Local storage has been cleared');
-                })
-                .catch(err => {
-                    logger('Failed to clear storage', err);
-                });
+// limpa o localStorage a partir de LOCAL_STORAGE_PREFIX
+function _resetApplication ({ onLoadingPanel }) {
+    logger('executou _resetApplication');
+    storage.clearSync(LOCAL_STORAGE_PREFIX);
+    window.location.reload()
+}
 
-            //storage.clearSync();
-        },
+// limpa o localStorage a partir de LOCAL_STORAGE_PREFIX_DATA
+function _refreshData ({ onLoadingPanel }) {
+    logger('executou _refreshData');
+    storage.clearSync();
+    window.location.reload()
+}
 
-        _refreshData: () => {
-            logger('executou _refreshData');
+function _onChangeServerProtocol ({ data }) {
+    //logger(data);
+    storage.setSync("protocol", data, LOCAL_STORAGE_PREFIX_SERVER);
+}
 
-            storage.setSync("movies", mock.getMovies(id));
+function _onChangeServerIp ({ value }) {
+    //logger(value);
+    storage.setSync("ip", value, LOCAL_STORAGE_PREFIX_SERVER);
+}
 
-            let movies = JSON.parse(storage.getSync("movies"));
-            logger(movies);
+function _onChangeServerPort ({ value }) {
+    //logger(value);
+    storage.setSync("port", value, LOCAL_STORAGE_PREFIX_SERVER);
+}
 
+function RadioGroupProtocols() {
 
-            if (utils.isObject(movies)) {
-                logger("é um objeto");
-                if (movies.result && movies.result.movies && Array.isArray(movies.result.movies)) {
-                    logger("movies existe e é um array");
-                    movies.result.movies.forEach(utils.imageFixURL);
-                    logger(movies.result.movies);
-                }
-            }
-            //storage.setSync("tv-shows", mock.getTVshows(id));
-            //logger(storage.getSync("tv-shows"));
-            //console.log(JSON.parse(storage.getSync("tv-shows")));
+    return (
+        <Group
+            childComponent={RadioItem}
+            select="radio"
+            selectedProp="selected"
+            defaultSelected={server_protocol()}
+            onSelect={_onChangeServerProtocol}
+        >
+            {PROTOCOLS}
+        </Group>
+    );
+}
 
-            return "";
-        }
-    },
-
-    defaultProps: {
-        src: "http://192.168.0.4:8080/vfs/smb%3a%2f%2fLACIE-CLOUDBOX%2fFamily%2fVideos%2fS%c3%a9ries%2fMr.%20Robot%2fMr.%20Robot%201%c2%aa%20Temporada%202015%2fS01E02%20-%20uns%20e%20zer0s.mpeg.mkv",
-
-        bg: "http://192.168.0.4:8080/image/image%3A%2F%2Fhttp%253a%252f%252fimage.tmdb.org%252ft%252fp%252foriginal%252fmvUvfgoN5U9U3riyqRXHiswtDGo.jpg%2F",
-    },
-
-
-    render: ({ src, bg, sectionID, itemID, onClick, text, _clearStorage, _refreshData, ...rest }) => {
-        logger("entrou no render");
-        return (
-            <Panel {...rest}>
-                <Header type="compact" title={`Settings Panel`} />
-                <div>
-                    <Scroller>
-                        <Button onClick={onClick}>Go to Home</Button>
-                        <Button onClick={_refreshData}>Refresh data</Button>
-                        <Button onClick={_clearStorage}>Clear local storage</Button>
-                    </Scroller>
-
-                    <VideoPlayer title="Hilarious Cat Video" poster={bg}>
-                        <source src={src} type="video/mp4" />
-                        <infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
-                        <MediaControls>
-                            <leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
-                            <rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
-
-                            <Button backgroundOpacity="translucent">Add To Favorites</Button>
-                            <IconButton backgroundOpacity="translucent">search</IconButton>
-                        </MediaControls>
-                    </VideoPlayer>
-                </div>
-            </Panel>
-        );
+function _onToggle() {
+    if (storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER) === true) {
+        storage.setSync(DEMO_MODE, false, LOCAL_STORAGE_PREFIX_SERVER);
+    } else {
+        storage.setSync(DEMO_MODE, true, LOCAL_STORAGE_PREFIX_SERVER);
     }
-});
+}
+
+function ToggleDemoMode() {
+    
+    let selected = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER)? true: false;
+
+    return (
+        <CheckboxItem onToggle={_onToggle} defaultSelected={selected}>
+            Demo mode.
+        </CheckboxItem>
+    );
+}
+
+function SettingsPanel({ onClick, onLoadingPanel, sectionID, itemID, ...rest }) {
+
+    logger("entrou settingsPanel");
+
+    //let demo = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER)? true: false;
+
+    return (
+        <Panel {...rest}>
+            <section className={css.container}>
+            <fieldset>
+                    <Layout align="start">
+                        <ToggleDemoMode/>
+                    </Layout>
+                </fieldset>
+                <br />
+                <fieldset>
+                    <Layout align="start">
+                        <Cell component="label" size="40%" className={css.label}>Kodi Server Protocol:</Cell>
+                        <Cell component={RadioGroupProtocols} size="60%" className={css.radioGroup} />
+                    </Layout>
+                    <br />
+                    <Layout align="center">
+                        <Cell component="label" size="40%" className={css.label}>Kodi Server IP:</Cell>
+                        <Cell component={Input} size="60%" className={css.input} placeholder={INPUT_PLACEHOLDER_IP} defaultValue={server_ip} onChange={_onChangeServerIp} />
+                    </Layout>
+                    <br />
+                    <Layout align="center">
+                        <Cell component="label" size="40%" className={css.label}>Kodi Server Port:</Cell>
+                        <Cell component={Input} size="60%" className={css.input} placeholder={INPUT_PLACEHOLDER_PORT} defaultValue={server_port} onChange={_onChangeServerPort} />
+                    </Layout>
+                    <br />
+                </fieldset>
+                <br />
+                <fieldset>
+                    <legend>Actions</legend>
+                    <Layout align="start">
+                        <Cell component={LabeledIconButton} icon="home" className={css.button} labelPosition="after" onClick={() => window.location.reload()}>Go to Home</Cell>
+                        <Cell component={LabeledIconButton} icon="refresh" labelPosition="after" onClick={() => _refreshData({ onLoadingPanel })}>Refresh data</Cell>
+                        <Cell component={LabeledIconButton} icon="warning" labelPosition="after" onClick={() => _resetApplication({ onLoadingPanel })}>Reset application</Cell>
+                    </Layout>
+                </fieldset>
+            </section>
+        </Panel>
+    );
+}
 
 export default SettingsPanel;
+
+/**
+ * 
+ *                 <fieldset>
+                    <legend>Actions</legend>
+                    <Layout align="start">
+                        <Cell component={LabeledIconButton} icon="home" className={css.button} labelPosition="after" onClick={() => window.location.reload()}>Go to Home</Cell>
+                        <Cell component={LabeledIconButton} icon="refresh" labelPosition="after" onClick={() => _refreshData({ onLoadingPanel })}>Refresh data</Cell>
+                        <Cell component={LabeledIconButton} icon="warning" labelPosition="after" onClick={() => _resetApplication({ onLoadingPanel })}>Reset application</Cell>
+                    </Layout>
+                </fieldset>
+                <br />
+                <fieldset>
+                    <Layout align="start">
+                        <ToggleDemoMode defaultSelected={demo} />
+                    </Layout>
+                </fieldset>
+
+ */

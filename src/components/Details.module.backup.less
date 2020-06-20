@@ -10,20 +10,12 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
- @font-face {
-  font-family: NetflixSans;
-  src: local(NetflixSans), url('../../assets/fonts/NetflixSans_W_Rg.woff2');
-}
-
 .content {
   position: relative;
-  height: 43vw;
+  height: 37vw;
   margin-top: 0px;
   z-index: 0;
-  font-family: NetflixSans;
-  
-  border: medium;
-  border-color: tomato;
+  z-index: 0;
 
   &__background,
   &__background__shadow,
@@ -41,7 +33,7 @@
     &__shadow {
       left: 0;
       background: black;
-      width: 50%;
+      width: 40%;
       z-index: 2;
 
       &:before {
@@ -58,7 +50,7 @@
 
     &__image {
       right: 0;
-      width: 50%;
+      width: 60%;
       height: 100%;
       background-position: center 10%;
       background-size: cover;
@@ -71,6 +63,7 @@
     right: 0;
     height: 100%;
     z-index: 3;
+    background-image: linear-gradient(to top, black,transparent); //gradiente de baixo para cima
 
     &__container {
       padding: 30px 70px;
@@ -79,23 +72,15 @@
   }
 
   &__title {
-    font-size: 1rem;
+    font-size: 45px;
     color: #999;
     font-weight: 700;
-    max-width: 50%;
-  }
-
-  &__subtitle {
-    font-size: 1rem;
-    color: #999;
-    font-weight: 700;
-    max-width: 50%;
   }
 
   &__description {
-    font-size: 1rem;
+    font-size: 22px;
     color: #999;
     margin-top: 20px;
-    max-width: 70%;
+    max-width: 500px;
   }
 }

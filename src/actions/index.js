@@ -10,22 +10,27 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-export const navigate = (path, sectionID, itemID) => {
-	console.log(`executou actions NAVIGATE: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
+import debug from '../utils/debug';
+const logger = debug('actions:index');
+
+export const navigate = (path, sectionID, itemID, item) => {
+	logger(`executou actions NAVIGATE: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 	return {
 		type: 'NAVIGATE',
 		path,
 		sectionID,
 		itemID,
+		item,
 	};
 };
 
-export const changeSection = (path, sectionID, itemID) => {
-	console.log(`executou actions CHANGE_SECTION: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
+export const changeSection = (path, sectionID, itemID, item) => {
+	logger(`executou actions CHANGE_SECTION: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 	return {
 		type: 'CHANGE_SECTION',
 		path,
 		sectionID,
 		itemID,
+		item,
 	};
 };

@@ -13,52 +13,53 @@
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Repeater from '@enact/ui/Repeater';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import Scroller from '@enact/moonstone/Scroller';
 import ImageItem from './ImageItem';
+import storage from '../utils/storage';
 import css from './List.module.less';
+import debug from '../utils/debug';
 
+const logger = debug('components:list');
+
+function HorizontalList({items, ...rest}){
+    logger("entrou no HorizontalList");
+    
+    let content = "";
+
+    if(items && items.length > 0) {
+        content = items.map((item) => <ImageItem key={item.movieid} item={item} {...rest}/>);
+    }
+
+    return (<Row>{content}</Row>);
+}
 
 const List = kind({
     name: 'List',
 
     propTypes: {
-        //TODO: incluir titulo e descrição da lista, horizontal ou vertical
+        //TODO: verficar uso do selectedItemID
         listID: PropTypes.string,
         title: PropTypes.string,
-        items: PropTypes.array,
         sectionID: PropTypes.number,
         selectedItemID: PropTypes.string,
-        theme: PropTypes.string,
         onSelectItem: PropTypes.func,
         onFocusItem: PropTypes.func,
     },
 
 
-    render: ({ listID, items, theme, sectionID, title, selectedItemID, onSelectItem, onFocusItem }) => {
+    render: ({ listID, title, ...rest}) => {
 
-        console.log("List - entrou no render");
+        logger("entrou no render");
         //console.log(rest);
 
-        // propriedade indexProp assinala qual a propriedade do componente filho será utilizada como índice
-        // indexProp="index"
-
-        // propriedade itemProps contém o conjunto de props a serem passadas para cada childComponent do Repeater
-        // itemProps={{ onSelect: onSelectItem, theme: "sun" }
+        const items = storage.getSync(listID);
 
         return (
             <Column className={css.list}>
                 <Cell shrink>{title}</Cell>
                 <Scroller id={listID} direction="horizontal" horizontalScrollbar="hidden">
-                    <Repeater
-                        childComponent={ImageItem}
-                        indexProp="itemID"
-                        itemProps={{ listID, theme, sectionID, selectedItemID, onSelectItem, onFocusItem }}
-                        component={Row} //enfilera os Itens em linha
-                    >
-                        {items}
-                    </Repeater>
+                    <HorizontalList {...rest} listID={listID} items={items}/>
                 </Scroller>
             </Column>
         );

@@ -10,73 +10,141 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import Button from '@enact/moonstone/Button';
-import { Header, Panel } from '@enact/moonstone/Panels';
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
-import React from 'react';
-import Scroller from '@enact/ui/Scroller/Scroller';
-
-//import api from '../api/';
-import api from '../api/mock';
+import React, { useState, useEffect } from 'react';
+import { Panel } from '@enact/moonstone/Panels';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import css from './LoadingPanel.module.less';
+import storage from '../utils/storage';
+import utils from '../utils/utils';
 import debug from '../utils/debug';
+import api from '../api';
+
+import {
+	DEMO_MODE,
+	LOCAL_STORAGE_PREFIX_SERVER,
+	SERVER_DEFAULT_PROTOCOL,
+	SERVER_DEFAULT_PORT,
+	SERVER_DEFAULT_IP,
+	STEP,
+	MOVIES_LIST_IN_PROGRESS,
+	MOVIES_LIST_LAST_ADDED,
+	MOVIES_LIST_LAST_VIEWED,
+	PROTOCOL_HTTP
+} from '../utils/global';
+
 
 const logger = debug('views:loading');
 
 /**
- * Verificar se há servidor configurado
- * Verificar conexao com o servidor
- * LoadingPanel -> SettingsPanel -> LoadingPanel
+ * 1) Verificar se é o primeiro acesso -> redireciona para SettingsPanel
+ * 2) Incrementa número de acesso
+ * 3) Verificar se há servidor configurado -> redireciona para SettingsPanel
+ * 4) Verificar conexao com o servidor -> redireciona para SettingsPanel
+ * 5) Consumir a API e persistir os dados no localStorage
+ * 6) Redirecionar para painel principal
  */
 
+const access = () => {
+	// incrementa contador de acessos
+	logger("incrementou acesso");
+	const n = storage.getSync("access", LOCAL_STORAGE_PREFIX_SERVER);
+	storage.setSync("access", n + 1, LOCAL_STORAGE_PREFIX_SERVER);
+}
 
-/**
- * Consumir a API
- * - a API retorna o response JSON
- * - os dados estão em data.result...
- */
+function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
 
- const movies = api.getMovies(0,10).data.result.movies;
- logger(movies);
+	logger("entrou loadingPanel");
 
- //const tvShows = api.getTVshows(0,10);
- //logger(tvShows);
+	const [isLoading, setIsLoading] = useState(false);
 
- /**
-  * Persistir os dados no localStorage
-  */
+	useEffect(() => {
+		const fetchData = async () => {
+			setIsLoading(true);
 
+			await utils.sleep(STEP);
 
-/**
- * Sair do LoadingPanel -> MainPanel
- */
+			// verificar se é primeiro acesso
+			logger("verificar primeiro acesso");
+			if (storage.getSync("access", LOCAL_STORAGE_PREFIX_SERVER) === null) {
+				logger("identificou primeiro acesso -> redireciona para SettingsPanel");
 
- //TODO: transformar em componente statefull para utilizar as chamadas assincronas
+				//setar valores padrão
+				storage.setSync("protocol", PROTOCOL_HTTP, LOCAL_STORAGE_PREFIX_SERVER);
+				storage.setSync(DEMO_MODE, true, LOCAL_STORAGE_PREFIX_SERVER);
 
-const LoadingPanel = kind({
-	name: 'LoadingPanel',
+				setIsLoading(false);
+				access(); //incrementa contador de acesso
+				onSettingsPanel(); //redireciona
+			} 
+			
+			else {
+				logger("NÂO é primeiro acesso -> continuar verificações");
+				
+				await utils.sleep(STEP);
 
-	propTypes: {
-		onClick: PropTypes.func,
-	},
+				access(); //incrementa contador de acesso
 
-	computed: {
+				//verificar configuração do servidor
+				logger("verificando configuração do servidor...");
+				const noConfig = api.noConfig();
 
-	},
+				if (noConfig) {
+					logger("servidor não configurado -> redireciona para SettingsPanel");
+					setIsLoading(false);
+					onSettingsPanel();
+				} else {
 
-	render: ({ onClick, ...rest }) => {
-		logger("entrou no render");
-		return (
-			<Panel {...rest}>
-				<Header type="compact" title={`Loading Panel : `} />
-				<div>
-					<Scroller>
-						<Button onClick={onClick}>Go to Home</Button>
-					</Scroller>
+					await utils.sleep(STEP);
+
+					//verificar conexao com o servidor
+					logger("verificando conexao com o servidor...")
+					const noConnection = await api.noConnection();
+
+					if (noConnection) {
+						logger("não foi possível estabelecer conexão com o servidor. verifique configurações.");
+						setIsLoading(false);
+						onSettingsPanel();
+					} else {
+
+						//consumir API e persistir dados
+						logger("tudo ok! consumir api...")
+						await utils.sleep(STEP);
+
+						const moviesListInProgress = await api.getMoviesInProgress(0, 9);
+						logger(moviesListInProgress);
+						storage.setSync(MOVIES_LIST_IN_PROGRESS, moviesListInProgress);
+
+						const moviesListLastAdded = await api.getMoviesLastAdded(0, 9);
+						logger(moviesListLastAdded);
+						storage.setSync(MOVIES_LIST_LAST_ADDED, moviesListLastAdded);
+
+						const moviesListLastViews = await api.getMoviesLastViewed(0, 9);
+						logger(moviesListLastViews);
+						storage.setSync(MOVIES_LIST_LAST_VIEWED, moviesListLastViews);
+
+						//const tvShows = api.getTVshows(0,10);
+						//logger(tvShows);
+
+						setIsLoading(false);
+						logger("direcionar para onFirstPanel");
+						onFirstPanel();
+					}
+				}
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	return (
+		<Panel {...rest} className={css.panel}>
+			<div className={css.container}>
+				<div className={css.loading}>
+					{isLoading ? (<div><CircularProgress size={100} /></div>) : (<div> </div>)}
 				</div>
-			</Panel>
-		);
-	}
-});
+			</div>
+		</Panel>
+	);
+}
 
 export default LoadingPanel;

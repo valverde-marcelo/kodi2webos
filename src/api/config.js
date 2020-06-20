@@ -10,21 +10,25 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-/**
- *  UTILIZAR MÉTODO HTTP-POST
- */
+import storage from '../utils/storage';
+import {LOCAL_STORAGE_PREFIX_SERVER} from '../utils/global';
+
+const server_ip = storage.getSync("ip", LOCAL_STORAGE_PREFIX_SERVER);
+const server_port = storage.getSync("port", LOCAL_STORAGE_PREFIX_SERVER);
+const server_protocol = storage.getSync("protocol", LOCAL_STORAGE_PREFIX_SERVER);
 
 const server = {
-    ip: '192.168.0.4', // 'localhost' OR ipaddres
-    port: 8080, //http=8080, websocket=9090
-    protocol: 'http', //http|ws,
-    static: false,
+    ip: server_ip,              //'192.168.0.4', // 'localhost' OR ipaddres
+    port: server_port,          //8080, //http=8080, websocket=9090
+    protocol: server_protocol,  //'http', //http|ws,
 };
 
-
 const endpoint = `${server.protocol}://${server.ip}:${server.port}/jsonrpc`;
+
+const URL_BASE = `${server.protocol}://${server.ip}:${server.port}`;
 
 export {
     server,
     endpoint,
+    URL_BASE,
 }

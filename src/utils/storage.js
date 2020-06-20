@@ -13,9 +13,12 @@
  */
 
 import localforage from 'localforage';
+import {LOCAL_STORAGE_PREFIX_ASYNC, LOCAL_STORAGE_PREFIX_DATA} from '../utils/global';
+
+//const prefix = "kodi2webos:data:";
 
 const asyncStorage = localforage.createInstance({
-  name: 'kodi2webosAssync',
+  name: LOCAL_STORAGE_PREFIX_ASYNC,
   driver: localforage.LOCALSTORAGE, //define qual drive será utilizado
 });
 
@@ -41,15 +44,18 @@ function clear() {
   return asyncStorage.clear();
 }
 
-function setSync(key, value) {
+function setSync(key, value, prefix = LOCAL_STORAGE_PREFIX_DATA) {
+  key = prefix+key;
   localStorage[key] = JSON.stringify(value);
 }
 
-function setSyncRaw(key, value) {
+function setSyncRaw(key, value, prefix = LOCAL_STORAGE_PREFIX_DATA) {
+  key = prefix+key;
   localStorage[key] = value;
 }
 
-function getSync(key, value) {
+function getSync(key, prefix = LOCAL_STORAGE_PREFIX_DATA) {
+  key = prefix+key;
   if(!(key in localStorage)) {
     return null;
   }
@@ -57,8 +63,12 @@ function getSync(key, value) {
   return JSON.parse(localStorage[key]);
 }
 
-function clearSync() {
-  localStorage.clear();
+function clearSync(prefix = LOCAL_STORAGE_PREFIX_DATA) {
+  for(let key in localStorage) {
+    if(key.startsWith(prefix)){
+      localStorage.removeItem(key);
+    }
+  }
 }
 
 export default {

@@ -23,7 +23,7 @@ const EpisodesPanel = kind({
 
 	propTypes: {
 		sectionId: PropTypes.number,
-		itemID: PropTypes.string,
+		item: PropTypes.object,
 		onClick: PropTypes.func,
 	},
 
@@ -37,11 +37,11 @@ const EpisodesPanel = kind({
 		}
 	},
 
-	render: ({ sectionID, itemID, onClick, text, ...rest }) => {
-		console.log(`EpisodesPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
+	render: ({ sectionID, item, onClick, text, ...rest }) => {
+		console.log(`EpisodesPanel - entrou no render: sectionID=${sectionID}, itemID=${item}`);
 		return (
 			<Panel {...rest}>
-				<Header type="compact" title={`Episodes of ${text}: ${itemID}`} />
+				<Header type="compact" title={`Episodes of ${text}: ${item}`} />
 				<div>
 					<Scroller>
 						<Button onClick={onClick}>Go to Details</Button>

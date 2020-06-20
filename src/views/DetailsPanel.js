@@ -10,47 +10,83 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import Button from '@enact/moonstone/Button';
-import { Header, Panel } from '@enact/moonstone/Panels';
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
 import React from 'react';
+import { Panel } from '@enact/moonstone/Panels';
+import Button from '@enact/moonstone/Button';
+import LabeledIconButton from '@enact/moonstone/LabeledIconButton';
+import IconButton from '@enact/moonstone/IconButton';
+import { Ratings, Director, Writer, Duration, StreamAudioDetails, StreamSubsDetails, StreamVideoDetails } from '../components/Details';
+import css from './DetailsPanel.module.less';
+import debug from '../utils/debug';
 
-import Scroller from '@enact/ui/Scroller/Scroller';
+const logger = debug('views:detailspanel');
 
-const DetailsPanel = kind({
-	name: 'DetailsPanel',
+function PlayResumeButton ({onClick, value}) {
+	let component = null;
+	
+	logger(value);
 
-	propTypes: {
-		sectionID: PropTypes.number,
-		itemID: PropTypes.string,
-		onClick: PropTypes.func,
-	},
-
-	computed: {
-		text: ({sectionID}) => {
-			if (sectionID === 0) {
-				return "Movie";
-			} else if (sectionID === 1) {
-				return "TV Show";
-			}
+	if(value) {
+		if(value.position.toFixed() > 0) {
+			component = <IconButton color="red"  backgroundOpacity="translucent" size="small" onClick={onClick}>resumeplay</IconButton>;
+		} else {
+			component = <IconButton color="red" backgroundOpacity="translucent" size="small" onClick={onClick}>play</IconButton>;
 		}
-	},
-
-	render: ({ sectionID, itemID, onClick, text, ...rest }) => {
-		console.log(`DetailsPanel - entrou no render: sectionID=${sectionID}, itemID=${itemID}`);
-		console.log(rest);
-		return (
-			<Panel {...rest}>
-				<Header type="compact" title={`Details of ${text}: ${itemID}`} />
-				<div>
-					<Scroller>
-						<Button onClick={onClick}>Go to Player</Button>
-					</Scroller>
-				</div>
-			</Panel>
-		);
 	}
-});
+	
+	return (component);
+}
+
+function DetailsPanel({ onClick, item, ...rest }) {
+	logger('entrou Details panel');
+
+	return (
+		<Panel>
+			<div className={css.content}>
+				<div className={css.content__background}>
+					<div className={css.content__background__shadow} />
+					<div className={css.content__background__image} style={{ 'backgroundImage': `url(${item.art.fanart})` }} />
+				</div>
+				<div className={css.content__area}>
+					<div className={css.content__area__container}>
+						<div className={css.content__title}>{item.title}</div>
+						<div className={css.content__subtitle}>{item.tagline}</div>
+						<div className={css.content__subtitle}>({item.originaltitle})</div>
+						<div className={css.content__subtitle}>{item.year} - {item.mpaa} - <Duration className={css.content__subtitle} value={item.streamdetails} /></div>
+						<div className={css.content__description}>{item.plot}</div>
+						<div className={css.content__description}>{item.plotoutline}</div>
+						<Director className={css.content__subtitle} value={item.director} />
+						<Writer className={css.content__subtitle} value={item.writer} />
+						<Ratings className={css.content__subtitle} value={item.ratings} />
+						<StreamVideoDetails className={css.content__subtitle} value={item.streamdetails} />
+						<StreamAudioDetails className={css.content__subtitle} value={item.streamdetails} />
+						<StreamSubsDetails className={css.content__subtitle} value={item.streamdetails} />
+						<PlayResumeButton onClick={onClick} value={item.resume}/>
+					</div>
+				</div>
+			</div>
+		</Panel>
+	);
+}
+
 
 export default DetailsPanel;
+
+/*
+<div className={css.content}>
+	<div className={css.content__background}>
+		<div className={css.content__background__shadow} />
+		<div className={css.content__background__image} style={{ 'backgroundImage': `url(${details.fanart})` }} />
+	</div>
+	<div className={css.content__area}>
+		<div className={css.content__area__container}>
+			<div className={css.content__title}>{details.title}</div>
+			<div className={css.content__title}>{details.tagline}</div>
+			<div className={css.content__description}>{details.description}</div>
+		</div>
+	</div>
+</div>
+
+
+
+*/

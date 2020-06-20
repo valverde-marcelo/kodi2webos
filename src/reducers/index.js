@@ -18,7 +18,8 @@ const logger = debug('reducers:index');
 const init = {
 	path: '/loading',
 	sectionID: 0,
-	itemID: '#000000'
+	itemID: "0000",
+	item: null
 };
 
 function path(state = init, action) {
@@ -30,7 +31,8 @@ function path(state = init, action) {
 			return {
 				path: action.path,
 				sectionID: action.sectionID,
-				itemID: action.itemID
+				itemID: action.itemID,
+				item: action.item
 			};
 
 		case 'CHANGE_SECTION':

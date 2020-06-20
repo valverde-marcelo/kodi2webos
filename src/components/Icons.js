@@ -14,18 +14,22 @@ import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { IconButtonDecorator } from '@enact/moonstone/IconButton';
-import {LabeledIconButtonDecorator} from '@enact/moonstone/LabeledIconButton';
-
 import TvIconBase from '@material-ui/icons/Tv';
 import MovieIconBase from '@material-ui/icons/Movie';
 import { Cell } from '@enact/ui/Layout';
 import IconButton from '@enact/moonstone/IconButton';
 
+import css from './Icons.module.less';
+import debug from '../utils/debug';
+const logger = debug('components:icons');
+
+import { SECTION_MOVIES, SECTION_TV_SHOWS, SECTION_COLLECTIONS, SECTION_FAVOURITES } from '../utils/global';
+
 const TvIcon = IconButtonDecorator(TvIconBase);
 const MovieIcon = IconButtonDecorator(MovieIconBase);
 
-const Icon = kind({
-	name: "Icon",
+const Icons = kind({
+	name: "Icons",
 
 	propTypes: {
 		children: PropTypes.string,
@@ -48,21 +52,38 @@ const Icon = kind({
 	},
 
 	render: ({ fontSize, children, onClick, ...rest }) => {
-		console.log(rest);
+		
+		logger (children);
 
 		let component = "";
 
-		if (children === "Movies") {
-			component = <MovieIcon pressed="false" fontSize={fontSize} onClick={onClick}/>;
-		} else if (children === "TV Shows") {
-			component = <TvIcon pressed="false" fontSize={fontSize} onClick={onClick}/>;
+		switch (children) {
+			case SECTION_MOVIES:
+				component = <IconButton color="red" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				break;
+
+			case SECTION_TV_SHOWS:
+				component = <IconButton color="yellow" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				break;
+
+			case SECTION_COLLECTIONS:
+				component = <IconButton color="green" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+
+				break;
+
+			case SECTION_FAVOURITES:
+				component = <IconButton color="blue" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				break;
+
+			default:
+				break;
 		}
 
 		return (<Cell>{component}</Cell>);
 	}
 });
 
-export default Icon;
+export default Icons;
 
 /**
  * <Cell><TvIcon fontSize="small" onClick={onChangeSection}>TV Shows</TvIcon></Cell>
