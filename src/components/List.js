@@ -31,6 +31,8 @@ function HorizontalList({items, ...rest}){
         content = items.map((item) => <ImageItem key={item.movieid} item={item} {...rest}/>);
     }
 
+    logger(content);
+
     return (<Row>{content}</Row>);
 }
 

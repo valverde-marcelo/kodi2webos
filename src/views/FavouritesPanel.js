@@ -11,70 +11,49 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Scroller from '@enact/moonstone/Scroller';
 import { Panel, Header } from '@enact/moonstone/Panels';
 import Button from '@enact/moonstone/Button';
 //import List from './List';
 //import Details from './Details';
-//import css from './Body.module.less';
-//import { Column, Cell } from '@enact/ui/Layout';
-//import image from '../../assets/images/bttf.jpg';
-//import {
-//	LABEL_MOVIES_LIST_IN_PROGRESS, LABEL_MOVIES_LIST_LAST_VIEWED, LABEL_MOVIES_LIST_LAST_ADDED,
-//	MOVIES_LIST_IN_PROGRESS, MOVIES_LIST_LAST_ADDED, MOVIES_LIST_LAST_VIEWED
-//} from '../utils/global';
+import css from './FavouritesPanel.module.less';
+import { Column, Cell, Row } from '@enact/ui/Layout';
+
+import {
+	LABEL_MOVIES_LIST_IN_PROGRESS, LABEL_MOVIES_LIST_LAST_VIEWED, LABEL_MOVIES_LIST_LAST_ADDED,
+	MOVIES_LIST_IN_PROGRESS, MOVIES_LIST_LAST_ADDED, MOVIES_LIST_LAST_VIEWED
+} from '../utils/global';
+
 import debug from '../utils/debug';
+import Item from '@enact/moonstone/Item';
+import storage from '../utils/storage';
+import utils from '../utils/utils';
+import Grid from '../components/Grid';
 
 const logger = debug('views:favourites');
 
-const defaultItem = {
-	art: { fanart: "https://http2.mlstatic.com/headband-masculina-cor-cinza-chumbo-bandana-faixa-esportes-D_NQ_NP_829613-MLB31232046286_062019-F.jpg" },
-	title: 'De volta para o futuro III',
-	tagline: "sasfa",
-	plot: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et euismod ligula. Morbi mattis pretium eros, ut mollis leo tempus eget. Sed in dui ac ipsum feugiat ultricies. Phasellus vestibulum enim quis quam congue, non fringilla orci placerat. Praesent sollicitudin',
+function onFocusItem({ item }){
+	logger(item);
 }
 
-class FavouritesPanel extends React.Component {
-	static propTypes = {
-		sectionID: PropTypes.number,
-	}
+function onSelectItem({ item }){
+	logger(item);
+}
 
-	constructor(props) {
-		super(props);
-        
-        //this.state = { item: defaultItem };
+function FavouritesPanel({ listID, sectionID, ...rest }) {
 
-		console.log("entrou construtor");
-	}
+	//logger(items);
 
-    /*
-    handleOnFocusItem = ({ item }) => {
-		logger("chamou o handleOnFocusItem: ");
-		logger(item)
-		this.setState({ item: item });
-    }
-    */
-
-	render() {
-		logger("entrou render()");
-		//clona o objeto
-		//const { sectionID, ...rest } = Object.assign({}, this.props);
-		//console.log(this.props);
-
-		//const item = this.state.item;
-
-		return (
-            <Panel>
+	return (
+		<Panel {...rest}>
+			<Scroller id={listID} direction="vertical" verticalScrollbar="hidden">
 				<Header type="compact" title={`Favourites`} />
-				<div>
-					<Scroller>
-						<Button>Button</Button>
-					</Scroller>
-				</div>
-			</Panel>
-		);
-	}
+				<Grid listID={MOVIES_LIST_IN_PROGRESS} sectionID={sectionID} onSelectItem={onSelectItem} onFocusItem={onFocusItem}/>
+			</Scroller>
+		</Panel>
+	);
+
 }
 
 export default FavouritesPanel;

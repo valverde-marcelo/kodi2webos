@@ -24,7 +24,7 @@ const logger = debug('components:imageItem');
 
 function ImageItem({ onFocusItem, onSelectItem, sectionID, listID, item, ...rest }) {
 
-    //logger(rest);
+    //logger(item);
 
     let itemID = "";
 

@@ -46,6 +46,8 @@ const RoutablePanels = Routable({ navigate: 'onBack' }, Panels);
  * 1) Main - TV-Shows -> 4) Seasons -> 5) Episodes -> 6) Details -> 7) Player -> 1) Main
  */
 
+ //TODO: colocar loadingPanel como primeiro nivel... todos voltam para ele
+
 const App = kind({
 	name: 'App',
 
@@ -63,7 +65,7 @@ const App = kind({
 			console.log("App - chamou o _onChangeSection: " + section + " - " + sectionID);
 			switch (section) {
 				case SECTION_FAVOURITES:
-					return onNavigate({ path: '/favourites', sectionID });
+					return onNavigate({ path: '/first/favourites', sectionID });
 
 
 				default:
@@ -96,17 +98,17 @@ const App = kind({
 
 		_onLoadingPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			logger("chamou o _onLoadingPanel");
-			return onNavigate({ path: '/loading', sectionID, itemID, item })
+			return onNavigate({ path: '/first/loading', sectionID, itemID, item })
 		},
 
 		_onSettingsPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			logger("chamou _onSettingsPanel")
-			return onNavigate({ path: '/settings', sectionID, itemID, item })
+			return onNavigate({ path: '/first/settings', sectionID, itemID, item })
 		},
 
 		_onFavouritesPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			logger("chamou _onFavouritesPanel")
-			return onNavigate({ path: '/favourites', sectionID, itemID, item })
+			return onNavigate({ path: '/first/favourites', sectionID, itemID, item })
 		},
 
 		_onFirstPanel: (ev, { onNavigate, item, sectionID }) => {
@@ -158,9 +160,6 @@ const App = kind({
 
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
-				<Route path="loading" component={LoadingPanel} next="first" onFirstPanel={_onFirstPanel} onSettingsPanel={_onSettingsPanel} />
-				<Route path="settings" component={SettingsPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} onLoadingPanel={_onLoadingPanel} />
-				<Route path="help" component={"b"} />
 				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} item={item} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
 					<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="third" onClick={_onThirdPanel}>
 						<Route path="third" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
@@ -172,8 +171,11 @@ const App = kind({
 							</Route>
 						</Route>
 					</Route>
+					<Route path="loading" component={LoadingPanel} next="first" onFirstPanel={_onFirstPanel} onSettingsPanel={_onSettingsPanel} />
+					<Route path="settings" component={SettingsPanel} next="first" sectionID={sectionID} itemID={itemID} item={item} onClick={_onFirstPanel} onLoadingPanel={_onLoadingPanel} />
+					<Route path="favourites" component={FavouritesPanel} next="first" sectionID={sectionID} itemID={itemID} item={item}/>
 				</Route>
-				<Route path="favourites" component={FavouritesPanel} sectionID={sectionID} itemID={itemID} item={item}></Route>
+				
 			</RoutablePanels>
 		);
 	}

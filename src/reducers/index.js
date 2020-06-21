@@ -16,7 +16,7 @@ import debug from '../utils/debug';
 const logger = debug('reducers:index');
 
 const init = {
-	path: '/loading',
+	path: '/first/loading',
 	sectionID: 0,
 	itemID: "0000",
 	item: null

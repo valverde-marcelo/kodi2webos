@@ -15,7 +15,7 @@
 import Button from '@enact/moonstone/Button';
 import { Header, Panel } from '@enact/moonstone/Panels';
 import { Column, Row, Cell } from '@enact/ui/Layout';
-import React, { useState, useEffect } from 'react';;
+import React, { useState, useEffect } from 'react';
 import VideoPlayer, { MediaControls } from '@enact/moonstone/VideoPlayer';
 import IconButton from '@enact/moonstone/IconButton';
 
