@@ -14,38 +14,49 @@
 import Image from '@enact/moonstone/Image';
 import Item from '@enact/moonstone/Item';
 import React from 'react';
+import ri from '@enact/ui/resolution';
 import debug from '../utils/debug';
-import utils from '../utils/utils';
 import css from './ImageItem.module.less';
 
 const logger = debug('components:imageItem');
 
 //TODO: implementar overlay para os vistos
 
-function ImageItem({ onFocusItem, onSelectItem, sectionID, listID, item, ...rest }) {
-
-    //logger(item);
-
-    let itemID = "";
-
-    utils.objectFixURL(item);
-
-    //TODO: id de séries pode ter outro nome, atenção!!
-    if(sectionID === 0){
-        itemID = item.movieid.toString();
-    }
+function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
 
     //const url = item.art.poster;
     const url = item.thumbnail;
 
     return (
         <Item className={css.item}
-            onFocus={() => (onFocusItem({ item }))}
-            onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
-            <Image className={css.image} src={url} sizing="fill" />
-        </Item>
+    onFocus={() => (onFocusItem({ item }))}
+    onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
+    <Image className={css.image} src={url} sizing="fill" />
+</Item>
+
     );
 
 }
 
 export default ImageItem;
+
+/*
+
+.item {
+	margin: 5px;
+	padding: 3px;
+	height: 100%;
+	background-color: whitesmoke;
+}
+
+.image{
+	margin: 0 auto;
+}
+
+<Item className={css.item}
+    onFocus={() => (onFocusItem({ item }))}
+    onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
+    <Image className={css.image} src={url} sizing="fill" />
+</Item>
+
+*/

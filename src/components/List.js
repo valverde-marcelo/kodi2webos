@@ -19,6 +19,7 @@ import ImageItem from './ImageItem';
 import storage from '../utils/storage';
 import css from './List.module.less';
 import debug from '../utils/debug';
+import utils from '../utils/utils';
 
 const logger = debug('components:list');
 
@@ -28,10 +29,13 @@ function HorizontalList({items, ...rest}){
     let content = "";
 
     if(items && items.length > 0) {
-        content = items.map((item) => <ImageItem key={item.movieid} item={item} {...rest}/>);
-    }
 
-    logger(content);
+        for (let index = 0; index < items.length; index++) {
+            utils.objectFixURL(items[index]); 
+        }
+
+        content = items.map((item) => <ImageItem key={item.movieid} itemID={item.movieid.toString()} item={item} {...rest}/>);
+    }
 
     return (<Row>{content}</Row>);
 }

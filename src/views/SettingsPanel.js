@@ -39,14 +39,14 @@ const server_ip = storage.getSync("ip", LOCAL_STORAGE_PREFIX_SERVER);
 const server_port = storage.getSync("port", LOCAL_STORAGE_PREFIX_SERVER);
 
 // limpa o localStorage a partir de LOCAL_STORAGE_PREFIX
-function _resetApplication ({ onLoadingPanel }) {
+function _resetApplication () {
     logger('executou _resetApplication');
     storage.clearSync(LOCAL_STORAGE_PREFIX);
     window.location.reload()
 }
 
 // limpa o localStorage a partir de LOCAL_STORAGE_PREFIX_DATA
-function _refreshData ({ onLoadingPanel }) {
+function _refreshData () {
     logger('executou _refreshData');
     storage.clearSync();
     window.location.reload()
@@ -101,7 +101,7 @@ function ToggleDemoMode() {
     );
 }
 
-function SettingsPanel({ onClick, onLoadingPanel, sectionID, itemID, ...rest }) {
+function SettingsPanel({ ...rest }) {
 
     logger("entrou settingsPanel");
 
@@ -138,8 +138,8 @@ function SettingsPanel({ onClick, onLoadingPanel, sectionID, itemID, ...rest }) 
                     <legend>Actions</legend>
                     <Layout align="start">
                         <Cell component={LabeledIconButton} icon="home" className={css.button} labelPosition="after" onClick={() => window.location.reload()}>Go to Home</Cell>
-                        <Cell component={LabeledIconButton} icon="refresh" labelPosition="after" onClick={() => _refreshData({ onLoadingPanel })}>Refresh data</Cell>
-                        <Cell component={LabeledIconButton} icon="warning" labelPosition="after" onClick={() => _resetApplication({ onLoadingPanel })}>Reset application</Cell>
+                        <Cell component={LabeledIconButton} icon="refresh" labelPosition="after" onClick={() => _refreshData()}>Refresh data</Cell>
+                        <Cell component={LabeledIconButton} icon="warning" labelPosition="after" onClick={() => _resetApplication()}>Reset application</Cell>
                     </Layout>
                 </fieldset>
             </section>

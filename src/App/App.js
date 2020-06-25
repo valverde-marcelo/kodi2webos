@@ -46,7 +46,7 @@ const RoutablePanels = Routable({ navigate: 'onBack' }, Panels);
  * 1) Main - TV-Shows -> 4) Seasons -> 5) Episodes -> 6) Details -> 7) Player -> 1) Main
  */
 
- //TODO: colocar loadingPanel como primeiro nivel... todos voltam para ele
+//TODO: colocar loadingPanel como primeiro nivel... todos voltam para ele
 
 const App = kind({
 	name: 'App',
@@ -65,11 +65,11 @@ const App = kind({
 			console.log("App - chamou o _onChangeSection: " + section + " - " + sectionID);
 			switch (section) {
 				case SECTION_FAVOURITES:
-					return onNavigate({ path: '/first/favourites', sectionID });
+					return onNavigate({ path: '/loading/first/favourites', sectionID });
 
 
 				default:
-					return onChangeSection({ path: '/first', sectionID });
+					return onChangeSection({ path: '/loading/first', sectionID });
 			}
 		},
 
@@ -78,9 +78,9 @@ const App = kind({
 		_onSelectItem: ({ sectionID, itemID, item }, { onNavigate }) => {
 			logger("chamou o _onSelectItem: " + itemID + " " + sectionID);
 			if (sectionID === 0) {
-				return onNavigate({ path: '/first/second', sectionID, itemID, item })
+				return onNavigate({ path: '/loading/first/second', sectionID, itemID, item })
 			} else if (sectionID === 1) {
-				return onNavigate({ path: '/first/fourth', sectionID, itemID, item })
+				return onNavigate({ path: '/loading/first/fourth', sectionID, itemID, item })
 			}
 		},
 
@@ -98,22 +98,22 @@ const App = kind({
 
 		_onLoadingPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			logger("chamou o _onLoadingPanel");
-			return onNavigate({ path: '/first/loading', sectionID, itemID, item })
+			return onNavigate({ path: '/loading', sectionID, itemID, item })
 		},
 
 		_onSettingsPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			logger("chamou _onSettingsPanel")
-			return onNavigate({ path: '/first/settings', sectionID, itemID, item })
+			return onNavigate({ path: '/loading/settings', sectionID, itemID, item })
 		},
 
-		_onFavouritesPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
+		_onFavouritesPanel: (ev, { onNavigate, sectionID }) => {
 			logger("chamou _onFavouritesPanel")
-			return onNavigate({ path: '/first/favourites', sectionID, itemID, item })
+			return onNavigate({ path: '/loading/first/favourites', sectionID })
 		},
 
 		_onFirstPanel: (ev, { onNavigate, item, sectionID }) => {
 			//console.log("App - chamou o _onFirstPanel");
-			return onNavigate({ path: '/first', sectionID, item })
+			return onNavigate({ path: '/loading/first', sectionID, item })
 		},
 
 		/*
@@ -126,7 +126,7 @@ const App = kind({
 
 		_onThirdPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			//console.log("App - chamou o _onThirdPanel");
-			return onNavigate({ path: '/first/second/third', sectionID, itemID, item })
+			return onNavigate({ path: '/loading/first/second/third', sectionID, itemID, item })
 		},
 
 		/*
@@ -138,15 +138,15 @@ const App = kind({
 		*/
 
 		_onFifthPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
-			return onNavigate({ path: '/first/fourth/fifth', sectionID, itemID, item })
+			return onNavigate({ path: '/loading/first/fourth/fifth', sectionID, itemID, item })
 		},
 
 		_onSixthPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
-			return onNavigate({ path: '/first/fourth/fifth/sixth', sectionID, itemID, item })
+			return onNavigate({ path: '/loading/first/fourth/fifth/sixth', sectionID, itemID, item })
 		},
 
 		_onSeventhPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
-			return onNavigate({ path: '/first/fourth/fifth/sixth/seventh', sectionID, itemID, item })
+			return onNavigate({ path: '/loading/first/fourth/fifth/sixth/seventh', sectionID, itemID, item })
 		},
 
 	},
@@ -160,22 +160,22 @@ const App = kind({
 
 		return (
 			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
-				<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} item={item} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
-					<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="third" onClick={_onThirdPanel}>
-						<Route path="third" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
-					</Route>
-					<Route path="fourth" component={SeasonsPanel} sectionID={sectionID} itemID={itemID} item={item} next="fifth" onClick={_onFifthPanel}>
-						<Route path="fifth" component={EpisodesPanel} sectionID={sectionID} itemID={itemID} item={item} next="sixth" onClick={_onSixthPanel}>
-							<Route path="sixth" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="seventh" onClick={_onSeventhPanel}>
-								<Route path="seventh" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
+				<Route path="loading" component={LoadingPanel} next="first" onFirstPanel={_onFirstPanel} onSettingsPanel={_onSettingsPanel}>
+					<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} item={item} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
+						<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="third" onClick={_onThirdPanel}>
+							<Route path="third" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
+						</Route>
+						<Route path="fourth" component={SeasonsPanel} sectionID={sectionID} itemID={itemID} item={item} next="fifth" onClick={_onFifthPanel}>
+							<Route path="fifth" component={EpisodesPanel} sectionID={sectionID} itemID={itemID} item={item} next="sixth" onClick={_onSixthPanel}>
+								<Route path="sixth" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="seventh" onClick={_onSeventhPanel}>
+									<Route path="seventh" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
+								</Route>
 							</Route>
 						</Route>
+						<Route path="favourites" component={FavouritesPanel} />
 					</Route>
-					<Route path="loading" component={LoadingPanel} next="first" onFirstPanel={_onFirstPanel} onSettingsPanel={_onSettingsPanel} />
-					<Route path="settings" component={SettingsPanel} next="first" sectionID={sectionID} itemID={itemID} item={item} onClick={_onFirstPanel} onLoadingPanel={_onLoadingPanel} />
-					<Route path="favourites" component={FavouritesPanel} next="first" sectionID={sectionID} itemID={itemID} item={item}/>
+					<Route path="settings" component={SettingsPanel} />
 				</Route>
-				
 			</RoutablePanels>
 		);
 	}

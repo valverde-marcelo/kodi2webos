@@ -1,13 +1,26 @@
-/* Grid */
-.gridList {
-    display: grid;
-    max-width: 100%;
-	margin: 0 auto;
-    grid-template-columns: repeat(auto-fit, minmax(20%, auto));
-    //grid-template-columns: repeat(auto-fit, 20%);
+.main {
+    height: 98%;
+    width: 98%;
+    margin: 0 auto;
 }
 
-.grid {
-    height: auto;
+/* Grid */
+.gridListTemplateColumns {
+    display: grid;
+    //grid-template-columns: repeat(3, 1fr);
+    //grid-template-columns: repeat(auto-fit, minmax(20vw, auto));
+    grid-template-columns: repeat(auto-fill, minmax(20vw, auto));
+    //max-width: 100vw;  
+}
+
+.item {
+	margin: 5px;
+	padding: 3px;
+	height: 100%;
+	background-color: whitesmoke;
+}
+
+.image{
+	margin: 0 auto;
 }
 
