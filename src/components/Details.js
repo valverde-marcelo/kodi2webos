@@ -149,20 +149,12 @@ function Details(props) {
     logger(props);
     const item = props.item;
     return (
-        <div className={css.content}>
-            <div className={css.content__background}>
-                <div className={css.content__background__shadow} />
-                <div className={css.content__background__image} style={{ 'backgroundImage': `url(${item.art.fanart})` }} />
-            </div>
-            <div className={css.content__area}>
-                <div className={css.content__area__container}>
-                    <div className={css.content__title}>{item.title}</div>
-                    <div className={css.content__subtitle}>{item.tagline}</div>
-                    <div className={css.content__subtitle}>({item.originaltitle})</div>
-                    <div className={css.content__subtitle}>{item.year} - {item.mpaa} - <Duration className={css.content__subtitle} value={item.streamdetails} /></div>
-					<div className={css.content__description}>{utils.maxChar(item.plot, 400)}</div>
-                </div>
-            </div>
+        <div>
+            <div><span className={css.content}>{item.title}</span></div>
+            <div><span className={css.content}>{item.tagline}</span></div>
+            <div><span className={css.content}>({item.originaltitle})</span></div>
+            <div><span className={css.content}>{item.year} - {item.mpaa} - <Duration className={css.content} value={item.streamdetails} /></span></div>
+            <div><span className={css.content}>{utils.maxChar(item.plot, 400)}</span></div>
         </div>
     );
 }

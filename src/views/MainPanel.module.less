@@ -11,6 +11,74 @@
  */
 
 .main {
+	width: 100vw;
+    height: 100vh;
+    background-position: center; /* Center the image */
+	background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.sidebar{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+
+	width: 5vw;
+	height: 99vh;
+
+	background-color: black;
+	opacity: 0.7;
+
+	border-style: dotted;
+	border-color: blue;
+}
+
+.containertop {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 99vw;
+	height: 40vh;
+	
+	
+	border-style: dotted;
+  	border-color: tomato;
+}
+
+.containerbottom {
+	position: absolute;
+	top: 41vh;
+	left: 0;
+
+	width: 99vw;
+	height: 58vh;
+
+	
+
+	border-style: dotted;
+  	border-color: green;
+}
+
+.content {
+	width: 50vw;
+	height: 100vh;
+	padding-top: 2vh;
+	padding-left: 7vw;
+
+	background-image: linear-gradient(to right,black,  black, transparent);
+
+	border-style: dotted;
+  	border-color: gold;
+}
+
+.verticallist {
+	height: auto;
+}
+
+/*
+.main {
 	position: absolute;
 	margin: 0 auto;
 	width: 100%; //NAO REMOVER
@@ -19,11 +87,13 @@
 	//background-image: url(https://loremflickr.com/800/600/universe);
 	//background:linear-gradient(-120deg, #e50914, #221f1f, #f5f5f1);
 	background-color: black;
-	background-position: center; /* Center the image */
-	background-repeat: no-repeat; /* Do not repeat the image */
-	background-size: cover; /* Resize the background image to cover the entire container */
+	background-position: center; // Center the image
+	background-repeat: no-repeat; // Do not repeat the image
+	background-size: cover; // Resize the background image to cover the entire container
 }
+*/
 
+/*
 .sideBar{
 	display: grid; //divide o menu em partes iguais
 	position: relative;
@@ -42,8 +112,9 @@
 	padding-left: 0px;
 }
 
+*/
 
-/**
+/*
 
 .content {
 	display: flex;

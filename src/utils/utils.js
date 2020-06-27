@@ -16,6 +16,8 @@ import storage from '../utils/storage';
 
 import { DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER } from '../utils/global';
 
+const IMG_BLACK = "https://i2.wp.com/www.adobetutorialz.com/content_images/AdobePhotoshop/ART-D/tutorial537/25.jpg?resize=650%2C520";
+
 const logger = debug('utils:utils');
 
 function isObject(obj) {
@@ -24,16 +26,31 @@ function isObject(obj) {
 }
 
 function objectFixURL(object) {
-    object.thumbnail = fixURL(object.thumbnail, 'image');
-    object.art.fanart = fixURL(object.art.fanart, 'image');
-    object.art.poster = fixURL(object.art.poster, 'image');
+
+    if(object.thumbnail) {
+        object.thumbnail = fixURL(object.thumbnail, 'image');
+    } else {
+        object.thumbnail = IMG_BLACK;
+    }
+
+    if(object.art.fanart) {
+        object.art.fanart = fixURL(object.art.fanart, 'image');
+    } else {
+        object.art.fanart = IMG_BLACK;
+    }
+
+    if(object.art.poster) {
+        object.art.poster = fixURL(object.art.poster, 'image');
+    } else {
+        object.art.poster = IMG_BLACK;
+    }
 };
 
 function fixURL(src, type) {
     //TODO: utilizar imagens aleatorias
     if(storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER)){
         //return "https://upload.wikimedia.org/wikipedia/en/1/15/Dunkirk_Film_poster.jpg";
-        return "https://i2.wp.com/www.adobetutorialz.com/content_images/AdobePhotoshop/ART-D/tutorial537/25.jpg?resize=650%2C520";
+        return IMG_BLACK;
     }
     return `${server.protocol}://${server.ip}:${server.port}/${type}/${encodeURIComponent(src)}`;
 }

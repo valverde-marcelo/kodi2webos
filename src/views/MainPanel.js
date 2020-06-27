@@ -17,14 +17,106 @@ import { Header, Panel } from '@enact/moonstone/Panels';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import { IconButtonDecorator } from '@enact/moonstone/IconButton';
 import IconButton from '@enact/moonstone/IconButton';
+import Scroller from '@enact/moonstone/Scroller';
+
 import SettingsIconBase from '@material-ui/icons/Settings';
 
 import Nav from '../components/Nav';
 import Body from '../components/Body';
+import List from '../components/List';
+import Details from '../components/Details';
+
+import {
+	LABEL_MOVIES_LIST_IN_PROGRESS, LABEL_MOVIES_LIST_LAST_VIEWED, LABEL_MOVIES_LIST_LAST_ADDED,
+	MOVIES_LIST_IN_PROGRESS, MOVIES_LIST_LAST_ADDED, MOVIES_LIST_LAST_VIEWED
+} from '../utils/global';
 
 const SettingsIcon = IconButtonDecorator(SettingsIconBase);
 
+import debug from '../utils/debug';
+
+const logger = debug('views:main');
+
 import css from './MainPanel.module.less';
+
+const defaultItem = {
+	art: { fanart: "https://loremflickr.com/1280/720/universe" },
+	title: 'De volta para o futuro III',
+	tagline: "sasfa",
+	plot: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et euismod ligula. Morbi mattis pretium eros, ut mollis leo tempus eget. Sed in dui ac ipsum feugiat ultricies. Phasellus vestibulum enim quis quam congue, non fringilla orci placerat. Praesent sollicitudin',
+}
+
+class MainPanel extends React.Component {
+	constructor(props) {
+		logger("entrou construtor");
+		super(props);
+		//logger(props);
+
+		this.state = { item: defaultItem }
+	}
+
+	onFocusItem = ({ item }) => {
+		logger("chamou o onFocusItem");
+		this.setState({ item: item });
+	}
+
+	render() {
+		logger("entrou render()");
+		const url = this.state.item.art.fanart;
+		const item = this.state.item;
+
+		const { ...rest } = Object.assign({}, this.props);
+		//logger(rest);
+
+		//TODO: precisa passar o sectionID correto (movie/tv-show)
+		return (
+			<div id="main" className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
+				<div id="sidebar" className={css.sidebar}></div>
+				<div id="container-top" className={css.containertop}>
+					<ContainerTop item={item} />
+				</div>
+				<div id="container-bottom" className={css.containerbottom}>
+					<ContainerBottom onFocusItem={this.onFocusItem} {...rest} />
+				</div>
+			</div>
+		);
+	}
+}
+
+export default MainPanel;
+
+function ContainerTop({ item }) {
+	logger("entrou ContainerTop");
+	//logger(item);
+	return (		
+		<div className={css.content}>
+			<Details item={item}/>
+		</div>
+	);
+}
+
+//<Details item={item}/>
+
+function ContainerBottom({ ...rest }) {
+	logger("entrou ContainerBottom");
+	//logger(rest);
+	return (		
+			<Scroller direction="vertical" verticalScrollbar="hidden">
+				<Cell className={css.verticallist} >
+					<List listID={MOVIES_LIST_IN_PROGRESS} title={LABEL_MOVIES_LIST_IN_PROGRESS} {...rest} />
+					<List listID={MOVIES_LIST_LAST_ADDED} title={LABEL_MOVIES_LIST_LAST_ADDED} {...rest} />
+					<List listID={MOVIES_LIST_LAST_VIEWED} title={LABEL_MOVIES_LIST_LAST_VIEWED} {...rest} />
+				</Cell>
+			</Scroller>	
+	);
+}
+
+
+
+/*
+				<List listID={MOVIES_LIST_LAST_ADDED} title={LABEL_MOVIES_LIST_LAST_ADDED} {...rest}/>
+				<List listID={MOVIES_LIST_LAST_VIEWED} title={LABEL_MOVIES_LIST_LAST_VIEWED} {...rest}/>
+
 
 const MainPanel = kind({
 
@@ -61,11 +153,13 @@ const MainPanel = kind({
 	}
 });
 
-export default MainPanel;
+*/
+
+
 
 /**
  * TODO: resolver implementacao do selectedItemID
- * 
+ *
  *<Body sectionID={sectionID} selectedItemID={itemID} onSelectItem={onSelectItem} />
  *
  *

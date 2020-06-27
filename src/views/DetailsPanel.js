@@ -21,6 +21,8 @@ import debug from '../utils/debug';
 
 const logger = debug('views:detailspanel');
 
+//TODO: progress bar https://www.w3schools.com/howto/howto_js_progressbar.asp
+
 function PlayResumeButton ({onClick, value}) {
 	let component = null;
 	

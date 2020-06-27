@@ -16,86 +16,11 @@
 }
 
 .content {
-  position: relative;
-  height: 43vw;
-  margin-top: 0px;
-  z-index: 0;
   font-family: NetflixSans;
-  
-  border: medium;
-  border-color: tomato;
-
-  &__background,
-  &__background__shadow,
-  &__background__image,
-  &__area {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-  }
-
-  &__background {
-    left: 0;
-    right: 0;
-
-    &__shadow {
-      left: 0;
-      background: black;
-      width: 50%;
-      z-index: 2;
-
-      &:before {
-        content: '';
-        position: absolute;
-        z-index: 10;
-        background-image: linear-gradient(to right,black,transparent); // gradiente da esquerda para direita
-        top: 0;
-        bottom: 0;
-        left: 100%;
-        width: 40%;
-      }
-    }
-
-    &__image {
-      right: 0;
-      width: 50%;
-      height: 100%;
-      background-position: center 10%;
-      background-size: cover;
-      z-index: 1;
-    }
-  }
-
-  &__area {
-    left: 0;
-    right: 0;
-    height: 100%;
-    z-index: 3;
-
-    &__container {
-      padding: 30px 70px;
-      color: wheat;
-    }
-  }
-
-  &__title {
-    font-size: 1rem;
-    color: #999;
-    font-weight: 700;
-    max-width: 50%;
-  }
-
-  &__subtitle {
-    font-size: 1rem;
-    color: #999;
-    font-weight: 700;
-    max-width: 50%;
-  }
-
-  &__description {
-    font-size: 1rem;
-    color: #999;
-    margin-top: 20px;
-    max-width: 70%;
-  }
+  font-size: 1rem;
+  color: #999;
+  font-weight: 700;
+  //background-color: black;
+  background-image: linear-gradient(to bottom,transparent,  black, transparent);
+  opacity: 0.6;
 }

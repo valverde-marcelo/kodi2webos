@@ -23,17 +23,16 @@ const logger = debug('components:imageItem');
 //TODO: implementar overlay para os vistos
 
 function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
-
+    //logger(props);
     //const url = item.art.poster;
     const url = item.thumbnail;
 
     return (
         <Item className={css.item}
-    onFocus={() => (onFocusItem({ item }))}
-    onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
-    <Image className={css.image} src={url} sizing="fill" />
-</Item>
-
+            onFocus={() => (onFocusItem({ item }))}
+            onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
+            <Image className={css.image} src={url} sizing="fill" />
+        </Item>
     );
 
 }
@@ -41,6 +40,8 @@ function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
 export default ImageItem;
 
 /*
+
+
 
 .item {
 	margin: 5px;

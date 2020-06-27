@@ -23,22 +23,47 @@ import utils from '../utils/utils';
 
 const logger = debug('components:list');
 
-function HorizontalList({items, ...rest}){
+
+function HorizontalList({ items, ...rest }) {
     logger("entrou no HorizontalList");
-    
+    //logger(items);
+
+    delete rest.item; //remover, será passado ao ImageItem abaixo
+    delete rest.itemID; //remover, será passado ao ImageItem abaixo
+
     let content = "";
 
-    if(items && items.length > 0) {
+    if (items && items.length > 0) {
 
         for (let index = 0; index < items.length; index++) {
-            utils.objectFixURL(items[index]); 
+            utils.objectFixURL(items[index]);
         }
 
-        content = items.map((item) => <ImageItem key={item.movieid} itemID={item.movieid.toString()} item={item} {...rest}/>);
+        content = items.map((item) => <ImageItem key={item.movieid} item={item} itemID={item.movieid.toString()} {...rest} />);
     }
 
     return (<Row>{content}</Row>);
 }
+
+function List({ listID, title, ...rest }) {
+    logger("entrou no render");
+    //logger(rest);
+
+    const items = storage.getSync(listID);
+    //logger(items);
+
+    return (<Column>
+                <Cell><span className={css.title}>{title}</span></Cell>
+                <Scroller id={listID} direction="horizontal" horizontalScrollbar="hidden">
+                    <HorizontalList items={items} {...rest} />
+                </Scroller>
+            </Column>
+    );
+}
+
+/*
+
+
 
 const List = kind({
     name: 'List',
@@ -57,7 +82,7 @@ const List = kind({
     render: ({ listID, title, ...rest}) => {
 
         logger("entrou no render");
-        //console.log(rest);
+        logger(rest);
 
         const items = storage.getSync(listID);
 
@@ -71,5 +96,5 @@ const List = kind({
         );
     }
 });
-
+*/
 export default List;
