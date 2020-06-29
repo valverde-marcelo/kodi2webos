@@ -35,28 +35,60 @@ export function Ratings({ className, value }) {
     return (<div className={className}>{content}</div>);
 }
 
-export function Director({ className, value }) {
-
-    if (value && Array.isArray(value)) {
-        let content = `Director: ${value.join(", ")}`;
-        return (<div className={className}>{content}</div>);
+export function Director({ value }) {
+    let content = null;
+    if (value) {
+        if (value.length > 0) {
+            content = `Director: ${value.join(", ")}`;
+            content = <div className={css.director}>{content}</div>;
+        }
     }
 
-    return ("");
+    return content;
+}
+
+export function Cast({ value }) {
+    let content = null;
+    let cast = []
+    if (value) {
+        if (value.length > 0) {
+            for (let i = 0; i < 5; i++) {
+                if (value[i]) {
+                    cast.push((value[i].name));
+                }
+            }
+            content = `Cast: ${cast.join(", ")}`;
+            content = <div className={css.cast}>{content}</div>;
+        }
+    }
+
+    return content;
+}
+
+export function Genre({ value }) {
+    logger(value);
+    let content = null;
+    if (value && Array.isArray(value)) {
+        content = `${value.join(", ")}`;
+        content = <div className={css.genre}>{content}</div>;
+    }
+
+    return content;
 }
 
 export function Writer({ className, value }) {
+    let content = null;
 
     if (value && Array.isArray(value)) {
-        let content = `Writer: ${value.join(", ")}`;
-        return (<div className={className}>{content}</div>);
+        content = `Writer: ${value.join(", ")}`;
+        content = <div className={className}>{content}</div>;
     }
 
-    return ("");
+    return content;
 }
 
 export function Duration({ className, value }) {
-    let content = "";
+    let content = null;
     let video = [];
 
     if (value) {
@@ -64,10 +96,12 @@ export function Duration({ className, value }) {
             for (let i in value.video) {
                 video.push(`${(value.video[i].duration / 60).toFixed()}min`);
             }
+            content = video.join(" - ");
+            content = <span className={className}>{content}</span>;
         }
-        content = video.join(" - ");
     }
-    return (<span className={className}>{content}</span>);
+
+    return content;
 }
 
 export function StreamVideoDetails({ className, value }) {
@@ -104,6 +138,35 @@ export function StreamVideoDetails({ className, value }) {
         content = video.join(" - ");
     }
     return (<div className={className}>{content}</div>);
+}
+
+export function StreamVideoResolution({ className, value }) {
+    let content = null;
+    let vh = null;
+    let resolution = null;
+
+    if (value) {
+        if (value.video && value.video.length > 0) {
+            if (value.video[0].height) {
+                vh = value.video[0].height;
+                if (vh <= 480) {
+                    resolution = "SD";
+                } else if (vh <= 720) {
+                    resolution = "HD";
+                } else if (vh <= 1080) {
+                    resolution = "Full HD";
+                } else if (vh <= 2160) {
+                    resolution = "4K";
+                } else if (vh <= 4320) {
+                    resolution = "8K";
+                }
+                if (resolution) {
+                    content = <span className={className}>{resolution}</span>;
+                }
+            }
+        }
+    }
+    return content;
 }
 
 export function StreamAudioDetails({ className, value }) {
@@ -145,16 +208,94 @@ export function StreamSubsDetails({ className, value }) {
     return (<div className={className}>{content}</div>);
 }
 
+export function Tagline({ value }) {
+    let content = null;
+
+    if (value) {
+        content = <span className={css.tagline}>{value}</span>;
+    }
+
+    return content;
+}
+
+export function OriginalTitle({ className, value }) {
+    let content = null;
+
+    if (value) {
+        content = <span className={className}>({value})</span>;
+    }
+
+    return content;
+}
+
+export function Year({ className, value }) {
+    let content = null;
+
+    if (value) {
+        content = <span className={className}>{value}</span>;
+    }
+
+    return content;
+}
+
+/*
+"Rated", "Rated G",   "Rated PG", "Rated R", "Rated PG-13"
+*/
+export function Mpaa({ className, value }) {
+    let content = null;
+    let rated = "";
+
+    if (value) {
+        if (value === "Rated") {
+            value = "R";
+        }
+
+        value = value.replace("Rated ", "");
+
+        content = <span className={className}>{value}</span>;
+    }
+
+    return content;
+}
+
+export function Title({ value }) {
+    let content = null;
+
+    if (value) {
+        content = <span className={css.title}>{value}<br /></span>;
+    }
+
+    return content;
+}
+
+export function Plot({ value }) {
+    let content = null;
+
+    if (value) {
+        content = <span className={css.plot}>{value}<br /></span>;
+    }
+
+    return content;
+}
+
+export function LineDetails({ value: item }) {
+
+    return (<div><Year className={css.year} value={item.year} />
+        <Mpaa className={css.mpaa} value={item.mpaa} />
+        <Duration className={css.duration} value={item.streamdetails} />
+        <StreamVideoResolution className={css.resolution} value={item.streamdetails} />
+        <br />
+    </div>);
+}
+
 function Details(props) {
     logger(props);
     const item = props.item;
     return (
         <div>
-            <div><span className={css.content}>{item.title}</span></div>
-            <div><span className={css.content}>{item.tagline}</span></div>
-            <div><span className={css.content}>({item.originaltitle})</span></div>
-            <div><span className={css.content}>{item.year} - {item.mpaa} - <Duration className={css.content} value={item.streamdetails} /></span></div>
-            <div><span className={css.content}>{utils.maxChar(item.plot, 400)}</span></div>
+            <div><Title value={item.title} /></div>
+            <div><LineDetails value={item} /></div>
+            <div><Tagline value={item.tagline} /></div>
         </div>
     );
 }
@@ -162,3 +303,12 @@ function Details(props) {
 
 
 export default Details;
+
+/*
+<div><span className={css.title}>{item.title}</span></div>
+<div><span className={css.content}>{item.tagline}</span></div>
+<div><span className={css.content}>({item.originaltitle})</span></div>
+<div><span className={css.content}>{item.year} - {item.mpaa} - <Duration className={css.content} value={item.streamdetails} /></span></div>
+<div><span className={css.content}>{utils.maxChar(item.plot, 400)}</span></div>
+*/
+

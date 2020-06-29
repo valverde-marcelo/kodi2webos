@@ -30,6 +30,8 @@ import FavouritesPanel from '../views/FavouritesPanel';
 
 import { SECTION_FAVOURITES } from '../utils/global';
 
+import ri from '@enact/ui/resolution';
+
 import debug from '../utils/debug';
 
 const logger = debug('App:App');
@@ -158,8 +160,38 @@ const App = kind({
 		delete rest.onNavigate;
 		delete rest.onChangeSection;
 
+		ri.config.orientationHandling = 'scale';
+		ri.init();
+
+		logger(ri);
+
+		//const fontSize = ri.calculateFontSize();
+		const fontSize = '24px';
+		logger(fontSize);
+
+		/*
+		const ratio = ri.getAspectRatio();
+		logger(ratio);
+
+		const ratioName = ri.getAspectRatioName();
+		logger(ratioName);
+
+		const resClasses = ri.getResolutionClasses();
+		logger(resClasses);
+
+		const screenType = ri.getScreenType();
+		logger(screenType);
+
+		logger(ri.scale(100));
+
+		logger(ri.scaleToRem(100));
+
+		logger(ri.unitToPixelFactors);
+		*/
+
+
 		return (
-			<RoutablePanels {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
+			<RoutablePanels {...rest} style={{fontSize: fontSize}} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
 				<Route path="loading" component={LoadingPanel} next="first" onFirstPanel={_onFirstPanel} onSettingsPanel={_onSettingsPanel}>
 					<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} item={item} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
 						<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="third" onClick={_onThirdPanel}>

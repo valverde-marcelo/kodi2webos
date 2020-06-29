@@ -13,26 +13,32 @@
 import React from 'react';
 import Group from '@enact/ui/Group';
 import { Column, Cell } from '@enact/ui/Layout';
+import IconButton from '@enact/moonstone/IconButton';
 import Icons from './Icons';
 import { SECTIONS } from '../utils/global';
+import css from './Nav.module.less';
 import debug from '../utils/debug';
 
 const logger = debug('components:nav');
 
-function Nav({ onChangeSection, defaultSelected }) {
+function Nav({ onChangeSection, onSettingsPanel, defaultSelected }) {
 
 	logger('entrou no render');
 
-	return (
-			<Group
-				childComponent={Icons}
-				selectedProp="selected"
-				onSelect={onChangeSection}
-				select="radio"
-				itemProps={{ defaultSelected }}
-			>
-				{SECTIONS}
-			</Group>
+	return (<div className={css.main}>
+				<Group
+					childComponent={Icons}
+					selectedProp="selected"
+					onSelect={onChangeSection}
+					select="radio"
+					itemProps={{ defaultSelected }}
+				>
+					{SECTIONS}
+				</Group>
+				<Cell style={{marginTop: '10px'}}>
+					<IconButton backgroundOpacity="translucent" size="small" onClick={onSettingsPanel}>list</IconButton>
+				</Cell>
+			</div>
 	);
 
 }

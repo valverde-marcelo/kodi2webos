@@ -19,7 +19,7 @@ import MovieIconBase from '@material-ui/icons/Movie';
 import { Cell } from '@enact/ui/Layout';
 import IconButton from '@enact/moonstone/IconButton';
 
-import css from './Icons.module.less';
+import cssModule from './Icons.module.less';
 import debug from '../utils/debug';
 const logger = debug('components:icons');
 
@@ -27,6 +27,11 @@ import { SECTION_MOVIES, SECTION_TV_SHOWS, SECTION_COLLECTIONS, SECTION_FAVOURIT
 
 const TvIcon = IconButtonDecorator(TvIconBase);
 const MovieIcon = IconButtonDecorator(MovieIconBase);
+
+const css = {	iconButton: cssModule.default,
+				small: cssModule.small, 
+				large: cssModule.large,
+				selected: cssModule.selected}
 
 const Icons = kind({
 	name: "Icons",
@@ -45,13 +50,20 @@ const Icons = kind({
 	computed: {
 		fontSize: ({ "data-index": index, defaultSelected }) => {
 			if (index === defaultSelected) {
-				return "default";
+				return "large";
 			}
 			return "small";
 		},
+
+		selected: ({ "data-index": index, defaultSelected }) => {
+			if (index === defaultSelected) {
+				return true;
+			}
+			return false;
+		},
 	},
 
-	render: ({ fontSize, children, onClick, ...rest }) => {
+	render: ({ selected, fontSize, children, onClick, ...rest }) => {
 		
 		logger (children);
 
@@ -59,27 +71,27 @@ const Icons = kind({
 
 		switch (children) {
 			case SECTION_MOVIES:
-				component = <IconButton color="red" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				component = <IconButton css={css} color="red" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
 				break;
 
 			case SECTION_TV_SHOWS:
-				component = <IconButton color="yellow" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				component = <IconButton css={css} color="yellow" backgroundOpacity="translucent" selected={selected}  onClick={onClick}>star</IconButton>;
 				break;
 
 			case SECTION_COLLECTIONS:
-				component = <IconButton color="green" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				component = <IconButton css={css} color="green" backgroundOpacity="translucent" selected={selected}  onClick={onClick}>star</IconButton>;
 
 				break;
 
 			case SECTION_FAVOURITES:
-				component = <IconButton color="blue" backgroundOpacity="translucent" size={fontSize} onClick={onClick}>star</IconButton>;
+				component = <IconButton css={css} color="blue" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
 				break;
 
 			default:
 				break;
 		}
 
-		return (<Cell>{component}</Cell>);
+		return (<Cell style={{marginTop: '10px'}}>{component}</Cell>);
 	}
 });
 

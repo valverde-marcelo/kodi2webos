@@ -13,8 +13,6 @@
 //TODO: ver exemplo do pattern-video-player (painel sobreposto, opções, altera layout conforme posição do video...)
 
 import Button from '@enact/moonstone/Button';
-import { Header, Panel } from '@enact/moonstone/Panels';
-import { Column, Row, Cell } from '@enact/ui/Layout';
 import React, { useState, useEffect } from 'react';
 import VideoPlayer, { MediaControls } from '@enact/moonstone/VideoPlayer';
 import IconButton from '@enact/moonstone/IconButton';
@@ -22,6 +20,7 @@ import IconButton from '@enact/moonstone/IconButton';
 import api from '../api/';
 
 import debug from '../utils/debug';
+import css from './MainPanel.module.less';
 
 const logger = debug('views:plauerpanel');
 
@@ -46,8 +45,8 @@ function PlayerPanel({ itemID, item, onClick, ...rest }) {
 
 
 	return (
-		<Panel {...rest}>
-				<VideoPlayer title={item.title} poster={item.art.fanart}>
+		<div className={css.main}>
+			<VideoPlayer title={item.title} poster={item.art.fanart}>
 					<source src={source} type="video/mp4" />
 					<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
 					<MediaControls>
@@ -58,7 +57,8 @@ function PlayerPanel({ itemID, item, onClick, ...rest }) {
 						<IconButton backgroundOpacity="translucent">search</IconButton>
 					</MediaControls>
 				</VideoPlayer>
-		</Panel>
+		</div>
+				
 	);
 
 }

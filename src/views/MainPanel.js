@@ -10,10 +10,7 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Header, Panel } from '@enact/moonstone/Panels';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import { IconButtonDecorator } from '@enact/moonstone/IconButton';
 import IconButton from '@enact/moonstone/IconButton';
@@ -50,7 +47,7 @@ class MainPanel extends React.Component {
 	constructor(props) {
 		logger("entrou construtor");
 		super(props);
-		//logger(props);
+		logger(props);
 
 		this.state = { item: defaultItem }
 	}
@@ -60,63 +57,94 @@ class MainPanel extends React.Component {
 		this.setState({ item: item });
 	}
 
+	onFocusSideBar = () => {
+		logger("chamou o onFocusSideBar");
+	}
+
 	render() {
 		logger("entrou render()");
 		const url = this.state.item.art.fanart;
 		const item = this.state.item;
 
-		const { ...rest } = Object.assign({}, this.props);
-		//logger(rest);
+		const { onChangeSection, onSettingsPanel, sectionID, ...rest } = Object.assign({}, this.props);
+		logger(rest);
 
 		//TODO: precisa passar o sectionID correto (movie/tv-show)
+		//TODO: onBlur ou onFocus sidebar
+		
 		return (
-			<div id="main" className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
-				<div id="sidebar" className={css.sidebar}></div>
-				<div id="container-top" className={css.containertop}>
-					<ContainerTop item={item} />
-				</div>
-				<div id="container-bottom" className={css.containerbottom}>
-					<ContainerBottom onFocusItem={this.onFocusItem} {...rest} />
-				</div>
-			</div>
+			<Row className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
+				<Cell className={css.sidebar} shrink onFocus={this.onFocusSideBar}>
+						<Nav onChangeSection={onChangeSection} onSettingsPanel={onSettingsPanel} defaultSelected={sectionID} />
+				</Cell>
+				<Cell>
+					<Column className={css.containerRight}>
+						<Cell className={css.containerTop}>
+							<ContainerTop item={item} />
+						</Cell>
+						<Cell className={css.containerBottom}>
+							<ContainerBottom onFocusItem={this.onFocusItem} sectionID={sectionID} {...rest} />
+						</Cell>
+					</Column>
+				</Cell>
+			</Row>
 		);
 	}
 }
 
 export default MainPanel;
 
+//se a barra lateral sobrepor a lista horizontal, perde a navegação na extrema direita
+//style={{height: '60%', left: '-7%', width: '103vw'}
+//funciona somente se estiver alinhado
+//style={{height: '60%'}
+
+
+/*
+Layout usando apenas DIV e posições absolutas no CSS
+
+<div id="main" className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
+	<div id="sidebar" className={css.sidebar} onFocus={this.onFocusSideBar}>
+		<Nav onChangeSection={onChangeSection} onSettingsPanel={onSettingsPanel} defaultSelected={sectionID} />
+	</div>
+	<div id="container-top" className={css.containertop}>
+		<ContainerTop item={item} />
+	</div>
+	<div id="container-bottom" className={css.containerbottom}>
+		<ContainerBottom onFocusItem={this.onFocusItem} {...rest} />
+	</div>
+</div>
+
+*/
+
+
 function ContainerTop({ item }) {
 	logger("entrou ContainerTop");
 	//logger(item);
-	return (		
+	return (
 		<div className={css.content}>
-			<Details item={item}/>
+			<Details item={item} />
 		</div>
 	);
 }
 
-//<Details item={item}/>
-
 function ContainerBottom({ ...rest }) {
 	logger("entrou ContainerBottom");
-	//logger(rest);
-	return (		
-			<Scroller direction="vertical" verticalScrollbar="hidden">
-				<Cell className={css.verticallist} >
-					<List listID={MOVIES_LIST_IN_PROGRESS} title={LABEL_MOVIES_LIST_IN_PROGRESS} {...rest} />
-					<List listID={MOVIES_LIST_LAST_ADDED} title={LABEL_MOVIES_LIST_LAST_ADDED} {...rest} />
-					<List listID={MOVIES_LIST_LAST_VIEWED} title={LABEL_MOVIES_LIST_LAST_VIEWED} {...rest} />
-				</Cell>
-			</Scroller>	
+	logger(rest);
+	return (
+		<Scroller direction="vertical" verticalScrollbar="hidden">
+			<Cell className={css.verticallist} >
+				<List listID={MOVIES_LIST_IN_PROGRESS} title={LABEL_MOVIES_LIST_IN_PROGRESS} {...rest} />
+				<List listID={MOVIES_LIST_LAST_ADDED} title={LABEL_MOVIES_LIST_LAST_ADDED} {...rest} />
+				<List listID={MOVIES_LIST_LAST_VIEWED} title={LABEL_MOVIES_LIST_LAST_VIEWED} {...rest} />
+			</Cell>
+		</Scroller>
 	);
 }
 
 
 
 /*
-				<List listID={MOVIES_LIST_LAST_ADDED} title={LABEL_MOVIES_LIST_LAST_ADDED} {...rest}/>
-				<List listID={MOVIES_LIST_LAST_VIEWED} title={LABEL_MOVIES_LIST_LAST_VIEWED} {...rest}/>
-
 
 const MainPanel = kind({
 

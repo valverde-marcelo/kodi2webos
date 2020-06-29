@@ -39,6 +39,7 @@ function HorizontalList({ items, ...rest }) {
             utils.objectFixURL(items[index]);
         }
 
+        logger(rest);
         content = items.map((item) => <ImageItem key={item.movieid} item={item} itemID={item.movieid.toString()} {...rest} />);
     }
 

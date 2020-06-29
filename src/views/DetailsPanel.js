@@ -11,11 +11,9 @@
  */
 
 import React from 'react';
-import { Panel } from '@enact/moonstone/Panels';
-import Button from '@enact/moonstone/Button';
-import LabeledIconButton from '@enact/moonstone/LabeledIconButton';
 import IconButton from '@enact/moonstone/IconButton';
-import { Ratings, Director, Writer, Duration, StreamAudioDetails, StreamSubsDetails, StreamVideoDetails } from '../components/Details';
+import Button from '@enact/moonstone/Button';
+import { Title, LineDetails, Plot, Director, Genre, Cast } from '../components/Details';
 import css from './DetailsPanel.module.less';
 import debug from '../utils/debug';
 
@@ -23,28 +21,47 @@ const logger = debug('views:detailspanel');
 
 //TODO: progress bar https://www.w3schools.com/howto/howto_js_progressbar.asp
 
-function PlayResumeButton ({onClick, value}) {
+function PlayResumeButton({ onClick, value }) {
 	let component = null;
-	
+
 	logger(value);
 
-	if(value) {
-		if(value.position.toFixed() > 0) {
-			component = <IconButton color="red"  backgroundOpacity="translucent" size="small" onClick={onClick}>resumeplay</IconButton>;
+	if (value) {
+		if (value.position.toFixed() > 0) {
+			component = <Button css={css} color="blue" onClick={onClick}>Resume</Button>;
 		} else {
-			component = <IconButton color="red" backgroundOpacity="translucent" size="small" onClick={onClick}>play</IconButton>;
+			component = <Button css={css} color="blue" onClick={onClick}>Play</Button>;
 		}
 	}
-	
+
 	return (component);
 }
 
 function DetailsPanel({ onClick, item, ...rest }) {
 	logger('entrou Details panel');
+	const url = item.art.fanart;
 
-	return (
-		<Panel>
-			<div className={css.content}>
+	return (<div className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
+				<div className={css.container}>
+					<div><Title value={item.title}/></div>
+					<div><LineDetails value={item} /></div>
+					<div style={{width: '60vw'}}><Plot value={item.plot} /></div>
+					<br />
+					<div style={{width: '60vw'}}><Cast value={item.cast} /></div>
+					<div style={{width: '60vw'}}><Director value={item.director} /></div>
+					<div style={{width: '60vw'}}><Genre value={item.genre} /></div>
+					<br />
+					<PlayResumeButton onClick={onClick} value={item.resume}/>
+				</div>
+			</div>
+	);
+}
+
+
+export default DetailsPanel;
+
+/*
+<div className={css.content}>
 				<div className={css.content__background}>
 					<div className={css.content__background__shadow} />
 					<div className={css.content__background__image} style={{ 'backgroundImage': `url(${item.art.fanart})` }} />
@@ -67,28 +84,4 @@ function DetailsPanel({ onClick, item, ...rest }) {
 					</div>
 				</div>
 			</div>
-		</Panel>
-	);
-}
-
-
-export default DetailsPanel;
-
-/*
-<div className={css.content}>
-	<div className={css.content__background}>
-		<div className={css.content__background__shadow} />
-		<div className={css.content__background__image} style={{ 'backgroundImage': `url(${details.fanart})` }} />
-	</div>
-	<div className={css.content__area}>
-		<div className={css.content__area__container}>
-			<div className={css.content__title}>{details.title}</div>
-			<div className={css.content__title}>{details.tagline}</div>
-			<div className={css.content__description}>{details.description}</div>
-		</div>
-	</div>
-</div>
-
-
-
 */

@@ -14,8 +14,10 @@ import { generate as uuid } from "shortid";
 
 const defaultProperties = [
     'art',
+    'cast',
     'director',
     'file',
+    'genre',
     'mpaa',
     'originaltitle',
     'premiered',
