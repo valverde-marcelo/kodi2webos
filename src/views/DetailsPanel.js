@@ -45,6 +45,7 @@ function DetailsPanel({ onClick, item, ...rest }) {
 				<div className={css.container}>
 					<div><Title value={item.title}/></div>
 					<div><LineDetails value={item} /></div>
+					<br/>
 					<div style={{width: '60vw'}}><Plot value={item.plot} /></div>
 					<br />
 					<div style={{width: '60vw'}}><Cast value={item.cast} /></div>

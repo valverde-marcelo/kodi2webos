@@ -295,7 +295,10 @@ function Details(props) {
         <div>
             <div><Title value={item.title} /></div>
             <div><LineDetails value={item} /></div>
+            <br />
             <div><Tagline value={item.tagline} /></div>
+            <br />
+            <div><Genre value={item.genre} /></div>
         </div>
     );
 }
