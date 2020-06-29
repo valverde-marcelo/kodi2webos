@@ -13,7 +13,7 @@
 import React from 'react';
 import IconButton from '@enact/moonstone/IconButton';
 import Button from '@enact/moonstone/Button';
-import { Title, LineDetails, Plot, Director, Genre, Cast } from '../components/Details';
+import { Title, LineDetails, Plot, Director, Genre, Cast, Ratings } from '../components/Details';
 import css from './DetailsPanel.module.less';
 import debug from '../utils/debug';
 
@@ -50,6 +50,8 @@ function DetailsPanel({ onClick, item, ...rest }) {
 					<div style={{width: '60vw'}}><Cast value={item.cast} /></div>
 					<div style={{width: '60vw'}}><Director value={item.director} /></div>
 					<div style={{width: '60vw'}}><Genre value={item.genre} /></div>
+					<br />
+					<div><Ratings value={item.ratings} /></div>
 					<br />
 					<PlayResumeButton onClick={onClick} value={item.resume}/>
 				</div>

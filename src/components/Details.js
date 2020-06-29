@@ -17,7 +17,7 @@ import debug from '../utils/debug';
 
 const logger = debug('components:details');
 
-export function Ratings({ className, value }) {
+export function Ratings({ value }) {
 
     let content = "";
     let ratings = [];
@@ -32,7 +32,7 @@ export function Ratings({ className, value }) {
     }
     content = ratings.join(" / ");
 
-    return (<div className={className}>{content}</div>);
+    return (<div className={css.director}>{content}</div>);
 }
 
 export function Director({ value }) {
