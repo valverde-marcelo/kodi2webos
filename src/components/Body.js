@@ -17,7 +17,7 @@ import List from './List';
 import Details from './Details';
 import css from './Body.module.less';
 import { Column, Cell } from '@enact/ui/Layout';
-import image from '../../assets/images/bttf.jpg';
+
 import {
 	LABEL_MOVIES_LIST_IN_PROGRESS, LABEL_MOVIES_LIST_LAST_VIEWED, LABEL_MOVIES_LIST_LAST_ADDED,
 	MOVIES_LIST_IN_PROGRESS, MOVIES_LIST_LAST_ADDED, MOVIES_LIST_LAST_VIEWED
@@ -58,7 +58,7 @@ class Body extends React.Component {
 	render() {
 		logger("entrou render()");
 		//clona o objeto
-		const { sectionID, selectedItemID, onSelectItem, ...rest } = Object.assign({}, this.props);
+		const { sectionID, selectedItemID, onSelectItem } = Object.assign({}, this.props);
 		//console.log(this.props);
 		//console.log(this.state);
 

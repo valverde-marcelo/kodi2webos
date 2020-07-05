@@ -77,5 +77,6 @@ export default {
   clear,
   setSync,
   getSync,
-  clearSync
+  clearSync,
+  setSyncRaw
 }

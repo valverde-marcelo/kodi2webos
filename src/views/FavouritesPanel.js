@@ -13,7 +13,7 @@
 import React from 'react';
 import Scroller from '@enact/moonstone/Scroller';
 
-import {	MOVIES_LIST_IN_PROGRESS, MOVIES_LIST_LAST_ADDED, MOVIES_LIST_LAST_VIEWED } from '../utils/global';
+import { MOVIES_LIST_IN_PROGRESS, MOVIES_LIST_LAST_ADDED, MOVIES_LIST_LAST_VIEWED } from '../utils/global';
 
 import debug from '../utils/debug';
 import Grid from '../components/Grid';
@@ -43,12 +43,11 @@ class FavouritesPanel extends React.Component {
 		for (let index = 0; index < items.length; index++) {
 			utils.objectFixURL(items[index]);
 		}
-
-		this.state = { items: items, 
-						backgroundImage: items[0].art.fanart };
+		this.state = { items: items,
+			backgroundImage: items[0].art.fanart };
 	}
 
-	onFocusItem({item, ...rest}) {
+	onFocusItem({ item, ...rest }) {
 		logger("chamou onFocusItem");
 		logger(rest);
 		this.setState({ backgroundImage: item.art.fanart });
@@ -62,7 +61,7 @@ class FavouritesPanel extends React.Component {
 
 	render() {
 		logger("entrou render()");
-		
+
 		//TODO: precisa passar o sectionID correto (movie/tv-show)
 		return (
 			<section className={css.main} style={{ 'backgroundImage': `url(${this.state.backgroundImage})` }}>
@@ -73,7 +72,7 @@ class FavouritesPanel extends React.Component {
 						onSelectItem={this.onSelectItem} />
 				</Scroller>
 			</section>
-        );
+		);
 	}
 }
 

@@ -12,7 +12,6 @@
 
 import React from 'react';
 import css from './Details.module.less';
-import utils from '../utils/utils';
 import debug from '../utils/debug';
 
 const logger = debug('components:details');
@@ -176,7 +175,7 @@ export function StreamAudioDetails({ className, value }) {
     if (value) {
         if (value.audio && value.audio.length > 0) {
             for (let i in value.audio) {
-                var valueToPush = new Array(); // or "var valueToPush = new Object();" which is the same
+                let valueToPush = []; // or "var valueToPush = new Object();" which is the same
                 valueToPush[0] = `Audio Codec: ${value.audio[i].codec}`;
                 valueToPush[1] = `Channels: ${value.audio[i].channels}`;
                 valueToPush[2] = `Language: ${value.audio[i].language}`;
@@ -243,8 +242,6 @@ export function Year({ className, value }) {
 */
 export function Mpaa({ className, value }) {
     let content = null;
-    let rated = "";
-
     if (value) {
         if (value === "Rated") {
             value = "R";

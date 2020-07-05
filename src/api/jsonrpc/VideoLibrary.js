@@ -127,7 +127,7 @@ const getMoviesLastViewed = (start, end) => {
     return message;
 }
 
-export default { 
+export default {
     getMoviesInProgress,
     getMoviesLastAdded,
     getMoviesLastViewed

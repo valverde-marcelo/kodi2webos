@@ -12,7 +12,7 @@
 
 import React from 'react';
 import Group from '@enact/ui/Group';
-import { Column, Cell } from '@enact/ui/Layout';
+import { Cell } from '@enact/ui/Layout';
 import IconButton from '@enact/moonstone/IconButton';
 import Icons from './Icons';
 import { SECTIONS } from '../utils/global';

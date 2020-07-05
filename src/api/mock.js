@@ -37,7 +37,7 @@ function noConfig() {
 
 const noConnection = async () => {
     logger("check connection server");
-    await utils.sleep(STEP);   
+    await utils.sleep(STEP);
     return false;
 }
 
@@ -63,7 +63,7 @@ const getMoviesLastViewed = async (start, end) => {
 }
 
 const prepareDownload = async (path) => {
-    logger("prepareDownload");
+    logger("prepareDownload" + {path});
     await utils.sleep(STEP);
     return MOCK_URL_VIDEO;
 }

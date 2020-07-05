@@ -13,9 +13,9 @@
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { IconButtonDecorator } from '@enact/moonstone/IconButton';
-import TvIconBase from '@material-ui/icons/Tv';
-import MovieIconBase from '@material-ui/icons/Movie';
+//import { IconButtonDecorator } from '@enact/moonstone/IconButton';
+//import TvIconBase from '@material-ui/icons/Tv';
+//import MovieIconBase from '@material-ui/icons/Movie';
 import { Cell } from '@enact/ui/Layout';
 import IconButton from '@enact/moonstone/IconButton';
 
@@ -25,13 +25,15 @@ const logger = debug('components:icons');
 
 import { SECTION_MOVIES, SECTION_TV_SHOWS, SECTION_COLLECTIONS, SECTION_FAVOURITES } from '../utils/global';
 
-const TvIcon = IconButtonDecorator(TvIconBase);
-const MovieIcon = IconButtonDecorator(MovieIconBase);
+//const TvIcon = IconButtonDecorator(TvIconBase);
+//const MovieIcon = IconButtonDecorator(MovieIconBase);
 
-const css = {	iconButton: cssModule.default,
-				small: cssModule.small, 
-				large: cssModule.large,
-				selected: cssModule.selected}
+const css = {
+	iconButton: cssModule.default,
+	small: cssModule.small,
+	large: cssModule.large,
+	selected: cssModule.selected
+}
 
 const Icons = kind({
 	name: "Icons",
@@ -63,9 +65,9 @@ const Icons = kind({
 		},
 	},
 
-	render: ({ selected, fontSize, children, onClick, ...rest }) => {
-		
-		logger (children);
+	render: ({ selected, children, onClick }) => {
+
+		logger(children);
 
 		let component = "";
 
@@ -75,11 +77,11 @@ const Icons = kind({
 				break;
 
 			case SECTION_TV_SHOWS:
-				component = <IconButton css={css} color="yellow" backgroundOpacity="translucent" selected={selected}  onClick={onClick}>star</IconButton>;
+				component = <IconButton css={css} color="yellow" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
 				break;
 
 			case SECTION_COLLECTIONS:
-				component = <IconButton css={css} color="green" backgroundOpacity="translucent" selected={selected}  onClick={onClick}>star</IconButton>;
+				component = <IconButton css={css} color="green" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
 
 				break;
 
@@ -91,7 +93,7 @@ const Icons = kind({
 				break;
 		}
 
-		return (<Cell style={{marginTop: '10px'}}>{component}</Cell>);
+		return (<Cell style={{ marginTop: '10px' }}>{component}</Cell>);
 	}
 });
 

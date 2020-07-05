@@ -21,7 +21,7 @@ const IMG_BLACK = "https://i2.wp.com/www.adobetutorialz.com/content_images/Adobe
 const logger = debug('utils:utils');
 
 function isObject(obj) {
-    var type = typeof obj;
+    let type = typeof obj;
     return type === 'function' || type === 'object' && !!obj;
 }
 

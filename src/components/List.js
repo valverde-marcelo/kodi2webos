@@ -10,8 +10,6 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import Scroller from '@enact/moonstone/Scroller';

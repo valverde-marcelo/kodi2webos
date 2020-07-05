@@ -14,6 +14,7 @@
 import React from 'react';
 import LabeledIconButton from '@enact/moonstone/LabeledIconButton';
 import { Panel } from '@enact/moonstone/Panels';
+import Scroller from '@enact/moonstone/Scroller';
 import Group from '@enact/ui/Group';
 import RadioItem from '@enact/moonstone/RadioItem';
 import Input from '@enact/moonstone/Input';
@@ -30,7 +31,7 @@ import {
 
 const logger = debug('views:settings');
 
-function server_protocol () {
+function server_protocol() {
     return PROTOCOLS.indexOf(storage.getSync("protocol", LOCAL_STORAGE_PREFIX_SERVER));
 }
 
@@ -39,30 +40,30 @@ const server_ip = storage.getSync("ip", LOCAL_STORAGE_PREFIX_SERVER);
 const server_port = storage.getSync("port", LOCAL_STORAGE_PREFIX_SERVER);
 
 // limpa o localStorage a partir de LOCAL_STORAGE_PREFIX
-function _resetApplication () {
+function _resetApplication() {
     logger('executou _resetApplication');
     storage.clearSync(LOCAL_STORAGE_PREFIX);
     window.location.reload()
 }
 
 // limpa o localStorage a partir de LOCAL_STORAGE_PREFIX_DATA
-function _refreshData () {
+function _refreshData() {
     logger('executou _refreshData');
     storage.clearSync();
     window.location.reload()
 }
 
-function _onChangeServerProtocol ({ data }) {
+function _onChangeServerProtocol({ data }) {
     //logger(data);
     storage.setSync("protocol", data, LOCAL_STORAGE_PREFIX_SERVER);
 }
 
-function _onChangeServerIp ({ value }) {
+function _onChangeServerIp({ value }) {
     //logger(value);
     storage.setSync("ip", value, LOCAL_STORAGE_PREFIX_SERVER);
 }
 
-function _onChangeServerPort ({ value }) {
+function _onChangeServerPort({ value }) {
     //logger(value);
     storage.setSync("port", value, LOCAL_STORAGE_PREFIX_SERVER);
 }
@@ -76,6 +77,7 @@ function RadioGroupProtocols() {
             selectedProp="selected"
             defaultSelected={server_protocol()}
             onSelect={_onChangeServerProtocol}
+            className={css.label}
         >
             {PROTOCOLS}
         </Group>
@@ -91,12 +93,11 @@ function _onToggle() {
 }
 
 function ToggleDemoMode() {
-    
-    let selected = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER)? true: false;
+    let selected = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER);
 
     return (
         <CheckboxItem onToggle={_onToggle} defaultSelected={selected}>
-            Demo mode.
+            <span className={css.label}>Demo mode.</span>
         </CheckboxItem>
     );
 }
@@ -108,11 +109,11 @@ function SettingsPanel({ ...rest }) {
     //let demo = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER)? true: false;
 
     return (
-        <Panel {...rest}>
-            <section className={css.container}>
-            <fieldset>
+        <Panel className={css.main}>
+            <Scroller>
+                <fieldset>
                     <Layout align="start">
-                        <ToggleDemoMode/>
+                        <ToggleDemoMode />
                     </Layout>
                 </fieldset>
                 <br />
@@ -137,33 +138,14 @@ function SettingsPanel({ ...rest }) {
                 <fieldset>
                     <legend>Actions</legend>
                     <Layout align="start">
-                        <Cell component={LabeledIconButton} icon="home" className={css.button} labelPosition="after" onClick={() => window.location.reload()}>Go to Home</Cell>
-                        <Cell component={LabeledIconButton} icon="refresh" labelPosition="after" onClick={() => _refreshData()}>Refresh data</Cell>
-                        <Cell component={LabeledIconButton} icon="warning" labelPosition="after" onClick={() => _resetApplication()}>Reset application</Cell>
+                        <Cell component={LabeledIconButton} icon="home" className={css.label} labelPosition="after" onClick={() => window.location.reload()}>Go to Home</Cell>
+                        <Cell component={LabeledIconButton} icon="refresh" className={css.label} labelPosition="after" onClick={() => _refreshData()}>Refresh data</Cell>
+                        <Cell component={LabeledIconButton} icon="warning" className={css.label} labelPosition="after" onClick={() => _resetApplication()}>Reset application</Cell>
                     </Layout>
                 </fieldset>
-            </section>
+            </Scroller>
         </Panel>
     );
 }
 
 export default SettingsPanel;
-
-/**
- * 
- *                 <fieldset>
-                    <legend>Actions</legend>
-                    <Layout align="start">
-                        <Cell component={LabeledIconButton} icon="home" className={css.button} labelPosition="after" onClick={() => window.location.reload()}>Go to Home</Cell>
-                        <Cell component={LabeledIconButton} icon="refresh" labelPosition="after" onClick={() => _refreshData({ onLoadingPanel })}>Refresh data</Cell>
-                        <Cell component={LabeledIconButton} icon="warning" labelPosition="after" onClick={() => _resetApplication({ onLoadingPanel })}>Reset application</Cell>
-                    </Layout>
-                </fieldset>
-                <br />
-                <fieldset>
-                    <Layout align="start">
-                        <ToggleDemoMode defaultSelected={demo} />
-                    </Layout>
-                </fieldset>
-
- */

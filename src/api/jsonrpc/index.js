@@ -23,6 +23,6 @@ const ping = () => {
     return message;
 };
 
-export default { 
-    ping 
+export default {
+    ping
 };

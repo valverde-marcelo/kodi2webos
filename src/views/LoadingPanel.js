@@ -22,9 +22,6 @@ import api from '../api';
 import {
 	DEMO_MODE,
 	LOCAL_STORAGE_PREFIX_SERVER,
-	SERVER_DEFAULT_PROTOCOL,
-	SERVER_DEFAULT_PORT,
-	SERVER_DEFAULT_IP,
 	STEP,
 	MOVIES_LIST_IN_PROGRESS,
 	MOVIES_LIST_LAST_ADDED,
@@ -71,15 +68,14 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
 				//setar valores padrão
 				storage.setSync("protocol", PROTOCOL_HTTP, LOCAL_STORAGE_PREFIX_SERVER);
 				storage.setSync(DEMO_MODE, true, LOCAL_STORAGE_PREFIX_SERVER);
-
 				setIsLoading(false);
 				access(); //incrementa contador de acesso
 				onSettingsPanel(); //redireciona
-			} 
-			
+			}
+
 			else {
 				logger("NÂO é primeiro acesso -> continuar verificações");
-				
+
 				await utils.sleep(STEP);
 
 				access(); //incrementa contador de acesso
@@ -140,7 +136,7 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
 		<Panel {...rest} className={css.panel}>
 			<div className={css.container}>
 				<div className={css.loading}>
-					{isLoading ? (<div><CircularProgress size={100} /></div>) : (<div> </div>)}
+					{isLoading ? (<div><CircularProgress size={100} /></div>) : (<div/>)}
 				</div>
 			</div>
 		</Panel>

@@ -18,9 +18,7 @@ import { DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER } from '../utils/global';
 
 /**
  * CONDITIONAL EXPORT MOCK OR REAL API
- */
 function exportedAPI() {
-    
     if(storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER) === true) {
         console.log(">>>>>>> MOCK API");
         return mockAPI
@@ -28,6 +26,7 @@ function exportedAPI() {
     console.log("<<<<<<<<<<< REAL API");
     return realAPI;
 }
+*/
 
 const api = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER) ? mockAPI : realAPI;
 //const api = exportedAPI();

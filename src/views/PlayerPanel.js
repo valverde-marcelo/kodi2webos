@@ -27,40 +27,36 @@ const logger = debug('views:plauerpanel');
 
 //TODO: ao sair do video (onBack) deve parar a reprodução, caso constrario fica consumindo espaço em memoria (download em segundo plano)
 
-function PlayerPanel({ itemID, item, onClick, ...rest }) {
+function PlayerPanel({ item, ...rest }) {
+	logger("entrou PLayerPanel");
+	logger(rest);
 
 	const [source, setSource] = useState("");
-
 	useEffect(() => {
-		
 		const fetchData = async () => {
 			setSource("");
 			const path = await api.prepareDownload(item.file);
 			setSource(path);
 		}
-
 		fetchData();
-
-	}, []);
+	}, [item.file]);
 
 
 	return (
 		<div className={css.main}>
 			<VideoPlayer title={item.title} poster={item.art.fanart}>
-					<source src={source} type="video/mp4" />
-					<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
-					<MediaControls>
-						<leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
-						<rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
+				<source src={source} type="video/mp4" />
+				<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
+				<MediaControls>
+					<leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
+					<rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
 
-						<Button backgroundOpacity="translucent">Add To Favorites</Button>
-						<IconButton backgroundOpacity="translucent">search</IconButton>
-					</MediaControls>
-				</VideoPlayer>
+					<Button backgroundOpacity="translucent">Add To Favorites</Button>
+					<IconButton backgroundOpacity="translucent">search</IconButton>
+				</MediaControls>
+			</VideoPlayer>
 		</div>
-				
 	);
-
 }
 /*
 <Panel {...rest}>

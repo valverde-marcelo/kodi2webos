@@ -11,7 +11,6 @@
  */
 
 import React from 'react';
-import IconButton from '@enact/moonstone/IconButton';
 import Button from '@enact/moonstone/Button';
 import { Title, LineDetails, Plot, Director, Genre, Cast, Ratings } from '../components/Details';
 import css from './DetailsPanel.module.less';
@@ -37,7 +36,7 @@ function PlayResumeButton({ onClick, value }) {
 	return (component);
 }
 
-function DetailsPanel({ onClick, item, ...rest }) {
+function DetailsPanel({ onClick, item}) {
 	logger('entrou Details panel');
 	const url = item.art.fanart;
 

@@ -153,7 +153,7 @@ const App = kind({
 
 	},
 
-	render: ({ _onChangeSection, _onSelectItem, _onLoadingPanel, _onFirstPanel, _onThirdPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onSettingsPanel, _onFavouritesPanel, _onBack, path, itemID, item, sectionID, ...rest }) => {
+	render: ({ _onChangeSection, _onSelectItem, _onFirstPanel, _onThirdPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onSettingsPanel, _onBack, path, itemID, item, sectionID, ...rest }) => {
 		logger(`entrou no render: path=${path}, sectionID=${sectionID}, itemID=${item}`);
 
 		delete rest.onInitConfig;
@@ -165,8 +165,8 @@ const App = kind({
 
 		logger(ri);
 
-		//const fontSize = ri.calculateFontSize();
-		const fontSize = '24px';
+		const fontSize = ri.calculateFontSize();
+		//const fontSize = '24px';
 		logger(fontSize);
 
 		/*

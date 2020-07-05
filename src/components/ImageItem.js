@@ -13,8 +13,12 @@
 
 import Image from '@enact/moonstone/Image';
 import Item from '@enact/moonstone/Item';
+import {ImageDecorator} from '@enact/moonstone/Image';
+import {ItemDecorator} from '@enact/moonstone/Item';
+import Spottable from '@enact/spotlight/Spottable';
+import SlotItem from '@enact/moonstone/SlotItem';
 import React from 'react';
-import ri from '@enact/ui/resolution';
+//import ri from '@enact/ui/resolution';
 import debug from '../utils/debug';
 import css from './ImageItem.module.less';
 
@@ -23,26 +27,34 @@ const logger = debug('components:imageItem');
 //TODO: implementar overlay para os vistos
 
 function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
-    //logger(props);
+    logger("entrou");
     //const url = item.art.poster;
     const url = item.thumbnail;
 
     return (
-        <Item className={css.item}
-            onFocus={() => (onFocusItem({ item }))}
-            onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
-            <Image className={css.image} src={url} sizing="fill" />
-        </Item>
+        <div className={css.container}> teste </div>
+        
     );
 
 }
 
-export default ImageItem;
+export default Spottable(ImageItem);
 
-/*
+//<Image className={css.image} src={url} sizing="fill" />
+//style={{'backgroundImage': `url(${url})` }}
+
+/**
+ * 
+ * <SlotItem css={css}
+            onFocus={() => (onFocusItem({ item }))}
+            onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
+        </SlotItem>
+ * 
+ * 
+ */
 
 
-
+/* BACKUP
 .item {
 	margin: 5px;
 	padding: 3px;

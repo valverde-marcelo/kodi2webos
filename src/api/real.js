@@ -27,7 +27,7 @@ import debug from '../utils/debug';
 const logger = debug('api:index');
 
 function noConfig() {
-  return (server.ip === null || server.port === null || server.protocol === null) ? true : false;
+  return (server.ip === null || server.port === null || server.protocol === null);
 }
 
 const noConnection = async () => {
@@ -72,8 +72,8 @@ const getMoviesLastViewed = async (start, end) => {
   }
 }
 
-const prepareDownload = async (path) => {
-  let message = files.prepareDownload(path);
+const prepareDownload = async (_path) => {
+  let message = files.prepareDownload(_path);
   try {
     const response = await axios.post(endpoint, message);
     const path = response.data.result.details.path;
