@@ -10,15 +10,15 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-
+import { Column, Row, Cell } from '@enact/ui/Layout';
 import Image from '@enact/moonstone/Image';
 import Item from '@enact/moonstone/Item';
-import {ImageDecorator} from '@enact/moonstone/Image';
-import {ItemDecorator} from '@enact/moonstone/Item';
+import { ImageDecorator } from '@enact/moonstone/Image';
+import { ItemDecorator } from '@enact/moonstone/Item';
 import Spottable from '@enact/spotlight/Spottable';
 import SlotItem from '@enact/moonstone/SlotItem';
 import React from 'react';
-//import ri from '@enact/ui/resolution';
+import ri from '@enact/ui/resolution';
 import debug from '../utils/debug';
 import css from './ImageItem.module.less';
 
@@ -31,30 +31,39 @@ function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
     //const url = item.art.poster;
     const url = item.thumbnail;
 
+    const scale = 0.5;
+    const w = 360;
+    const h = 540;
+
+    const width = scale*w;
+    const height = scale*h;
+
+    ri.config.orientationHandling = 'scale';
+    ri.init();
+    
+
     return (
-        <div className={css.container}> teste </div>
-        
+        <Cell shrink>
+            <SlotItem css={css}
+                style={{'backgroundImage': `url(${url})`, 'width': `${width}px`, 'height': `${height}px`}}
+                onFocus={() => (onFocusItem({ item }))}
+                onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
+            </SlotItem>
+        </Cell>
+
+
     );
 
 }
 
-export default Spottable(ImageItem);
-
-//<Image className={css.image} src={url} sizing="fill" />
-//style={{'backgroundImage': `url(${url})` }}
-
-/**
- * 
- * <SlotItem css={css}
-            onFocus={() => (onFocusItem({ item }))}
-            onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
-        </SlotItem>
- * 
- * 
- */
-
+export default ImageItem;
 
 /* BACKUP
+
+//width: 360px;
+//height: 540px;
+    
+
 .item {
 	margin: 5px;
 	padding: 3px;

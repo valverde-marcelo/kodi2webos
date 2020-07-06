@@ -11,29 +11,23 @@
  */
 
  .slotItem{
-	height: 25vh;
-	width: 200px;
-	margin-left: 1em;
+	margin: 0.5em;
+
+	border: solid whitesmoke;
 	
-	border: solid black;
-
-	background: transparent;
-
-	//background-position: center; /* Center the image */
-	//background-repeat: no-repeat; /* Do not repeat the image */
-	//background-size: cover; /* Resize the background image to cover the entire container */
+	background-position: center; /* Center the image */
+	background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: cover;
+	
+	transition: all 0.3s;
  }
 
  //sobrescreve os estilos do Moonstone
  .slotItem:focus{
-	border: solid whitesmoke;
-	background: transparent;
-	background-color: none;
-	//background-position: center; /* Center the image */
-	//background-repeat: no-repeat; /* Do not repeat the image */
-	//background-size: cover; /* Resize the background image to cover the entire container */
+	transform: scale(1.1);
  }
-
+ 
+/*
  .container {
 	border: solid whitesmoke;
 	height: 25vh;
@@ -46,6 +40,9 @@
 }
 
 .image{
-	//height: 100%;
+	height: 200px;
+	width: 300px;
 	margin: 0 auto;
 }
+
+*/
