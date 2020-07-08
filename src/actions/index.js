@@ -13,7 +13,7 @@
 import debug from '../utils/debug';
 const logger = debug('actions:index');
 
-export const navigate = (path, sectionID, itemID, item) => {
+export const navigate = (path, sectionID, itemID, item, back) => {
 	logger(`executou actions NAVIGATE: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 	return {
 		type: 'NAVIGATE',
@@ -21,6 +21,7 @@ export const navigate = (path, sectionID, itemID, item) => {
 		sectionID,
 		itemID,
 		item,
+		back,
 	};
 };
 

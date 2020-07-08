@@ -26,9 +26,11 @@ function exportedAPI() {
     console.log("<<<<<<<<<<< REAL API");
     return realAPI;
 }
+
+const api = exportedAPI();
+
 */
 
 const api = storage.getSync(DEMO_MODE, LOCAL_STORAGE_PREFIX_SERVER) ? mockAPI : realAPI;
-//const api = exportedAPI();
 
 export default api;

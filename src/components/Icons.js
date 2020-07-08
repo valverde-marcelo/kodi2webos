@@ -23,7 +23,7 @@ import cssModule from './Icons.module.less';
 import debug from '../utils/debug';
 const logger = debug('components:icons');
 
-import { SECTION_MOVIES, SECTION_TV_SHOWS, SECTION_COLLECTIONS, SECTION_FAVOURITES } from '../utils/global';
+import { SECTION_MOVIES, SECTION_TV_SHOWS, SECTION_COLLECTIONS, SECTION_FAVOURITES, SECTION_MOVIE_SETS } from '../utils/global';
 
 //const TvIcon = IconButtonDecorator(TvIconBase);
 //const MovieIcon = IconButtonDecorator(MovieIconBase);
@@ -80,7 +80,7 @@ const Icons = kind({
 				component = <IconButton css={css} color="yellow" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
 				break;
 
-			case SECTION_COLLECTIONS:
+			case SECTION_MOVIE_SETS:
 				component = <IconButton css={css} color="green" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
 
 				break;

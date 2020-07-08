@@ -38,7 +38,10 @@ function HorizontalList({ items, ...rest }) {
         }
 
         logger(rest);
-        content = items.map((item) => <ImageItem key={item.movieid} item={item} itemID={item.movieid.toString()} {...rest} />);
+        content = items.map((_item) => {
+                return (<ImageItem key={_item.movieid} item={_item} itemID={_item.movieid.toString()} {...rest} />)
+            }
+        );
     }
 
     return (<Row>{content}</Row>);

@@ -34,6 +34,15 @@ const defaultProperties = [
     'year'
 ];
 
+const defaulMovieSetsProperties = [	
+    "title",
+    "playcount",
+    "fanart",
+    "thumbnail",
+    "art",
+    "plot"
+];
+
 const getMoviesInProgress = (start, end) => {
 
     let message = {
@@ -127,8 +136,57 @@ const getMoviesLastViewed = (start, end) => {
     return message;
 }
 
+const getMovieSets = () => {
+
+    let message = {
+        id: uuid(),
+        jsonrpc: '2.0',
+        method: "VideoLibrary.GetMovieSets",
+        params: {}
+    };
+
+    let params = {
+        sort: {
+            order: 'ascending',
+            method: 'label'
+        },
+        properties: defaulMovieSetsProperties
+    };
+
+    message.params = params;
+
+    return message;
+}
+
+const getMovieSetDetails = (setid) => {
+
+    let message = {
+        id: uuid(),
+        jsonrpc: '2.0',
+        method: "VideoLibrary.GetMovieSetDetails",
+        params: {}
+    };
+
+    let params = {
+        setid: setid,
+        movies: {
+            sort: {
+                order: 'ascending',
+                method: 'year'
+            },
+            properties: defaultProperties
+        }
+    };
+
+    message.params = params;
+
+    return message;
+}
+
 export default {
     getMoviesInProgress,
     getMoviesLastAdded,
-    getMoviesLastViewed
+    getMoviesLastViewed,
+    getMovieSets,
+    getMovieSetDetails
 }

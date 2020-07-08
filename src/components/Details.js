@@ -11,6 +11,9 @@
  */
 
 import React from 'react';
+import ProgressBar from '@enact/moonstone/ProgressBar';
+import Button from '@enact/moonstone/Button';
+import SlotItem from '@enact/moonstone/SlotItem';
 import css from './Details.module.less';
 import debug from '../utils/debug';
 
@@ -65,7 +68,7 @@ export function Cast({ value }) {
 }
 
 export function Genre({ value }) {
-    logger(value);
+    //logger(value);
     let content = null;
     if (value && Array.isArray(value)) {
         content = `${value.join(", ")}`;
@@ -285,8 +288,39 @@ export function LineDetails({ value: item }) {
     </div>);
 }
 
+export function Progress({value}) {
+    let content = null;
+    let progress = null;
+
+    logger(value);
+
+    if (value) {
+        progress = value.position.toFixed()/value.total.toFixed() ;
+        content = <SlotItem css={css}>
+                        <div className={css.progressLabel}><center>Play</center></div>
+                        <ProgressBar css={css} progress={progress} />
+                    </SlotItem>;
+    }
+
+    return content;
+}
+
+export function PlayResumeButton({ onClick, value }) {
+	let content = null;
+
+	if (value) {
+		if (value.position.toFixed() > 0) {
+			content = <Button css={css} color="blue" onClick={onClick}>Resume</Button>;
+		} else {
+			content = <Button css={css} color="blue" onClick={onClick}>Play</Button>;
+		}
+	}
+
+	return content;
+}
+
 function Details(props) {
-    logger(props);
+    //logger(props);
     const item = props.item;
     return (
         <div>
@@ -299,8 +333,6 @@ function Details(props) {
         </div>
     );
 }
-
-
 
 export default Details;
 

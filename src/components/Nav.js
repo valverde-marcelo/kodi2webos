@@ -24,6 +24,7 @@ const logger = debug('components:nav');
 function Nav({ onChangeSection, onSettingsPanel, defaultSelected }) {
 
 	logger('entrou no render');
+	logger(SECTIONS);
 
 	return (<div className={css.main}>
 				<Group

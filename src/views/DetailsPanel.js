@@ -11,8 +11,7 @@
  */
 
 import React from 'react';
-import Button from '@enact/moonstone/Button';
-import { Title, LineDetails, Plot, Director, Genre, Cast, Ratings } from '../components/Details';
+import { Title, LineDetails, Plot, Director, Genre, Cast, Ratings, PlayResumeButton, Progress } from '../components/Details';
 import css from './DetailsPanel.module.less';
 import debug from '../utils/debug';
 
@@ -20,21 +19,7 @@ const logger = debug('views:detailspanel');
 
 //TODO: progress bar https://www.w3schools.com/howto/howto_js_progressbar.asp
 
-function PlayResumeButton({ onClick, value }) {
-	let component = null;
 
-	logger(value);
-
-	if (value) {
-		if (value.position.toFixed() > 0) {
-			component = <Button css={css} color="blue" onClick={onClick}>Resume</Button>;
-		} else {
-			component = <Button css={css} color="blue" onClick={onClick}>Play</Button>;
-		}
-	}
-
-	return (component);
-}
 
 function DetailsPanel({ onClick, item}) {
 	logger('entrou Details panel');
@@ -52,6 +37,8 @@ function DetailsPanel({ onClick, item}) {
 					<div style={{width: '60vw'}}><Genre value={item.genre} /></div>
 					<br />
 					<div><Ratings value={item.ratings} /></div>
+					<br />
+					<Progress value={item.resume}/>
 					<br />
 					<PlayResumeButton onClick={onClick} value={item.resume}/>
 				</div>

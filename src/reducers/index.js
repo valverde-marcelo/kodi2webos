@@ -19,7 +19,8 @@ const init = {
 	path: '/loading',
 	sectionID: 0,
 	itemID: "0000",
-	item: null
+	item: null,
+	back: null
 };
 
 function path(state = init, action) {
@@ -32,7 +33,8 @@ function path(state = init, action) {
 				path: action.path,
 				sectionID: action.sectionID,
 				itemID: action.itemID,
-				item: action.item
+				item: action.item,
+				back: action.back
 			};
 
 		case 'CHANGE_SECTION':

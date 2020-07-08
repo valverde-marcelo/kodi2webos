@@ -27,8 +27,10 @@ import SeasonsPanel from '../views/SeasonsPanel';
 import EpisodesPanel from '../views/EpisodesPanel';
 import SettingsPanel from '../views/SettingsPanel';
 import FavouritesPanel from '../views/FavouritesPanel';
+import MovieSetsPanel from '../views/MovieSetsPanel';
+import MovieSetsDetailsPanel from '../views/MovieSetsDetailsPanel';
 
-import { SECTION_FAVOURITES } from '../utils/global';
+import { SECTION_FAVOURITES, SECTION_MOVIE_SETS } from '../utils/global';
 
 import ri from '@enact/ui/resolution';
 
@@ -69,6 +71,8 @@ const App = kind({
 				case SECTION_FAVOURITES:
 					return onNavigate({ path: '/loading/first/favourites', sectionID });
 
+				case SECTION_MOVIE_SETS:
+					return onNavigate({ path: '/loading/first/moviesets', sectionID });
 
 				default:
 					return onChangeSection({ path: '/loading/first', sectionID });
@@ -87,15 +91,27 @@ const App = kind({
 		},
 
 		/**
+		 * Back = item para manter o valor ao passar pro proximo nível
+		 * quando volta, recupera o valor de 'back'
+		 */
+		_onSelectMovieSet: ({ sectionID, itemID, item }, { onNavigate }) => {
+			logger("chamou _onSelectMovieSet")
+			return onNavigate({ path: '/loading/first/moviesets/moviesetsdetails', sectionID, itemID, item, back:item })
+		},
+
+		/**
 		 * sintaxe original:
 		 * _onSixthPanel: (ev, { onNavigate }) => {
 		 *	return onNavigate({ path: '/first/fourth/fifth/sixth' })
 		 *	},
 		 */
 
-		_onBack: ({ path }, { onNavigate, itemID, item, sectionID }) => {
+		 /**
+		  * introduzida a variavel 'back' para guardar o valor anterior do 'item'
+		  */
+		_onBack: ({ path }, { onNavigate, itemID, item, sectionID, back }) => {
 			console.log(`App - chamou o _onBack: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
-			return onNavigate({ path, sectionID, itemID, item })
+			return onNavigate({ path, sectionID, itemID, item, back })
 		},
 
 		_onLoadingPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
@@ -113,18 +129,29 @@ const App = kind({
 			return onNavigate({ path: '/loading/first/favourites', sectionID })
 		},
 
+		/**
+		 * passa o valor de 'back' para frente
+		 */
+		_onMovieSetDetails: ({ sectionID, itemID, item }, { onNavigate, back }) => {
+			logger("chamou _onMovieSetDetails");
+			return onNavigate({ path: '/loading/first/moviesets/moviesetsdetails/details', sectionID, itemID, item, back })
+		},
+
+		_onMovieSetDetailsPlayer: (ev, { onNavigate, itemID, item, sectionID }) => {
+			logger("chamou _onMovieSetDetailsPlayer")
+			return onNavigate({ path: '/loading/first/moviesets/moviesetsdetails/details/player', sectionID, itemID, item })
+		},
+
+		
 		_onFirstPanel: (ev, { onNavigate, item, sectionID }) => {
 			//console.log("App - chamou o _onFirstPanel");
 			return onNavigate({ path: '/loading/first', sectionID, item })
 		},
 
-		/*
-		_onSecondPanel: (index, args) => {
-			console.log(index);
-			const { onNavigate } = args;
-			return onNavigate({ path: '/first/second', index })
+		_onSecondPanel: (ev, { onNavigate, item, sectionID }) => {
+			//console.log("App - chamou o _onSecondPanel");
+			return onNavigate({ path: '/loading/first/second', sectionID, item })
 		},
-		*/
 
 		_onThirdPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			//console.log("App - chamou o _onThirdPanel");
@@ -153,12 +180,29 @@ const App = kind({
 
 	},
 
-	render: ({ _onChangeSection, _onSelectItem, _onFirstPanel, _onThirdPanel, _onFifthPanel, _onSixthPanel, _onSeventhPanel, _onSettingsPanel, _onBack, path, itemID, item, sectionID, ...rest }) => {
-		logger(`entrou no render: path=${path}, sectionID=${sectionID}, itemID=${item}`);
+	render: ({ _onChangeSection,
+				_onSelectItem,
+				_onSelectMovieSet,
+				_onFirstPanel,
+				_onSecondPanel,
+				_onThirdPanel,
+				_onFifthPanel,
+				_onSixthPanel,
+				_onSeventhPanel,
+				_onSettingsPanel,
+				_onMovieSetDetails,
+				_onMovieSetDetailsPlayer,
+				_onBack,
+				path, itemID, item, sectionID, back, 
+				...rest }) => {
+		
+					logger(`entrou no render: path=${path}, sectionID=${sectionID}, itemID=${item}`);
 
 		delete rest.onInitConfig;
 		delete rest.onNavigate;
 		delete rest.onChangeSection;
+		delete rest._onLoadingPanel;
+		delete rest._onFavouritesPanel;
 
 		ri.config.orientationHandling = 'scale';
 		ri.init();
@@ -201,6 +245,13 @@ const App = kind({
 							<Route path="fifth" component={EpisodesPanel} sectionID={sectionID} itemID={itemID} item={item} next="sixth" onClick={_onSixthPanel}>
 								<Route path="sixth" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="seventh" onClick={_onSeventhPanel}>
 									<Route path="seventh" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
+								</Route>
+							</Route>
+						</Route>
+						<Route path="moviesets" next="moviesetsdetails" component={MovieSetsPanel} sectionID={sectionID} itemID={itemID} item={item} onSelectItem={_onSelectMovieSet}>
+							<Route path="moviesetsdetails" next="details" component={MovieSetsDetailsPanel} sectionID={sectionID} itemID={itemID} item={item} back={back} onSelectItem={_onMovieSetDetails}>
+								<Route path="details" next="player" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} back={back} onClick={_onMovieSetDetailsPlayer}>
+									<Route path="player" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item}/>
 								</Route>
 							</Route>
 						</Route>

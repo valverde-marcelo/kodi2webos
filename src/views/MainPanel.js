@@ -13,6 +13,8 @@
 import React from 'react';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import Scroller from '@enact/moonstone/Scroller';
+import SlotItem from '@enact/moonstone/SlotItem';
+import {Panel} from '@enact/moonstone/Panels';
 import Nav from '../components/Nav';
 import List from '../components/List';
 import Details from '../components/Details';
@@ -69,10 +71,10 @@ class MainPanel extends React.Component {
 				</Cell>
 				<Cell>
 					<Column className={css.containerRight}>
-						<Cell className={css.containerTop}>
-							<ContainerTop item={item} />
+						<Cell className={css.containerTop} size={'40vh'}>
+							<div><ContainerTop item={item} /></div>
 						</Cell>
-						<Cell className={css.containerBottom}>
+						<Cell className={css.containerBottom} size={'60vh'}>
 							<ContainerBottom onFocusItem={this.onFocusItem} sectionID={sectionID} {...rest} />
 						</Cell>
 					</Column>

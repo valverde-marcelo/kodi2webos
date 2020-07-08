@@ -25,8 +25,8 @@ const mapStateToProps = ({path}) => ({
 
 const mapStateToProps = (state) => {
 	logger("executou mapStateToProps");
-	const { path, sectionID, itemID, item } = state.path;
-	return { path, sectionID, itemID, item };
+	const { path, sectionID, itemID, item, back } = state.path;
+	return { path, sectionID, itemID, item, back };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -34,8 +34,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onNavigate: (object) => {
 			//console.log(object);
-			const { path, sectionID, itemID, item } = object;
-			return dispatch(navigate(path, sectionID, itemID, item));
+			const { path, sectionID, itemID, item, back } = object;
+			return dispatch(navigate(path, sectionID, itemID, item, back));
 		},
 		onChangeSection: (object) => {
 			const { path, sectionID } = object;

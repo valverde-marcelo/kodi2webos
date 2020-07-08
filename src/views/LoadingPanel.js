@@ -26,7 +26,8 @@ import {
 	MOVIES_LIST_IN_PROGRESS,
 	MOVIES_LIST_LAST_ADDED,
 	MOVIES_LIST_LAST_VIEWED,
-	PROTOCOL_HTTP
+	PROTOCOL_HTTP,
+	MOVIE_SETS_LIST_ALL
 } from '../utils/global';
 
 
@@ -48,7 +49,7 @@ const access = () => {
 	storage.setSync("access", n + 1, LOCAL_STORAGE_PREFIX_SERVER);
 }
 
-function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
+function LoadingPanel({ onFirstPanel, onSettingsPanel }) {
 
 	logger("entrou loadingPanel");
 
@@ -106,6 +107,9 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
 						logger("tudo ok! consumir api...")
 						await utils.sleep(STEP);
 
+						/**
+						 * MOVIES
+						 */
 						const moviesListInProgress = await api.getMoviesInProgress(0, 9);
 						logger(moviesListInProgress);
 						storage.setSync(MOVIES_LIST_IN_PROGRESS, moviesListInProgress);
@@ -117,6 +121,14 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
 						const moviesListLastViews = await api.getMoviesLastViewed(0, 9);
 						logger(moviesListLastViews);
 						storage.setSync(MOVIES_LIST_LAST_VIEWED, moviesListLastViews);
+
+						/**
+						 * MOVIE SETS
+						 */
+
+						const movieSetsListAll = await api.getMovieSets();
+						logger(movieSetsListAll);
+						storage.setSync(MOVIE_SETS_LIST_ALL, movieSetsListAll);
 
 						//const tvShows = api.getTVshows(0,10);
 						//logger(tvShows);
@@ -133,7 +145,7 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel, ...rest }) {
 	}, []);
 
 	return (
-		<Panel {...rest} className={css.panel}>
+		<Panel className={css.panel}>
 			<div className={css.container}>
 				<div className={css.loading}>
 					{isLoading ? (<div><CircularProgress size={100} /></div>) : (<div/>)}

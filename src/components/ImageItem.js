@@ -10,12 +10,7 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import { Column, Row, Cell } from '@enact/ui/Layout';
-import Image from '@enact/moonstone/Image';
-import Item from '@enact/moonstone/Item';
-import { ImageDecorator } from '@enact/moonstone/Image';
-import { ItemDecorator } from '@enact/moonstone/Item';
-import Spottable from '@enact/spotlight/Spottable';
+import { Cell } from '@enact/ui/Layout';
 import SlotItem from '@enact/moonstone/SlotItem';
 import React from 'react';
 import ri from '@enact/ui/resolution';
@@ -26,21 +21,24 @@ const logger = debug('components:imageItem');
 
 //TODO: implementar overlay para os vistos
 
-function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
-    logger("entrou");
+//{ onFocusItem, onSelectItem, sectionID, item, itemID }
+function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID, ...rest }) {
+    //logger("entrou");
+    
+    ri.config.orientationHandling = 'scale';
+    ri.init();
+    const fontSize = ri.calculateFontSize().replace('px', '');
+    //logger(fontSize);
+
     //const url = item.art.poster;
     const url = item.thumbnail;
 
-    const scale = 0.5;
+    const scale = 0.025*fontSize;
     const w = 360;
     const h = 540;
 
     const width = scale*w;
     const height = scale*h;
-
-    ri.config.orientationHandling = 'scale';
-    ri.init();
-    
 
     return (
         <Cell shrink>
@@ -53,7 +51,6 @@ function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID }) {
 
 
     );
-
 }
 
 export default ImageItem;
