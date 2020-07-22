@@ -1,12 +1,12 @@
 {
-  "id": "kodi2webos.tv.app",
-  "title": "kodi2webos",
-  "vendor": "Kodi2WebOS using Enact Moonstone",
-  "version": "0.0.1",
-  "type": "web",
-  "main": "index.html",
-  "icon": "icon.png",
-  "miniicon": "icon-mini.png",
-  "largeIcon": "icon-large.png",
-  "uiRevision": 2
+	"id": "kodi2webos",
+	"version": "1.0.0",
+	"vendor": "VALVERDE",
+	"type": "web",
+	"main": "./src/index.js",
+	"title": "Enact App Template",
+	"icon": "icon.png",
+	"miniicon": "icon-mini.png",
+	"largeIcon": "icon-large.png",
+	"uiRevision": 2
 }

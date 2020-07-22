@@ -12,34 +12,31 @@
 
 import React from 'react';
 import Group from '@enact/ui/Group';
-import { Cell } from '@enact/ui/Layout';
-import IconButton from '@enact/moonstone/IconButton';
-import Icons from './Icons';
+import Icons, {IconSettings} from './Icons';
 import { SECTIONS } from '../utils/global';
 import css from './Nav.module.less';
+import cssIcon from './Icons.module.less';
 import debug from '../utils/debug';
+import { Settings } from 'react-feather';
 
 const logger = debug('components:nav');
 
 function Nav({ onChangeSection, onSettingsPanel, defaultSelected }) {
 
 	logger('entrou no render');
-	logger(SECTIONS);
 
-	return (<div className={css.main}>
-				<Group
-					childComponent={Icons}
-					selectedProp="selected"
-					onSelect={onChangeSection}
-					select="radio"
-					itemProps={{ defaultSelected }}
-				>
-					{SECTIONS}
-				</Group>
-				<Cell style={{marginTop: '10px'}}>
-					<IconButton backgroundOpacity="translucent" size="small" onClick={onSettingsPanel}>list</IconButton>
-				</Cell>
-			</div>
+	return (<div className={css.container}>
+		<Group
+			childComponent={Icons}
+			selectedProp="selected"
+			onSelect={onChangeSection}
+			select="radio"
+			itemProps={{ defaultSelected }}
+		>
+			{SECTIONS}
+		</Group>
+		<IconSettings className={cssIcon.icon} onClick={onSettingsPanel}><Settings/></IconSettings>
+	</div>
 	);
 
 }

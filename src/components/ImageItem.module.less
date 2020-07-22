@@ -10,25 +10,26 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
- .slotItem{
-	margin-left: 0.25em;
-	margin-right: 0.25em;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+ .image{
+	margin: 0.5em;
 
-	border: solid whitesmoke;
+
+
+	border: 1px solid #CCCCCC;;
 	
 	background-position: center; /* Center the image */
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: cover;
 	
 	transition: all 0.3s;
+	opacity: 0.7;
  }
 
  //sobrescreve os estilos do Moonstone
- .slotItem:focus{
-	border: solid tomato;
+ .image:focus{
+	border: 1px solid tomato;;
 	transform: scale(1.1);
+	opacity: 1;
  }
  
 /*

@@ -10,98 +10,60 @@
  * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
  */
 
-import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
-import React from 'react';
-//import { IconButtonDecorator } from '@enact/moonstone/IconButton';
-//import TvIconBase from '@material-ui/icons/Tv';
-//import MovieIconBase from '@material-ui/icons/Movie';
-import { Cell } from '@enact/ui/Layout';
-import IconButton from '@enact/moonstone/IconButton';
 
-import cssModule from './Icons.module.less';
+import React from 'react';
+import Spottable from '@enact/spotlight/Spottable';
+import { Film, Tv, Grid, Star} from 'react-feather';
+
+import css from './Icons.module.less';
 import debug from '../utils/debug';
 const logger = debug('components:icons');
 
 import { SECTION_MOVIES, SECTION_TV_SHOWS, SECTION_COLLECTIONS, SECTION_FAVOURITES, SECTION_MOVIE_SETS } from '../utils/global';
 
-//const TvIcon = IconButtonDecorator(TvIconBase);
-//const MovieIcon = IconButtonDecorator(MovieIconBase);
 
-const css = {
-	iconButton: cssModule.default,
-	small: cssModule.small,
-	large: cssModule.large,
-	selected: cssModule.selected
+function IconBase({ children, ...rest }){
+	return (<div {...rest}>{children}</div>);
 }
 
-const Icons = kind({
-	name: "Icons",
 
-	propTypes: {
-		children: PropTypes.string,
-		onClick: PropTypes.func.isRequired,
-		selected: PropTypes.bool,
-		defaultSelected: PropTypes.number,
-	},
+const IconMovies = Spottable(IconBase);
+const IconTvShows = Spottable(IconBase);
+const IconFavourites = Spottable(IconBase);
+const IconMovieSets = Spottable(IconBase);
+export const IconSettings = Spottable(IconBase);
 
-	defaultProps: {
-		//pressed: true,
-	},
 
-	computed: {
-		fontSize: ({ "data-index": index, defaultSelected }) => {
-			if (index === defaultSelected) {
-				return "large";
-			}
-			return "small";
-		},
+function Icons({ children, onClick, ...rest }) {
 
-		selected: ({ "data-index": index, defaultSelected }) => {
-			if (index === defaultSelected) {
-				return true;
-			}
-			return false;
-		},
-	},
+	logger("entrou");
 
-	render: ({ selected, children, onClick }) => {
+	logger(rest);
+	let component = null;
 
-		logger(children);
+	switch (children) {
+		case SECTION_MOVIES:
+			component = <IconMovies className={css.icon} tabIndex={1} onClick={onClick}><Film /></IconMovies>;
+			break;
 
-		let component = "";
+		case SECTION_TV_SHOWS:
+			component = <IconTvShows className={css.icon} onClick={onClick}><Tv/></IconTvShows>;
+			break;
 
-		switch (children) {
-			case SECTION_MOVIES:
-				component = <IconButton css={css} color="red" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
-				break;
+		case SECTION_MOVIE_SETS:
+			component = <IconMovieSets className={css.icon} onClick={onClick}><Grid/></IconMovieSets>;
 
-			case SECTION_TV_SHOWS:
-				component = <IconButton css={css} color="yellow" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
-				break;
+			break;
 
-			case SECTION_MOVIE_SETS:
-				component = <IconButton css={css} color="green" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
+		case SECTION_FAVOURITES:
+			component = <IconFavourites className={css.icon} onClick={onClick}><Star/></IconFavourites>;
+			break;
 
-				break;
-
-			case SECTION_FAVOURITES:
-				component = <IconButton css={css} color="blue" backgroundOpacity="translucent" selected={selected} onClick={onClick}>star</IconButton>;
-				break;
-
-			default:
-				break;
-		}
-
-		return (<Cell style={{ marginTop: '10px' }}>{component}</Cell>);
+		default:
+			break;
 	}
-});
+
+	return (<div>{component}</div>);
+}
 
 export default Icons;
-
-/**
- * <Cell><TvIcon fontSize="small" onClick={onChangeSection}>TV Shows</TvIcon></Cell>
-	<Cell><MovieIcon fontSize="small" onClick={onChangeSection}>Movies</MovieIcon></Cell>
-
-	return (<Cell>{component}</Cell>)
- */

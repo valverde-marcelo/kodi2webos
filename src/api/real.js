@@ -72,6 +72,26 @@ const getMoviesLastViewed = async (start, end) => {
   }
 }
 
+const getMoviesByGenre = async (start, end, genre) => {
+  let message = videoLibrary.getMoviesByGenre(start, end, genre);
+  try {
+    const response = await axios.post(endpoint, message);
+    return response.data.result.movies;
+  } catch (error) {
+    return error;
+  }
+}
+
+const getGenres = async () => {
+  let message = videoLibrary.getGenres();
+  try {
+    const response = await axios.post(endpoint, message);
+    return response.data.result.genres;
+  } catch (error) {
+    return error;
+  }
+}
+
 const getMovieSets = async () => {
   let message = videoLibrary.getMovieSets();
   try {
@@ -109,6 +129,8 @@ export default {
   getMoviesInProgress,
   getMoviesLastAdded,
   getMoviesLastViewed,
+  getMoviesByGenre,
+  getGenres,
   getMovieSets,
   getMovieSetDetails,
   prepareDownload

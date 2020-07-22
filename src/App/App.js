@@ -1,15 +1,3 @@
-/*
- * File: App.js
- * Project: App
- * File Created: Saturday, 2nd May 2020 10:08:34 pm
- * Author: valverde82 (valverde.marcelo@gmail.com)
- * -----
- * Last Modified: Wednesday, 10th June 2020 3:28:31 pm
- * Modified By: valverde82 (valverde.marcelo@gmail.com>)
- * -----
- * Copyright 2020 © VALVERDE, Marcelo Richard. All Rigths Reserved.
- */
-
 import kind from '@enact/core/kind';
 import MoonstoneDecorator from '@enact/moonstone/MoonstoneDecorator';
 import { Panels, Routable, Route } from '@enact/moonstone/Panels';
@@ -35,22 +23,11 @@ import { SECTION_FAVOURITES, SECTION_MOVIE_SETS } from '../utils/global';
 import ri from '@enact/ui/resolution';
 
 import debug from '../utils/debug';
+import css from './App.module.less';
 
 const logger = debug('App:App');
 
-//import css from './App.module.less';
-
-
-//Routable Decorator
 const RoutablePanels = Routable({ navigate: 'onBack' }, Panels);
-
-/**
- * Rotas:
- * 1) Main - Movies -> 2) Details -> 3) Player -> 1) Main
- * 1) Main - TV-Shows -> 4) Seasons -> 5) Episodes -> 6) Details -> 7) Player -> 1) Main
- */
-
-//TODO: colocar loadingPanel como primeiro nivel... todos voltam para ele
 
 const App = kind({
 	name: 'App',
@@ -63,9 +40,7 @@ const App = kind({
 
 	handlers: {
 
-		// Método onNavigate recebe um objeto como parâmetro, contendo atributos: 'path', 'sectionID', 'itemID'
-
-		_onChangeSection: ({ data: section, selected: sectionID }, { onNavigate, onChangeSection }) => {
+			_onChangeSection: ({ data: section, selected: sectionID }, { onNavigate, onChangeSection }) => {
 			console.log("App - chamou o _onChangeSection: " + section + " - " + sectionID);
 			switch (section) {
 				case SECTION_FAVOURITES:
@@ -80,7 +55,7 @@ const App = kind({
 		},
 
 
-		//TODO: fix JSX props should not use arrow functions react/jsx-no-bind
+	
 		_onSelectItem: ({ sectionID, itemID, item }, { onNavigate }) => {
 			logger("chamou o _onSelectItem: " + itemID + " " + sectionID);
 			if (sectionID === 0) {
@@ -90,25 +65,13 @@ const App = kind({
 			}
 		},
 
-		/**
-		 * Back = item para manter o valor ao passar pro proximo nível
-		 * quando volta, recupera o valor de 'back'
-		 */
+		
 		_onSelectMovieSet: ({ sectionID, itemID, item }, { onNavigate }) => {
 			logger("chamou _onSelectMovieSet")
 			return onNavigate({ path: '/loading/first/moviesets/moviesetsdetails', sectionID, itemID, item, back:item })
 		},
 
-		/**
-		 * sintaxe original:
-		 * _onSixthPanel: (ev, { onNavigate }) => {
-		 *	return onNavigate({ path: '/first/fourth/fifth/sixth' })
-		 *	},
-		 */
-
-		 /**
-		  * introduzida a variavel 'back' para guardar o valor anterior do 'item'
-		  */
+		
 		_onBack: ({ path }, { onNavigate, itemID, item, sectionID, back }) => {
 			console.log(`App - chamou o _onBack: path=${path}, sectionID=${sectionID}, itemID=${itemID}`);
 			return onNavigate({ path, sectionID, itemID, item, back })
@@ -129,9 +92,6 @@ const App = kind({
 			return onNavigate({ path: '/loading/first/favourites', sectionID })
 		},
 
-		/**
-		 * passa o valor de 'back' para frente
-		 */
 		_onMovieSetDetails: ({ sectionID, itemID, item }, { onNavigate, back }) => {
 			logger("chamou _onMovieSetDetails");
 			return onNavigate({ path: '/loading/first/moviesets/moviesetsdetails/details', sectionID, itemID, item, back })
@@ -144,27 +104,16 @@ const App = kind({
 
 		
 		_onFirstPanel: (ev, { onNavigate, item, sectionID }) => {
-			//console.log("App - chamou o _onFirstPanel");
 			return onNavigate({ path: '/loading/first', sectionID, item })
 		},
 
 		_onSecondPanel: (ev, { onNavigate, item, sectionID }) => {
-			//console.log("App - chamou o _onSecondPanel");
 			return onNavigate({ path: '/loading/first/second', sectionID, item })
 		},
 
 		_onThirdPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
-			//console.log("App - chamou o _onThirdPanel");
 			return onNavigate({ path: '/loading/first/second/third', sectionID, itemID, item })
 		},
-
-		/*
-		_onFourthPanel: (ev, args) => {
-			console.log(ev);
-			const { onNavigate } = args;
-			return onNavigate({ path: '/first/fourth' })
-		},
-		*/
 
 		_onFifthPanel: (ev, { onNavigate, itemID, item, sectionID }) => {
 			return onNavigate({ path: '/loading/first/fourth/fifth', sectionID, itemID, item })
@@ -209,55 +158,33 @@ const App = kind({
 
 		logger(ri);
 
-		const fontSize = ri.calculateFontSize();
-		//const fontSize = '24px';
+		const fontSize = '16px';
 		logger(fontSize);
 
-		/*
-		const ratio = ri.getAspectRatio();
-		logger(ratio);
-
-		const ratioName = ri.getAspectRatioName();
-		logger(ratioName);
-
-		const resClasses = ri.getResolutionClasses();
-		logger(resClasses);
-
-		const screenType = ri.getScreenType();
-		logger(screenType);
-
-		logger(ri.scale(100));
-
-		logger(ri.scaleToRem(100));
-
-		logger(ri.unitToPixelFactors);
-		*/
-
-
 		return (
-			<RoutablePanels {...rest} style={{fontSize: fontSize}} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
+			<RoutablePanels className={css.app} {...rest} arranger={SlideLeftArranger} onBack={_onBack} path={path} noCloseButton>
 				<Route path="loading" component={LoadingPanel} next="first" onFirstPanel={_onFirstPanel} onSettingsPanel={_onSettingsPanel}>
-					<Route path="first" component={MainPanel} sectionID={sectionID} itemID={itemID} item={item} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
-						<Route path="second" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="third" onClick={_onThirdPanel}>
-							<Route path="third" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
+					<Route path="first" component={MainPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} next="second" onChangeSection={_onChangeSection} onSelectItem={_onSelectItem} onSettingsPanel={_onSettingsPanel}>
+						<Route path="second" component={DetailsPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} next="third" onClick={_onThirdPanel}>
+							<Route path="third" component={PlayerPanel} fontSize={fontSize}  sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
 						</Route>
-						<Route path="fourth" component={SeasonsPanel} sectionID={sectionID} itemID={itemID} item={item} next="fifth" onClick={_onFifthPanel}>
-							<Route path="fifth" component={EpisodesPanel} sectionID={sectionID} itemID={itemID} item={item} next="sixth" onClick={_onSixthPanel}>
-								<Route path="sixth" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} next="seventh" onClick={_onSeventhPanel}>
-									<Route path="seventh" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
+						<Route path="fourth" component={SeasonsPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} next="fifth" onClick={_onFifthPanel}>
+							<Route path="fifth" component={EpisodesPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} next="sixth" onClick={_onSixthPanel}>
+								<Route path="sixth" component={DetailsPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} next="seventh" onClick={_onSeventhPanel}>
+									<Route path="seventh" component={PlayerPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} next="first" onClick={_onFirstPanel} />
 								</Route>
 							</Route>
 						</Route>
-						<Route path="moviesets" next="moviesetsdetails" component={MovieSetsPanel} sectionID={sectionID} itemID={itemID} item={item} onSelectItem={_onSelectMovieSet}>
-							<Route path="moviesetsdetails" next="details" component={MovieSetsDetailsPanel} sectionID={sectionID} itemID={itemID} item={item} back={back} onSelectItem={_onMovieSetDetails}>
-								<Route path="details" next="player" component={DetailsPanel} sectionID={sectionID} itemID={itemID} item={item} back={back} onClick={_onMovieSetDetailsPlayer}>
-									<Route path="player" component={PlayerPanel} sectionID={sectionID} itemID={itemID} item={item}/>
+						<Route path="moviesets" next="moviesetsdetails" component={MovieSetsPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} onSelectItem={_onSelectMovieSet}>
+							<Route path="moviesetsdetails" next="details" component={MovieSetsDetailsPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} back={back} onSelectItem={_onMovieSetDetails}>
+								<Route path="details" next="player" component={DetailsPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item} back={back} onClick={_onMovieSetDetailsPlayer}>
+									<Route path="player" component={PlayerPanel} fontSize={fontSize} sectionID={sectionID} itemID={itemID} item={item}/>
 								</Route>
 							</Route>
 						</Route>
-						<Route path="favourites" component={FavouritesPanel} />
+						<Route path="favourites" component={FavouritesPanel} fontSize={fontSize}/>
 					</Route>
-					<Route path="settings" component={SettingsPanel} />
+					<Route path="settings" component={SettingsPanel} fontSize={fontSize}/>
 				</Route>
 			</RoutablePanels>
 		);

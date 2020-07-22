@@ -26,6 +26,8 @@ export const LABEL_MOVIES_LIST_LAST_VIEWED = "Últimos vistos";
 export const MOVIES_LIST_IN_PROGRESS = "movies-list-in-progress";
 export const MOVIES_LIST_LAST_ADDED = "movies-list-last-added";
 export const MOVIES_LIST_LAST_VIEWED = "movies-list-last-viewed";
+export const MOVIES_LIST_GENRES = "movies-list-genres";
+export const MOVIES_LIST_BY_GENRE_PREFIX = "movies-list-by-genre-";
 
 /**
  * MOVIE SETS

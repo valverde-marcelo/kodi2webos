@@ -37,14 +37,14 @@ function HorizontalList({ items, ...rest }) {
             utils.objectFixURL(items[index]);
         }
 
-        logger(rest);
+        //logger(rest);
         content = items.map((_item) => {
                 return (<ImageItem key={_item.movieid} item={_item} itemID={_item.movieid.toString()} {...rest} />)
             }
         );
     }
 
-    return (<Row>{content}</Row>);
+    return (<Row className={css.horizontalList}>{content}</Row>);
 }
 
 function List({ listID, title, ...rest }) {

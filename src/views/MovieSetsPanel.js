@@ -51,11 +51,11 @@ class MovieSetsPanel extends React.Component {
 	render() {
 		logger("entrou render()");
 
-        const { onSelectItem, ...rest } = Object.assign({}, this.props);
+        const { onSelectItem, fontSize, ...rest } = Object.assign({}, this.props);
         //logger(rest);
         
 		return (
-			<section className={css.main} style={{ 'backgroundImage': `url(${this.state.backgroundImage})` }}>
+			<div className={css.main} style={{ 'backgroundImage': `url(${this.state.backgroundImage})`, fontSize:fontSize }}>
 				<Scroller direction="vertical" verticalScrollbar="hidden">
 					<Grid
                         items={this.state.items}
@@ -65,7 +65,7 @@ class MovieSetsPanel extends React.Component {
                         {...rest}
                        />
 				</Scroller>
-			</section>
+			</div>
 		);
 	}
 }

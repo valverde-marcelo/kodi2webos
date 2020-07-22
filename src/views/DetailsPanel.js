@@ -11,8 +11,9 @@
  */
 
 import React from 'react';
-import { Title, LineDetails, Plot, Director, Genre, Cast, Ratings, PlayResumeButton, Progress } from '../components/Details';
+import { Title, LineDetails, Plot, Director, Genre, Cast, Ratings, PlayResumeButton, Progress, Button } from '../components/Details';
 import css from './DetailsPanel.module.less';
+import cssDetails from '../components/Details.module.less';
 import debug from '../utils/debug';
 
 const logger = debug('views:detailspanel');
@@ -21,26 +22,29 @@ const logger = debug('views:detailspanel');
 
 
 
-function DetailsPanel({ onClick, item}) {
+function DetailsPanel({ onClick, item, fontSize}) {
 	logger('entrou Details panel');
 	const url = item.art.fanart;
 
-	return (<div className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
+	//Spotlight.focus('.resume');
+	//const current = Spotlight.getCurrent();
+	//logger(current);
+
+	const content = <PlayResumeButton value={item.resume}/>;
+	
+	return (<div className={css.main} style={{ 'backgroundImage': `url(${url})`, fontSize:fontSize}}>
 				<div className={css.container}>
 					<div><Title value={item.title}/></div>
 					<div><LineDetails value={item} /></div>
 					<br/>
 					<div style={{width: '60vw'}}><Plot value={item.plot} /></div>
-					<br />
 					<div style={{width: '60vw'}}><Cast value={item.cast} /></div>
 					<div style={{width: '60vw'}}><Director value={item.director} /></div>
 					<div style={{width: '60vw'}}><Genre value={item.genre} /></div>
-					<br />
 					<div><Ratings value={item.ratings} /></div>
-					<br />
-					<Progress value={item.resume}/>
-					<br />
-					<PlayResumeButton onClick={onClick} value={item.resume}/>
+					<Button className={cssDetails.button} onClick={onClick} tabIndex='1'>
+						<PlayResumeButton value={item.resume}/>
+					</Button>
 				</div>
 			</div>
 	);
@@ -48,6 +52,7 @@ function DetailsPanel({ onClick, item}) {
 
 
 export default DetailsPanel;
+
 
 /*
 <div className={css.content}>

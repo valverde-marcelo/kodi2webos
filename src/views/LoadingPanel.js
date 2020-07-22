@@ -27,7 +27,9 @@ import {
 	MOVIES_LIST_LAST_ADDED,
 	MOVIES_LIST_LAST_VIEWED,
 	PROTOCOL_HTTP,
-	MOVIE_SETS_LIST_ALL
+	MOVIE_SETS_LIST_ALL,
+	MOVIES_LIST_BY_GENRE_PREFIX,
+	MOVIES_LIST_GENRES
 } from '../utils/global';
 
 
@@ -110,6 +112,7 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel }) {
 						/**
 						 * MOVIES
 						 */
+
 						const moviesListInProgress = await api.getMoviesInProgress(0, 9);
 						logger(moviesListInProgress);
 						storage.setSync(MOVIES_LIST_IN_PROGRESS, moviesListInProgress);
@@ -121,6 +124,25 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel }) {
 						const moviesListLastViews = await api.getMoviesLastViewed(0, 9);
 						logger(moviesListLastViews);
 						storage.setSync(MOVIES_LIST_LAST_VIEWED, moviesListLastViews);
+
+						/**
+						 * MOVIES BY GENRE
+						 */
+
+						const genres = await api.getGenres();
+						logger(genres);
+						storage.setSync(MOVIES_LIST_GENRES, genres);
+
+						const promises = genres.map(async (genre) => {
+							let index = MOVIES_LIST_BY_GENRE_PREFIX + genre.genreid;
+							let moviesListByGenre = await api.getMoviesByGenre(0, 9, genre.label);
+							logger(moviesListByGenre);
+							storage.setSync(index, moviesListByGenre);
+						}
+
+						);
+
+						await Promise.all(promises);
 
 						/**
 						 * MOVIE SETS
@@ -148,7 +170,7 @@ function LoadingPanel({ onFirstPanel, onSettingsPanel }) {
 		<Panel className={css.panel}>
 			<div className={css.container}>
 				<div className={css.loading}>
-					{isLoading ? (<div><CircularProgress size={100} /></div>) : (<div/>)}
+					{isLoading ? (<div><CircularProgress size={100} /></div>) : (<div />)}
 				</div>
 			</div>
 		</Panel>

@@ -12,8 +12,8 @@
 
 import React from 'react';
 import ProgressBar from '@enact/moonstone/ProgressBar';
-import Button from '@enact/moonstone/Button';
-import SlotItem from '@enact/moonstone/SlotItem';
+import Spottable from '@enact/spotlight/Spottable';
+import { Play } from 'react-feather';
 import css from './Details.module.less';
 import debug from '../utils/debug';
 
@@ -288,48 +288,73 @@ export function LineDetails({ value: item }) {
     </div>);
 }
 
-export function Progress({value}) {
+export function Progress({ value, width, float }) {
     let content = null;
     let progress = null;
 
-    logger(value);
+    //logger(value);
 
-    if (value) {
-        progress = value.position.toFixed()/value.total.toFixed() ;
-        content = <SlotItem css={css}>
-                        <div className={css.progressLabel}><center>Play</center></div>
-                        <ProgressBar css={css} progress={progress} />
-                    </SlotItem>;
+    if (value && value.position.toFixed() > 0) {
+        progress = value.position.toFixed() / value.total.toFixed();
+        content = <ProgressBar css={css} style={{ width: width, float: float }} progress={progress} />;
     }
 
     return content;
 }
 
-export function PlayResumeButton({ onClick, value }) {
-	let content = null;
+export function ProgressLeft({ value }) {
+    let content = null;
+    let left = null;
 
-	if (value) {
-		if (value.position.toFixed() > 0) {
-			content = <Button css={css} color="blue" onClick={onClick}>Resume</Button>;
-		} else {
-			content = <Button css={css} color="blue" onClick={onClick}>Play</Button>;
-		}
-	}
+    if (value && value.position.toFixed() > 0) {
+        left = ((value.total - value.position) / 60).toFixed();
+        content = <div className={css.left}>Left: {left}min</div>;
+    }
 
-	return content;
+    return content;
 }
 
-function Details(props) {
+export function PlayResumeButton({ value }) {
+    let label = null;
+    let content = null;
+    let progress = null;
+
+    if (value) {
+        if (value.position.toFixed() > 0) {
+            label = "Resume";
+            progress = <Progress value={value} width='10vw'/>;
+        } else {
+            label = "Play";
+        }
+
+        content = <div className={css.playResumeButtonContainer}>
+            <Play className={css.icon} />
+            <div className={css.label}>{label}</div>
+            {progress}
+        </div>;
+    }
+
+    return (content);
+}
+
+
+function ButtonBase({ children, ...rest }) {
+    return (<div {...rest}>{children}</div>);
+}
+
+export const Button = Spottable(ButtonBase);
+
+function Details({ item }) {
     //logger(props);
-    const item = props.item;
     return (
         <div>
             <div><Title value={item.title} /></div>
             <div><LineDetails value={item} /></div>
-            <br />
             <div><Tagline value={item.tagline} /></div>
-            <br />
             <div><Genre value={item.genre} /></div>
+            <div style={{ display: 'block' }}>
+                <Progress value={item.resume} width='15vw' float='left' />
+                <ProgressLeft value={item.resume} /></div>
         </div>
     );
 }

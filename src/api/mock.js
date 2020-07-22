@@ -62,6 +62,13 @@ const getMoviesLastViewed = async (start, end) => {
     return movies;
 }
 
+const getMovieSets = async () => {
+    logger("getMovieSets");
+    await utils.sleep(STEP);
+    let movies = createMockData(MOCK_MOVIE, 100);
+    return movies;
+}
+
 const prepareDownload = async (path) => {
     logger("prepareDownload" + {path});
     await utils.sleep(STEP);
@@ -74,5 +81,6 @@ export default {
     getMoviesInProgress,
     getMoviesLastAdded,
     getMoviesLastViewed,
+    getMovieSets,
     prepareDownload
 }

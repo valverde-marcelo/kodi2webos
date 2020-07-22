@@ -102,25 +102,51 @@
   text-shadow: 0.1em 0.1em 0.2em black;
 }
 
-.button{
-  border: 1px solid #CCCCCC;
+.playResumeButtonContainer{
+  padding-left: 0.5em;
+  vertical-align: middle;
+  display: table-cell;
+  min-width: 25vw;
 }
 
 .progressBar{
   border: 1px solid #CCCCCC;
+  height: 0.5em;
+  font-size: 0.8em;
+  float: right;
 }
 
-.slotItem {
+.icon {
+  height: 1em;
+  font-size: 0.8em;
+}
+
+.label{
+  height: 1em;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 2em;
+  //vertical-align: 0.2em;
+  vertical-align: top;
+}
+
+.left{
+  display: inline-block;
+  font-size: 0.7em;
+}
+
+.button{
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  width: 25vw;
+  min-width: 25vw;
+  height: 1.5em;
+  margin-bottom: 0.5em;
+  transition: all 0.3s;
+  opacity: 0.5;
+}
+
+.button:focus{
   border: 1px solid #CCCCCC;
-  width: 15vw;
-  font-size: 1em;
-}
-
-.slotItem :focus{
-  border: 1px solid tomato;
-  color: tomato;
-}
-
-.progressLabel{
-
+  opacity: 1;
 }

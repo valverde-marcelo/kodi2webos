@@ -14,6 +14,7 @@
 import React from 'react';
 import { Column, Row, Cell } from '@enact/ui/Layout';
 import Scroller from '@enact/moonstone/Scroller';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '../components/List';
 import Details from '../components/Details';
 import utils from '../utils/utils';
@@ -54,7 +55,8 @@ class MovieSetsDetailsPanel extends React.Component {
             movieSetTitle: defaultItem.title,
             item: defaultItem,
             index: index,
-            setId: setId
+            setId: setId,
+            movies: null
         }
     }
 
@@ -70,11 +72,13 @@ class MovieSetsDetailsPanel extends React.Component {
             logger("coleção não encontrada -> buscar no servidor");
             movies = await api.getMovieSetDetails(setId);
             storage.setSync(index, movies);
-            await utils.sleep(1000);
+            //await utils.sleep(1000);
         } else {
             logger("coleção encontrada -> usar local");
-            await utils.sleep(1000);
+            //await utils.sleep(1000);
         }
+
+        this.setState({ movies: movies });
     }
 
     onFocusItem = ({ item }) => {
@@ -89,18 +93,24 @@ class MovieSetsDetailsPanel extends React.Component {
         const item = this.state.item;
         const title = this.state.movieSetTitle;
         const index = this.state.index;
+        const movies = this.state.movies;
+        let isLoading = true;
+
+        if(movies && movies.length > 0){
+            isLoading = false;
+        }
 
         logger("INDEX: " + index);
 
-        const { onChangeSection, onSettingsPanel, sectionID, ...rest } = Object.assign({}, this.props);
+        const { onChangeSection, onSettingsPanel, sectionID, fontSize, ...rest } = Object.assign({}, this.props);
 
        return (
-            <Column className={css.main} style={{ 'backgroundImage': `url(${url})` }}>
+            <Column className={css.main} style={{ 'backgroundImage': `url(${url})`, fontSize:fontSize }}>
                 <Cell size={'40vh'}>
                     <div><ContainerTop title={title} item={item} /></div>
                 </Cell>
                 <Cell size={'60vh'}>
-                    <ContainerBottom index={index} onFocusItem={this.onFocusItem} sectionID={sectionID} {...rest} />
+                    {isLoading ? (<div><center><CircularProgress size={100} /></center></div>) : (<ContainerBottom index={index} onFocusItem={this.onFocusItem} sectionID={sectionID} {...rest} />)}     
                 </Cell>
             </Column>
         );

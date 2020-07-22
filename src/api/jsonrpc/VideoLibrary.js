@@ -34,7 +34,7 @@ const defaultProperties = [
     'year'
 ];
 
-const defaulMovieSetsProperties = [	
+const defaulMovieSetsProperties = [
     "title",
     "playcount",
     "fanart",
@@ -136,6 +136,63 @@ const getMoviesLastViewed = (start, end) => {
     return message;
 }
 
+const getMoviesByGenre = (start, end, genre) => {
+
+    let message = {
+        id: uuid(),
+        jsonrpc: '2.0',
+        method: "VideoLibrary.GetMovies",
+        params: {}
+    };
+
+    let params = {
+        limits: {
+            start: start,
+            end: end
+        },
+        filter: {
+            and: [{
+                field: 'playcount',
+                operator: 'is',
+                value: '0'
+            },
+            {
+                field: 'genre',
+                operator: 'is',
+                value: genre
+            }]
+
+        },
+        sort: {
+            order: 'descending',
+            method: 'dateadded'
+        },
+        properties: defaultProperties
+    };
+
+    message.params = params;
+
+    return message;
+}
+
+const getGenres = () => {
+
+    let message = {
+        id: uuid(),
+        jsonrpc: '2.0',
+        method: "VideoLibrary.GetGenres",
+        params: {}
+    };
+
+    let params = {
+        type : "movie"
+    };
+
+    message.params = params;
+
+    return message;
+}
+
 const getMovieSets = () => {
 
     let message = {
@@ -187,6 +244,8 @@ export default {
     getMoviesInProgress,
     getMoviesLastAdded,
     getMoviesLastViewed,
+    getMoviesByGenre,
+    getGenres,
     getMovieSets,
     getMovieSetDetails
 }

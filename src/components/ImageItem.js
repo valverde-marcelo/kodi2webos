@@ -12,6 +12,7 @@
 
 import { Cell } from '@enact/ui/Layout';
 import SlotItem from '@enact/moonstone/SlotItem';
+import Spottable from '@enact/spotlight/Spottable';
 import React from 'react';
 import ri from '@enact/ui/resolution';
 import debug from '../utils/debug';
@@ -20,6 +21,13 @@ import css from './ImageItem.module.less';
 const logger = debug('components:imageItem');
 
 //TODO: implementar overlay para os vistos
+
+function ImageBase({ children, ...rest }){
+	return (<div {...rest}>{children}</div>);
+}
+
+
+const ImageSpottable = Spottable(ImageBase);
 
 //{ onFocusItem, onSelectItem, sectionID, item, itemID }
 function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID, ...rest }) {
@@ -42,11 +50,11 @@ function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID, ...rest
 
     return (
         <Cell shrink>
-            <SlotItem css={css}
+            <ImageSpottable className={css.image}
                 style={{'backgroundImage': `url(${url})`, 'width': `${width}px`, 'height': `${height}px`}}
                 onFocus={() => (onFocusItem({ item }))}
                 onClick={() => (onSelectItem({ sectionID, itemID, item }))}>
-            </SlotItem>
+            </ImageSpottable>
         </Cell>
 
 
@@ -54,6 +62,8 @@ function ImageItem({ onFocusItem, onSelectItem, sectionID, item, itemID, ...rest
 }
 
 export default ImageItem;
+
+
 
 /* BACKUP
 

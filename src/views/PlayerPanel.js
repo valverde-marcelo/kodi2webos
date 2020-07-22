@@ -27,7 +27,7 @@ const logger = debug('views:plauerpanel');
 
 //TODO: ao sair do video (onBack) deve parar a reprodução, caso constrario fica consumindo espaço em memoria (download em segundo plano)
 
-function PlayerPanel({ item, ...rest }) {
+function PlayerPanel({ item, fontSize, ...rest }) {
 	logger("entrou PLayerPanel");
 	logger(rest);
 
@@ -43,10 +43,10 @@ function PlayerPanel({ item, ...rest }) {
 
 
 	return (
-		<div className={css.main}>
+		<div className={css.main} style={{fontSize:fontSize}}>
 			<VideoPlayer title={item.title} poster={item.art.fanart}>
 				<source src={source} type="video/mp4" />
-				<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
+				<infoComponents>{item.plot}</infoComponents>
 				<MediaControls>
 					<leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
 					<rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
@@ -58,24 +58,5 @@ function PlayerPanel({ item, ...rest }) {
 		</div>
 	);
 }
-/*
-<Panel {...rest}>
-			<Header type="compact" title={`Player of: ${itemID}`} />
-			<Column>
-				<VideoPlayer title={item.title} poster={item.art.fanart}>
-					<source src={source} type="video/mp4" />
-					<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
-					<MediaControls>
-						<leftComponents><IconButton backgroundOpacity="translucent">star</IconButton></leftComponents>
-						<rightComponents><IconButton backgroundOpacity="translucent">flag</IconButton></rightComponents>
-
-						<Button backgroundOpacity="translucent">Add To Favorites</Button>
-						<IconButton backgroundOpacity="translucent">search</IconButton>
-					</MediaControls>
-				</VideoPlayer>
-				<Button onClick={onClick}>Go to Home</Button>
-			</Column>
-		</Panel>
-*/
 
 export default PlayerPanel;
