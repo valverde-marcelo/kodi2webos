@@ -42,7 +42,7 @@ function DetailsPanel({ onClick, item, fontSize}) {
 					<div style={{width: '60vw'}}><Director value={item.director} /></div>
 					<div style={{width: '60vw'}}><Genre value={item.genre} /></div>
 					<div><Ratings value={item.ratings} /></div>
-					<Button className={cssDetails.button} onClick={onClick} tabIndex='1'>
+					<Button className={cssDetails.button} onClick={onClick} tabIndex={1}>
 						<PlayResumeButton value={item.resume}/>
 					</Button>
 				</div>

@@ -50,8 +50,14 @@ function setSync(key, value, prefix = LOCAL_STORAGE_PREFIX_DATA) {
 }
 
 function setSyncRaw(key, value, prefix = LOCAL_STORAGE_PREFIX_DATA) {
-  key = prefix+key;
+  if (prefix) {
+    key = prefix+key;
+  } 
   localStorage[key] = value;
+}
+
+function setDebugModeOn(){
+  localStorage.setItem('debug', 'kodi2webos:*');
 }
 
 function getSync(key, prefix = LOCAL_STORAGE_PREFIX_DATA) {
@@ -78,5 +84,6 @@ export default {
   setSync,
   getSync,
   clearSync,
-  setSyncRaw
+  setSyncRaw,
+  setDebugModeOn
 }

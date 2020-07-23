@@ -182,7 +182,7 @@ function MovieGenreLists({ ...rest }){
 
         content = items.map((item) => {
 				let index = MOVIES_LIST_BY_GENRE_PREFIX + item.genreid;
-                return (<List listID={index} title={item.label} {...rest} />)
+                return (<List key={item.genreid} listID={index} title={item.label} {...rest} />)
             }
         );
     }

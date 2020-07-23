@@ -13,8 +13,11 @@
  */
 
 import debug from 'debug';
+import storage from './storage';
 
-localStorage.setItem('debug', 'kodi2webos:*');
+storage.setDebugModeOn();
+
+//localStorage.setItem('debug', 'kodi2webos:*');
 
 export default function debugFactory(tag) {
   return debug(`kodi2webos:${tag}`);
